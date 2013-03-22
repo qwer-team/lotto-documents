@@ -1,0 +1,96 @@
+<?php
+
+namespace Qwer\LottoDocumentsBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Itc\DocumentsBundle\Entity\Document\Document;
+/**
+ * Bet
+ */
+class Bet extends Document
+{
+    /**
+     * @var string
+     */
+    private $currency;
+
+    /**
+     * @var string
+     */
+    private $externalUserId;
+
+    /**
+     * @var \Qwer\LottoBundle\Entity\Client
+     */
+    private $lotoClient;
+
+
+    /**
+     * Set currency
+     *
+     * @param string $currency
+     * @return Bet
+     */
+    public function setCurrency($currency)
+    {
+        $this->currency = $currency;
+    
+        return $this;
+    }
+
+    /**
+     * Get currency
+     *
+     * @return string 
+     */
+    public function getCurrency()
+    {
+        return $this->currency;
+    }
+
+    /**
+     * Set externalUserId
+     *
+     * @param string $externalUserId
+     * @return Bet
+     */
+    public function setExternalUserId($externalUserId)
+    {
+        $this->externalUserId = $externalUserId;
+    
+        return $this;
+    }
+
+    /**
+     * Get externalUserId
+     *
+     * @return string 
+     */
+    public function getExternalUserId()
+    {
+        return $this->externalUserId;
+    }
+
+    /**
+     * Set lotoClient
+     *
+     * @param \Qwer\LottoBundle\Entity\Client $lotoClient
+     * @return Bet
+     */
+    public function setLotoClient(\Qwer\LottoBundle\Entity\Client $lotoClient = null)
+    {
+        $this->lotoClient = $lotoClient;
+    
+        return $this;
+    }
+
+    /**
+     * Get lotoClient
+     *
+     * @return \Qwer\LottoBundle\Entity\Client 
+     */
+    public function getLotoClient()
+    {
+        return $this->lotoClient;
+    }
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Qwer\LottoDocumentsBundle\Entity\DocumentLine" table="lotto_document_line" inheritance-type="JOINED">
+        <discriminator-column name="discr" type="string"/>
+        <discriminator-map>
+            <discriminator-mapping value="betLine" class="Qwer\LottoDocumentsBundle\Entity\BetLine"/>
+        </discriminator-map>
+        <one-to-many field="transactions" target-entity="Transaction" mapped-by="documentLine">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+    </entity>
+</doctrine-mapping>

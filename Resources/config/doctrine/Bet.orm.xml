@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Qwer\LottoDocumentsBundle\Entity\Bet" table="lotto_bet">
+        <field name="externalUserId" type="string" column="external_user_id" length="45" nullable="true"/>
+        <many-to-one field="lotoClient" target-entity="Qwer\LottoBundle\Entity\Client">
+            <join-columns>
+                <join-column name="loto_client_id" referenced-column-name="id" nullable="true"/>
+            </join-columns>
+        </many-to-one>
+        <one-to-many field="documentLines" target-entity="BetLine" mapped-by="lottoBet">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+    </entity>
+</doctrine-mapping>

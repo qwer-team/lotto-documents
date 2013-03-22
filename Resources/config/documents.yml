@@ -1,0 +1,10 @@
+itc_documents:
+    documents: 
+      bet:
+        document_transactions: 
+          transaction_1: 
+              input_account: 22
+              input:  [ { level: 1, value: 2 }]
+              output_account: 23
+              output: [ { level: 1, value: 2 }, { level: 2, value: 2 }, { level: 3, value: 2 }]
+              summa: "{summa1}"

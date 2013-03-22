@@ -1,0 +1,90 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Bet</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Documenttypeid</th>
+                <td>{{ entity.documentTypeId }}</td>
+            </tr>
+            <tr>
+                <th>Num</th>
+                <td>{{ entity.num }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ entity.date|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ entity.status }}</td>
+            </tr>
+            <tr>
+                <th>Oa1</th>
+                <td>{{ entity.OA1 }}</td>
+            </tr>
+            <tr>
+                <th>Oa2</th>
+                <td>{{ entity.OA2 }}</td>
+            </tr>
+            <tr>
+                <th>Text1</th>
+                <td>{{ entity.text1 }}</td>
+            </tr>
+            <tr>
+                <th>Text2</th>
+                <td>{{ entity.text2 }}</td>
+            </tr>
+            <tr>
+                <th>Summa1</th>
+                <td>{{ entity.summa1 }}</td>
+            </tr>
+            <tr>
+                <th>Summa2</th>
+                <td>{{ entity.summa2 }}</td>
+            </tr>
+            <tr>
+                <th>Summa3</th>
+                <td>{{ entity.summa3 }}</td>
+            </tr>
+            <tr>
+                <th>Ucor</th>
+                <td>{{ entity.ucor }}</td>
+            </tr>
+            <tr>
+                <th>Dtcor</th>
+                <td>{{ entity.dtcor|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Externaluserid</th>
+                <td>{{ entity.externalUserId }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('bet') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('bet_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('bet_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+{% endblock %}

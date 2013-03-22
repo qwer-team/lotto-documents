@@ -1,0 +1,67 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Bet list</h1>
+
+    <table class="records_list table table-bordered table-hover table-striped">
+        <thead>
+            <tr>
+                <th>Documenttypeid</th>
+                <th>Num</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Oa1</th>
+                <th>Oa2</th>
+                <th>Text1</th>
+                <th>Text2</th>
+                <th>Summa1</th>
+                <th>Summa2</th>
+                <th>Summa3</th>
+                <th>Ucor</th>
+                <th>Dtcor</th>
+                <th>Id</th>
+                <th>Externaluserid</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('bet_show', { 'id': entity.id }) }}">{{ entity.documentTypeId }}</a></td>
+                <td>{{ entity.num }}</td>
+                <td>{% if entity.date %}{{ entity.date|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.status }}</td>
+                <td>{{ entity.OA1 }}</td>
+                <td>{{ entity.OA2 }}</td>
+                <td>{{ entity.text1 }}</td>
+                <td>{{ entity.text2 }}</td>
+                <td>{{ entity.summa1 }}</td>
+                <td>{{ entity.summa2 }}</td>
+                <td>{{ entity.summa3 }}</td>
+                <td>{{ entity.ucor }}</td>
+                <td>{% if entity.dtcor %}{{ entity.dtcor|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.id }}</td>
+                <td>{{ entity.externalUserId }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('bet_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('bet_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('bet_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

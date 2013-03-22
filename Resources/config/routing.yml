@@ -1,0 +1,4 @@
+qwer_lotto_documents_bet:
+    resource: "@QwerLottoDocumentsBundle/Resources/config/routing/bet.xml"
+    prefix:   /bet
+
