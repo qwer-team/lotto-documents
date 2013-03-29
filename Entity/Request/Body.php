@@ -32,7 +32,7 @@ class Body
      *
      * @var \Qwer\LottoBundle\Entity\Type 
      */
-    private $lottoType;
+    private $lottoTime;
 
     /**
      *
@@ -45,6 +45,12 @@ class Body
      * @var boolean 
      */
     private $withBonus;
+    
+    /**
+     *
+     * @var integer 
+     */
+    private $drawNum;
     
     function __construct()
     {
@@ -109,18 +115,18 @@ class Body
      * 
      * @return \Qwer\LottoBundle\Entity\Time
      */
-    public function getLottoType()
+    public function getLottoTime()
     {
-        return $this->lottoType;
+        return $this->lottoTime;
     }
 
     /**
      * 
      * @param \Qwer\LottoBundle\Entity\Time $lottoTime
      */
-    public function setLottoType(Time $lottoTime)
+    public function setLottoTime(Time $lottoTime)
     {
-        $this->lottoType = $lottoTime;
+        $this->lottoTime = $lottoTime;
     }
 
     /**
@@ -158,5 +164,16 @@ class Body
     {
         $this->withBonus = $withBonus;
     }
+
+    public function getDrawNum()
+    {
+        return $this->drawNum;
+    }
+
+    public function setDrawNum($drawNum)
+    {
+        $this->drawNum = $drawNum;
+    }
+
 
 }

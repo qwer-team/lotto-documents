@@ -13,7 +13,7 @@ class BodyType extends AbstractType
     {
         $clientsOptions = array('class' => 'QwerLottoBundle:Client');
         $currencyOptions = array('class' => 'QwerLottoDocumentsBundle:Currency');
-        $lottoTypeOptions = array('class' => 'QwerLottoBundle:Type');
+        $lottoTimeOptions = array('class' => 'QwerLottoBundle:Time');
         $rawBetsOptions =  array(
             'type'         => new RawBetType(),
             'allow_add'    => true,
@@ -24,8 +24,9 @@ class BodyType extends AbstractType
             ->add('client', 'entity', $clientsOptions)
             ->add('currency', 'entity', $currencyOptions)
             ->add('externalId', 'integer')
-            ->add('lottoType', 'entity', $lottoTypeOptions)
+            ->add('lottoTime', 'entity', $lottoTimeOptions)
             ->add('withBonus', 'checkbox')
+            ->add('drawNum', 'integer')
             ->add('rawBets', 'collection', $rawBetsOptions )
         ;
     }

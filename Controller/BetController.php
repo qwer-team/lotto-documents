@@ -6,6 +6,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Qwer\LottoDocumentsBundle\Entity\Bet;
 use Qwer\LottoDocumentsBundle\Form\BetType;
+use Qwer\LottoDocumentsBundle\Form\BodyType;
+use Qwer\LottoDocumentsBundle\Event\BetRequestEvent;
 
 /**
  * Bet controller.
@@ -106,21 +108,10 @@ class BetController extends Controller
         $editForm = $this->createForm(new BetType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        $body = new \Qwer\LottoDocumentsBundle\Entity\Request\Body();
-        $collection = new \Doctrine\Common\Collections\ArrayCollection();
-        for ($i = 0; $i < 2; $i++) {
-            $value = new \Qwer\LottoDocumentsBundle\Entity\Request\RawBet();
-            $collection->add($value);
-        }
-        $body->setRawBets($collection);
-        $rawBetForm = $this->createForm( new \Qwer\LottoDocumentsBundle\Form\BodyType(),
-        $body);
-
         return $this->render('QwerLottoDocumentsBundle:Bet:edit.html.twig', array(
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-            'raw_bet_form' => $rawBetForm->createView(),
         ));
     }
 
@@ -196,6 +187,39 @@ class BetController extends Controller
         ->add('id', 'hidden')
         ->getForm()
         ;
+    }
+
+    public function betRequestAction(Rerquest $request)
+    {
+        $body = new Body();
+        $form = $this->createForm(new BodyType, $body);
+
+        $form->bindRequest($request);
+
+        if ($form->isValid()) {
+            $dispatcher = $this->getEventDispatcher();
+            
+            $event = new BetRequestEvent();
+            $dispatcher->dispatch("bet.request.event", $event);
+            
+            $this->get('session')->setFlash(
+                'notice',
+                'request was processed!'
+            );
+        }
+        
+        return $this->redirect($this->generateUrl('bet_index'));
+    }
+
+    /**
+     * 
+     * @return \Symfony\Component\EventDispatcher\EventDispatcher
+     */
+    private function getEventDispatcher()
+    {
+        $dispatcher = $this->get("event_dispatcher");
+        
+        return $dispatcher;
     }
 
 }

@@ -2,6 +2,8 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
     <entity name="Qwer\LottoDocumentsBundle\Entity\Bet" table="lotto_bet">
         <field name="externalUserId" type="string" column="external_user_id" length="45" nullable="true"/>
+        <field name="balls" type="array" column="balls" />
+        <field name="withBonus" type="boolean" column="with_bonus" nullable="true"/>
         <many-to-one field="lotoClient" target-entity="Qwer\LottoBundle\Entity\Client">
             <join-columns>
                 <join-column name="loto_client_id" referenced-column-name="id" nullable="true"/>
@@ -12,5 +14,10 @@
                 <cascade-persist/>
             </cascade>
         </one-to-many>
+        <many-to-one field="lottoDraw" target-entity="Qwer\LottoBundle\Entity\Draw">
+            <join-columns>
+                <join-column name="lotto_draw_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
     </entity>
 </doctrine-mapping>

@@ -2,8 +2,6 @@
 
 namespace Qwer\LottoDocumentsBundle\Entity;
 
-use Itc\DocumentsBundle\Entity\Document\DocumentLine;
-
 /**
  * BetLine
  */
@@ -16,17 +14,6 @@ class BetLine extends DocumentLine
     protected $balls;
 
     /**
-     * @var boolean
-     */
-    protected $withBonus;
-
-    /**
-     * @var \Qwer\LottoBundle\Entity\Draw
-     */
-    protected $lottoDraw;
-
-
-    /**
      * Set balls
      *
      * @param string $balls
@@ -35,7 +22,7 @@ class BetLine extends DocumentLine
     public function setBalls($balls)
     {
         $this->balls = $balls;
-    
+
         return $this;
     }
 
@@ -49,49 +36,14 @@ class BetLine extends DocumentLine
         return $this->balls;
     }
 
-    /**
-     * Set withBonus
-     *
-     * @param boolean $withBonus
-     * @return BetLine
-     */
-    public function setWithBonus($withBonus)
+    public function setSumma($summa)
     {
-        $this->withBonus = $withBonus;
-    
-        return $this;
+        $this->summa1 = $summa;
     }
 
-    /**
-     * Get withBonus
-     *
-     * @return boolean 
-     */
-    public function getWithBonus()
+    public function getSumma()
     {
-        return $this->withBonus;
+        return $this->summa1;
     }
 
-    /**
-     * Set lottoDraw
-     *
-     * @param \Qwer\LottoBundle\Entity\Draw $lottoDraw
-     * @return BetLine
-     */
-    public function setLottoDraw(\Qwer\LottoBundle\Entity\Draw $lottoDraw = null)
-    {
-        $this->lottoDraw = $lottoDraw;
-    
-        return $this;
-    }
-
-    /**
-     * Get lottoDraw
-     *
-     * @return \Qwer\LottoBundle\Entity\Draw 
-     */
-    public function getLottoDraw()
-    {
-        return $this->lottoDraw;
-    }
 }

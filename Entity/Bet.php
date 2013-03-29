@@ -27,6 +27,22 @@ class Bet extends Document
     protected $documentTypeId = 1;
 
     /**
+     * @var boolean
+     */
+    protected $withBonus;
+
+    /**
+     *
+     * @var array 
+     */
+    protected $balls;
+    
+    /**
+     * @var \Qwer\LottoBundle\Entity\Draw
+     */
+    protected $lottoDraw;
+
+    /**
      * Set externalUserId
      *
      * @param string $externalUserId
@@ -72,12 +88,88 @@ class Bet extends Document
         return $this->lotoClient;
     }
 
+    public function getDocumentTypeId()
+    {
+        return $this->documentTypeId;
+    }
+
+    public function setDocumentTypeId($documentTypeId)
+    {
+        $this->documentTypeId = $documentTypeId;
+    }
+
+    public function getBalls()
+    {
+        return $this->balls;
+    }
+
+    public function setBalls($balls)
+    {
+        $this->balls = $balls;
+    }
+
+    /**
+     * Set withBonus
+     *
+     * @param boolean $withBonus
+     * @return BetLine
+     */
+    public function setWithBonus($withBonus)
+    {
+        $this->withBonus = $withBonus;
+
+        return $this;
+    }
+
+    /**
+     * Get withBonus
+     *
+     * @return boolean 
+     */
+    public function getWithBonus()
+    {
+        return $this->withBonus;
+    }
+
     public function addBetLine(BetLine $betLine)
     {
         $this->addDocumentLine($betLine);
-        
+
         $summa = $this->getSumma1() + $betLine->getSum();
         $this->setSumma1($summa);
+    }
+    
+    /**
+     * Set lottoDraw
+     *
+     * @param \Qwer\LottoBundle\Entity\Draw $lottoDraw
+     * @return BetLine
+     */
+    public function setLottoDraw(\Qwer\LottoBundle\Entity\Draw $lottoDraw = null)
+    {
+        $this->lottoDraw = $lottoDraw;
+    
+        return $this;
+    }
+
+    /**
+     * Get lottoDraw
+     *
+     * @return \Qwer\LottoBundle\Entity\Draw 
+     */
+    public function getLottoDraw()
+    {
+        return $this->lottoDraw;
+    }
+
+    public function setSumma($summa)
+    {
+        $this->summa1 = $summa;
+    }
+
+    public function getSumma()
+    {
+        return $this->summa1;
     }
 
 }
