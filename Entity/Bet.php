@@ -135,7 +135,7 @@ class Bet extends Document
     {
         $this->addDocumentLine($betLine);
 
-        $summa = $this->getSumma1() + $betLine->getSum();
+        $summa = $this->getSumma1() + $betLine->getSumma();
         $this->setSumma1($summa);
     }
     

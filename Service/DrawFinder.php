@@ -4,8 +4,9 @@ namespace Qwer\LottoDocumentsBundle\Service;
 
 use Qwer\LottoBundle\Entity\Time;
 use Doctrine\Common\Collections\ArrayCollection;
+use Itc\DocumentsBundle\Listener\ContainerAware;
 
-class DrawFinder
+class DrawFinder extends ContainerAware
 {
 
     /**
@@ -15,9 +16,25 @@ class DrawFinder
      */
     public function getDraws(Time $type, $drawNum)
     {
-        $draws = new ArrayCollection();
+        $draws = $this->getDrawsRepo()->findNextDraws($type, $drawNum);
 
         return $draws;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    private function getDrawsRepo()
+    {
+        $repo = $this->em->getRepository("QwerLottoBundle:Draw");
+        
+        return $repo;
+    }
+
+    public function setEntityManager($manager)
+    {
+        $this->em = $manager;
     }
 
 }

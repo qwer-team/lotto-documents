@@ -40,7 +40,7 @@ class BetMapper extends ContainerAware
             $bet->setExternalUserId($externalId);
             $bet->setLotoClient($client);
             $bet->setWithBonus($withBonus);
-
+            
             $betsPrototypes->add($bet);
         }
 
@@ -71,6 +71,7 @@ class BetMapper extends ContainerAware
         $summa = $rawBet->getSumma();
 
         $bet = new Bet();
+        $bet->setBalls($balls);
 
         $betType = $rawBet->getBetType();
         $generator = $this->getBetLineGenerator($betType);
@@ -97,7 +98,7 @@ class BetMapper extends ContainerAware
 
         if (!$this->container->has($serviceId)) {
             $message = sprintf("Service \"%s\" was not found.", $serviceId);
-            throw new \ResourceNotFoundException($message);
+            throw new ResourceNotFoundException($message);
         }
 
         $service = $this->container->get($serviceId);
