@@ -5,6 +5,6 @@
       <generator strategy="AUTO"/>
     </id>
     <field name="code" type="string" column="code" length="3"/>
-    <field name="rateToMain" type="decimal" column="rateToMain"/>
+    <field name="rateToMain" type="decimal" scale="4" column="rateToMain"/>
   </entity>
 </doctrine-mapping>
