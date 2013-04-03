@@ -46,4 +46,37 @@ class BetLine extends DocumentLine
         return $this->summa1;
     }
 
+    public function getRatedSumma()
+    {
+        $currency = $this->getCurrency();
+        return $currency->convertToMain($this->getSumma());
+    }
+
+    /**
+     * 
+     * @return \Qwer\LottoBundle\Entity\Client
+     */
+    public function getClient()
+    {
+        return $this->getDocument()->gteClient();
+    }
+
+    /**
+     * 
+     * @return \Qwer\LottoBundle\Entity\Type
+     */
+    public function getLottoType()
+    {
+        return $this->getDocument()->getLottoDraw()->getLottoTime()->getLottoType();
+    }
+
+    /**
+     * 
+     * @return \Qwer\LottoDocumentsBundle\Entity\Currency
+     */
+    public function getCurrency()
+    {
+        return $this->getDocument()->getCurrency();
+    }
+
 }
