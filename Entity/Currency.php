@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Currency
 {
+
     /**
      * @var integer
      */
@@ -23,7 +24,6 @@ class Currency
      * @var float
      */
     private $rateToMain;
-
 
     /**
      * Get id
@@ -44,7 +44,7 @@ class Currency
     public function setCode($code)
     {
         $this->code = $code;
-    
+
         return $this;
     }
 
@@ -67,7 +67,7 @@ class Currency
     public function setRateToMain($rateToMain)
     {
         $this->rateToMain = $rateToMain;
-    
+
         return $this;
     }
 
@@ -80,10 +80,16 @@ class Currency
     {
         return $this->rateToMain;
     }
-    
+
     public function __toString()
     {
         return $this->code;
+    }
+
+    public function convertToMain($summa)
+    {
+        $rate = $this->getRateToMain();
+        return  $rate * $summa;
     }
 
 }
