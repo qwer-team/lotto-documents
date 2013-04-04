@@ -21,12 +21,6 @@ class StaticLimitValidatorTest extends AbstractValidatorTest
      */
     private $constraint;
 
-    /**
-     *
-     * @var type 
-     */
-    private $rate = 2.2;
-
     protected function setUp()
     {
         parent::setUp();

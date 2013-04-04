@@ -6,6 +6,7 @@ use Qwer\LottoBundle\Entity\Client;
 use Qwer\LottoDocumentsBundle\Entity\Currency;
 use Qwer\LottoBundle\Entity\Type;
 use Itc\DocumentsBundle\Tests\Service\MockFactory;
+use Qwer\LottoBundle\Entity\Draw;
 
 /**
  * Description of AbstractValidatorTest
@@ -35,10 +36,22 @@ abstract class AbstractValidatorTest extends \PHPUnit_Framework_TestCase
     
     /**
      *
+     * @var float 
+     */
+    protected $cumLimit = 100;
+    
+    /**
+     *
      * @var array 
      */
     protected $violations = array();
 
+    /**
+     *
+     * @var type 
+     */
+    protected $rate = 2.2;
+    
     protected function getContextMock()
     {
         $stub = $this->getMockBuilder("Symfony\Component\Validator\ExecutionContextInterface")
@@ -75,14 +88,19 @@ abstract class AbstractValidatorTest extends \PHPUnit_Framework_TestCase
         $client->setCurrency($currency);
         $client->setStaticLimit($this->limit);
         $client->setMinimumLimit($this->minimum);
+        $client->setCumulativeLimit($this->cumLimit);
 
         MockFactory::addMethod($stub, "getClient", $client);
         MockFactory::addMethod($stub, "getCurrency", $currency);
-        MockFactory::addMethod($stub, "getlottoType", new Type());
+        MockFactory::addMethod($stub, "getLottoType", new Type());
+        MockFactory::addMethod($stub, "getLottoDraw", new Draw());
 
         MockFactory::addMethod($stub, "getBalls", array(1, 2, 3));
+        MockFactory::addMethod($stub, "getBallsString", "1_2_3");
         MockFactory::addMethod($stub, "getSumma", $this->summa);
         MockFactory::addMethod($stub, "getRatedSumma", $this->summa * $rate);
+        $possibleWin = $this->summa * $rate * ($this->rate - 1);
+        MockFactory::addMethod($stub, "getRatedPossibleWin", $possibleWin);
 
         return $stub;
     }

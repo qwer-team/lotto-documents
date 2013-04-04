@@ -26,24 +26,17 @@ class StaticLimitValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         $this->betLine = $value;
-        $summa = $this->betLine->getSumma();
 
         $client = $this->betLine->getClient();
-        $lottoType = $this->betLine->getLottoType();
-        $balls = $this->betLine->getBalls();
-        $currency = $this->betLine->getCurrency();
+        $possibleWin = $this->betLine->getRatedPossibleWin();
 
-        $rate = $this->rateService->getRate($balls, $lottoType, $client);
-
-        if (!$this->checkLimitation($summa, $rate, $currency, $client)) {
+        if (!$this->checkLimitation($possibleWin, $client)) {
             $this->context->addViolation($constraint->getMessage());
         }
     }
 
-    private function checkLimitation($summa, $rate, Currency $currency, Client $client)
+    private function checkLimitation($possibleWin, Client $client)
     {
-        $possibleWin = $currency->convertToMain($summa) * ($rate - 1);
-
         $clientsCur = $client->getCurrency();
         $staticLimit = $clientsCur->convertToMain($client->getStaticLimit());
 
