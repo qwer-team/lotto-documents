@@ -9,6 +9,8 @@ use Itc\DocumentsBundle\Listener\ContainerAware;
 use Qwer\LottoDocumentsBundle\Entity\Request\RawBet;
 use Qwer\LottoBundle\Entity\BetType;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
+use Qwer\LottoBundle\Entity\Type;
+use Qwer\LottoBundle\Entity\Client;
 
 class BetMapper extends ContainerAware
 {
@@ -18,6 +20,12 @@ class BetMapper extends ContainerAware
      * @var DrawFinder 
      */
     private $drawFinder;
+
+    /**
+     *
+     * @var \Qwer\LottoDocumentsBundle\Service\RateService 
+     */
+    private $rateService;
 
     /**
      * 
@@ -40,17 +48,28 @@ class BetMapper extends ContainerAware
             $bet->setExternalUserId($externalId);
             $bet->setLotoClient($client);
             $bet->setWithBonus($withBonus);
-            
+
             $betsPrototypes->add($bet);
         }
 
         $lottoTime = $body->getLottoTime();
+        $lottoType = $lottoTime->getLottoType();
+
+        foreach ($betsPrototypes as $betPrototype) {
+            $betLines = $betPrototype->getDocumentLines();
+            foreach($betLines as $line) {
+                $balls = $line->getBalls();
+                $odd = $this->rateService->getRate($balls, $withBonus, $lottoType, $client);
+                $line->setOdd($odd);
+            }
+        }
+
         $draws = $this->drawFinder->getDraws($lottoTime, $drawNum);
 
         $bets = new ArrayCollection();
 
         foreach ($draws as $draw) {
-            foreach($betsPrototypes as $betPrototype) {
+            foreach ($betsPrototypes as $betPrototype) {
                 $bet = clone($betPrototype);
                 $bet->setLottoDraw($draw);
                 $bets->add($bet);
@@ -104,10 +123,15 @@ class BetMapper extends ContainerAware
         $service = $this->container->get($serviceId);
         return $service;
     }
-    
+
     public function setDrawFinder($drawFinder)
     {
         $this->drawFinder = $drawFinder;
+    }
+
+    public function setRateService(RateService $rateService)
+    {
+        $this->rateService = $rateService;
     }
 
 }
