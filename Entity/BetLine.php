@@ -14,6 +14,12 @@ class BetLine extends DocumentLine
     protected $balls;
 
     /**
+     *
+     * @var float 
+     */
+    protected $odd;
+
+    /**
      * Set balls
      *
      * @param string $balls
@@ -34,6 +40,12 @@ class BetLine extends DocumentLine
     public function getBalls()
     {
         return $this->balls;
+    }
+
+    public function getBallsString()
+    {
+        sort($this->balls);
+        return implode("_", $this->balls);
     }
 
     public function setSumma($summa)
@@ -77,6 +89,37 @@ class BetLine extends DocumentLine
     public function getCurrency()
     {
         return $this->getDocument()->getCurrency();
+    }
+
+    public function getExternalUserId()
+    {
+        return $this->getDocument()->getExternalUserId();
+    }
+
+    public function getLottoDraw()
+    {
+        return $this->getDocument()->getLottoDraw();
+    }
+
+    public function getOdd()
+    {
+        return $this->odd;
+    }
+
+    public function setOdd($odd)
+    {
+        $this->odd = $odd;
+    }
+
+    public function getPossibleWin()
+    {
+        $possibleWin = $this->getSumma() * ($this->getOdd() - 1);
+        return $possibleWin;
+    }
+
+    public function getRatedPossibleWin()
+    {
+        return $this->getCurrency()->getRateToMain($this->getPossibleWin());
     }
 
 }
