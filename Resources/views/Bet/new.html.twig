@@ -17,4 +17,11 @@
         </a>
     </li>
 </ul>
+    
+  <form action="{{ path('bet_request') }}" method="post" {{ form_enctype(raw_bet_form) }}>
+        {{ form_widget(raw_bet_form) }}
+        <p>
+            <button type="submit">Create</button>
+        </p>
+    </form>  
 {% endblock %}

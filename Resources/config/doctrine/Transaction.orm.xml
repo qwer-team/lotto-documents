@@ -10,6 +10,9 @@
             <join-columns>
                 <join-column name="document_id" referenced-column-name="id" on-delete="CASCADE" nullable="1"/>
             </join-columns>
+            <cascade>
+                <cascade-all/>
+            </cascade>
         </many-to-one>
         <field name="inputLevel4" column="input_level_4" nullable="true" length="17" type="string"/> 
         <field name="outputLevel4" column="output_level_4" nullable="true" length="17" type="string"/> 

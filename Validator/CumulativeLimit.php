@@ -18,7 +18,7 @@ class CumulativeLimit extends Constraint
 
     public function validatedBy()
     {
-        return "cummulation_limit";
+        return "cumulative_limit";
     }
 
     public function getMessage()

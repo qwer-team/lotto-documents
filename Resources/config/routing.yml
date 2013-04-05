@@ -2,3 +2,10 @@ qwer_lotto_documents_bet:
     resource: "@QwerLottoDocumentsBundle/Resources/config/routing/bet.xml"
     prefix:   /bet
 
+qwer_lotto_documents_currency:
+    resource: "@QwerLottoDocumentsBundle/Resources/config/routing/currency.xml"
+    prefix:   /currency
+    
+qwer_lotto_documents_currency:
+    resource: "@QwerLottoDocumentsBundle/Resources/config/routing/documenttype.xml"
+    prefix:   /documenttype

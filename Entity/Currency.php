@@ -88,7 +88,7 @@ class Currency
 
     public function convertToMain($summa)
     {
-        $rate = $this->getRateToMain();
+        $rate = (float)$this->getRateToMain();
         return  $rate * $summa;
     }
 

@@ -18,7 +18,7 @@ class Bet extends Document
     /**
      * @var \Qwer\LottoBundle\Entity\Client
      */
-    protected $lotoClient;
+    protected $lottoClient;
 
     /**
      *
@@ -36,7 +36,7 @@ class Bet extends Document
      * @var array 
      */
     protected $balls;
-    
+
     /**
      * @var \Qwer\LottoBundle\Entity\Draw
      */
@@ -73,7 +73,7 @@ class Bet extends Document
      */
     public function setLotoClient(\Qwer\LottoBundle\Entity\Client $lotoClient = null)
     {
-        $this->lotoClient = $lotoClient;
+        $this->lottoClient = $lotoClient;
 
         return $this;
     }
@@ -85,7 +85,7 @@ class Bet extends Document
      */
     public function getLotoClient()
     {
-        return $this->lotoClient;
+        return $this->lottoClient;
     }
 
     public function getDocumentTypeId()
@@ -138,7 +138,7 @@ class Bet extends Document
         $summa = $this->getSumma1() + $betLine->getSumma();
         $this->setSumma1($summa);
     }
-    
+
     /**
      * Set lottoDraw
      *
@@ -148,7 +148,7 @@ class Bet extends Document
     public function setLottoDraw(\Qwer\LottoBundle\Entity\Draw $lottoDraw = null)
     {
         $this->lottoDraw = $lottoDraw;
-    
+
         return $this;
     }
 
@@ -170,6 +170,20 @@ class Bet extends Document
     public function getSumma()
     {
         return $this->summa1;
+    }
+
+    public function resetLines()
+    {
+        $lines = $this->getDocumentLines();
+        $this->documentLines = new \Doctrine\Common\Collections\ArrayCollection();
+
+        $newLines = new \Doctrine\Common\Collections\ArrayCollection();
+        foreach($lines as $line) {
+            $newLine = clone($line);
+            $newLine->setDocument($this);
+            $newLines->add($newLine);
+        }
+        $this->documentLines = $newLines;
     }
 
 }

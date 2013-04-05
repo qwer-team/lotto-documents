@@ -3,8 +3,8 @@
 namespace Qwer\LottoDocumentsBundle\Service;
 
 use Qwer\LottoBundle\Entity\Time;
-use Doctrine\Common\Collections\ArrayCollection;
 use Itc\DocumentsBundle\Listener\ContainerAware;
+use Doctrine\ORM\EntityManager;
 
 class DrawFinder extends ContainerAware
 {
@@ -23,7 +23,7 @@ class DrawFinder extends ContainerAware
 
     /**
      * 
-     * @return 
+     * @return \Qwer\LottoBundle\Repository\DrawRepository
      */
     private function getDrawsRepo()
     {
@@ -32,7 +32,7 @@ class DrawFinder extends ContainerAware
         return $repo;
     }
 
-    public function setEntityManager($manager)
+    public function setEntityManager(EntityManager $manager)
     {
         $this->em = $manager;
     }

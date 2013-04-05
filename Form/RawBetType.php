@@ -10,7 +10,7 @@ class RawBetType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $ballsOptions = array('type' => 'integer');
+        $ballsOptions = array('type' => 'integer','allow_add' => true);
         $betTypeOptions = array('class' => 'QwerLottoBundle:BetType');
         $summaOptions = array('currency' => 'RUR');
         $builder

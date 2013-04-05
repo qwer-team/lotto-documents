@@ -2,5 +2,8 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
     <entity name="Qwer\LottoDocumentsBundle\Entity\Rest" table="lotto_rest" inheritance-type="JOINED" repository-class="Qwer\LottoDocumentsBundle\Repository\RestRepository">
         <field name="level4" column="level4" type="string" length="17" nullable="true"/>
+        <unique-constraints>
+            <unique-constraint columns="year,month,account_id,level1,level2,level3,level4" name="rest_uniidx"/>
+        </unique-constraints>
     </entity>
 </doctrine-mapping>

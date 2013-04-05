@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="Qwer\LottoDocumentsBundle\Entity\BetLine" table="lotto_bet_line">
-    <field name="balls" type="string" column="balls" length="100" nullable="true"/>
-    <field name="odd" type="float" column="odd" nullable="true"/>
-  </entity>
+    <entity name="Qwer\LottoDocumentsBundle\Entity\BetLine" table="lotto_bet_line">
+        <field name="balls" type="array" column="balls" length="100" nullable="true"/>
+        <field name="odd" type="float" column="odd" nullable="true"/>
+        <many-to-one field="document" target-entity="Bet" inversed-by="documentLines">
+            <join-columns>
+                <join-column name="document_id" referenced-column-name="id" on-update="CASCADE" on-delete="CASCADE" nullable="false"/>
+            </join-columns>
+            <cascade>
+                <cascade-all />
+            </cascade>
+        </many-to-one>
+    </entity>
 </doctrine-mapping>

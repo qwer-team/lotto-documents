@@ -14,6 +14,7 @@ use Qwer\LottoDocumentsBundle\Service\BetLineGenerator\SingleGenerator;
 use Qwer\LottoBundle\Entity\Client;
 use Qwer\LottoBundle\Entity\Time;
 use Qwer\LottoBundle\Entity\Type;
+use Qwer\LottoDocumentsBundle\Entity\DocumentType;
 
 class BetMapperTest extends \PHPUnit_Framework_TestCase
 {
@@ -30,6 +31,7 @@ class BetMapperTest extends \PHPUnit_Framework_TestCase
         $this->service->setDrawFinder($this->getDrawFinder());
         $this->service->setContainer($this->getContainerMock());
         $this->service->setRateService($this->getRateServiceMock());
+        $this->service->setDocumentType(new DocumentType());
     }
 
     private function getDrawFinder()
@@ -114,17 +116,17 @@ class BetMapperTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals(20, $bet->getSumma());
 
             $this->assertEquals(1, count($bet->getDocumentLines()));
-            
-            foreach($bet->getDocumentLines() as $line) {
+
+            foreach ($bet->getDocumentLines() as $line) {
                 $this->assertEquals(20, $line->getSumma());
                 $this->assertEquals(array(1, 2, 3), $line->getBalls());
             }
         }
     }
-    
+
     private function getRateServiceMock()
     {
-        $stub = $this->getMock("Qwer\LottoDocumentsBundle\Service\RateService");
+        $stub = $this->getMock("Qwer\LottoBundle\Service\RateService");
 
         $stub->expects($this->any())
         ->method("getRate")

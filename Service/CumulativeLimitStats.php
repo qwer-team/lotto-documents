@@ -2,6 +2,10 @@
 
 namespace Qwer\LottoDocumentsBundle\Service;
 
+use Doctrine\ORM\EntityManager;
+use Qwer\LottoBundle\Entity\Client;
+use Qwer\LottoBundle\Entity\Draw;
+
 class CumulativeLimitStats
 {
 

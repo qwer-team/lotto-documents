@@ -7,4 +7,8 @@
     <route id="qwer_lotto_documents_homepage" pattern="/hello/{name}">
         <default key="_controller">QwerLottoDocumentsBundle:Default:index</default>
     </route>
+    
+    <route id="bet_request" pattern="/betreq" methods="POST">
+        <default key="_controller">QwerLottoDocumentsBundle:Bet:betRequest</default>
+    </route>
 </routes>

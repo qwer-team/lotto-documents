@@ -6,6 +6,7 @@ use Itc\DocumentsBundle\Listener\ContainerAware;
 use Qwer\LottoDocumentsBundle\Event\BetsEvent;
 use Itc\DocumentsBundle\Event\DocumentEvent;
 use Qwer\LottoDocumentsBundle\Exception\FundsException;
+use Qwer\LottoDocumentsBundle\Service\ClientApi;
 
 class BetsCreationListener extends ContainerAware
 {
@@ -45,6 +46,11 @@ class BetsCreationListener extends ContainerAware
             $this->em->close();
             throw $e;
         }
+    }
+    
+    public function setClientsApi(ClientApi $clientsApi)
+    {
+        $this->clientsApi = $clientsApi;
     }
 
 }

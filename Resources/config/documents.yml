@@ -1,10 +1,14 @@
+parameters:
+  cumulative_limit_account: 7
+  rest.start.year: 13
+  rest.end.year: 14
+  rest.levels.count: 4
+  
 itc_documents:
     documents: 
       bet:
-        document_transactions: 
-          transaction_1: 
-              input_account: 22
-              input:  [ { level: 1, value: 2 }]
-              output_account: 23
-              output: [ { level: 1, value: 2 }, { level: 2, value: 2 }, { level: 3, value: 2 }]
-              summa: "{summa1}"
+        document_line_transactions:
+          cumulative_limit:
+              input_account: "%cumulative_limit_account%"
+              input: [ {level: 1, value: "{client.id}"}, { level: 2, value: "{externalUserId}" }, { level: 3, value: "{lottoDraw.id}" }, { level: 4, value: "{ballsString}", type: string }]
+              summa: "{ratedPossibleWin}"     

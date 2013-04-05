@@ -9,8 +9,7 @@ use Itc\DocumentsBundle\Listener\ContainerAware;
 use Qwer\LottoDocumentsBundle\Entity\Request\RawBet;
 use Qwer\LottoBundle\Entity\BetType;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
-use Qwer\LottoBundle\Entity\Type;
-use Qwer\LottoBundle\Entity\Client;
+use Qwer\LottoBundle\Service\RateService;
 
 class BetMapper extends ContainerAware
 {
@@ -23,10 +22,16 @@ class BetMapper extends ContainerAware
 
     /**
      *
-     * @var \Qwer\LottoDocumentsBundle\Service\RateService 
+     * @var \Qwer\LottoBundle\Service\RateService 
      */
     private $rateService;
 
+    /**
+     *
+     * @var type 
+     */
+    private $documentType = null;
+    
     /**
      * 
      * @param \Qwer\LottoDocumentsBundle\Entity\Request\Body $body
@@ -42,13 +47,15 @@ class BetMapper extends ContainerAware
 
         $betsPrototypes = new ArrayCollection();
 
+        $documentType = $this->getDocumentType();
+
         foreach ($body->getRawBets() as $rawBet) {
             $bet = $this->getBet($rawBet);
             $bet->setCurrency($currency);
             $bet->setExternalUserId($externalId);
             $bet->setLotoClient($client);
             $bet->setWithBonus($withBonus);
-
+            $bet->setDocumentType($documentType);
             $betsPrototypes->add($bet);
         }
 
@@ -57,7 +64,7 @@ class BetMapper extends ContainerAware
 
         foreach ($betsPrototypes as $betPrototype) {
             $betLines = $betPrototype->getDocumentLines();
-            foreach($betLines as $line) {
+            foreach ($betLines as $line) {
                 $balls = $line->getBalls();
                 $odd = $this->rateService->getRate($balls, $withBonus, $lottoType, $client);
                 $line->setOdd($odd);
@@ -70,9 +77,10 @@ class BetMapper extends ContainerAware
 
         foreach ($draws as $draw) {
             foreach ($betsPrototypes as $betPrototype) {
-                $bet = clone($betPrototype);
-                $bet->setLottoDraw($draw);
-                $bets->add($bet);
+                $newbet = clone($betPrototype);
+                $newbet->resetLines();
+                $newbet->setLottoDraw($draw);
+                $bets->add($newbet);
             }
         }
 
@@ -132,6 +140,22 @@ class BetMapper extends ContainerAware
     public function setRateService(RateService $rateService)
     {
         $this->rateService = $rateService;
+    }
+
+    public function setDocumentType($documentType)
+    {
+        $this->documentType = $documentType;
+    }
+
+    private function getDocumentType()
+    {
+        if(!is_null($this->documentType)){
+            return $this->documentType;
+        }
+        $repo = $this->em->getRepository("QwerLottoDocumentsBundle:DocumentType");
+
+        $document = $repo->find(1);
+        return $document;
     }
 
 }

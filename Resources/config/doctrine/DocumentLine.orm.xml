@@ -7,7 +7,7 @@
         </discriminator-map>
         <one-to-many field="transactions" target-entity="Transaction" mapped-by="documentLine">
             <cascade>
-                <cascade-persist/>
+                <cascade-all/>
             </cascade>
         </one-to-many>
     </entity>

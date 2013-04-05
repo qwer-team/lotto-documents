@@ -5,7 +5,7 @@ namespace Qwer\LottoDocumentsBundle\Event;
 use Symfony\Component\EventDispatcher\Event;
 use Qwer\LottoDocumentsBundle\Entity\Request\Body;
 
-class BetRequestEvent
+class BetRequestEvent extends Event
 {
     /**
      *

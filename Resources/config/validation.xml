@@ -3,11 +3,10 @@
                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                     xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-    <class name="Qwer\LottoDocumentsBundle\Entity\Bet">
-        <!--<constraint name="MarketFusion\Bundle\PromotionBundle\Form\Validator\PromoLimitations">
-            <option name="message">Promotion.Validation.Limitations</option>
-        </constraint>-->
-        
+    <class name="Qwer\LottoDocumentsBundle\Entity\BetLine">
+        <constraint name="Qwer\LottoDocumentsBundle\Validator\StaticLimit"/>
+        <constraint name="Qwer\LottoDocumentsBundle\Validator\MinimumLimit"/>
+        <constraint name="Qwer\LottoDocumentsBundle\Validator\CumulativeLimit"/>
     </class>
     
 </constraint-mapping>

@@ -61,7 +61,8 @@ class BetLine extends DocumentLine
     public function getRatedSumma()
     {
         $currency = $this->getCurrency();
-        return $currency->convertToMain($this->getSumma());
+        $res =  $currency->convertToMain($this->getSumma());
+        return $res;
     }
 
     /**
@@ -70,7 +71,7 @@ class BetLine extends DocumentLine
      */
     public function getClient()
     {
-        return $this->getDocument()->gteClient();
+        return $this->getDocument()->getLotoClient();
     }
 
     /**
@@ -119,7 +120,12 @@ class BetLine extends DocumentLine
 
     public function getRatedPossibleWin()
     {
-        return $this->getCurrency()->getRateToMain($this->getPossibleWin());
+        return $this->getCurrency()->convertToMain($this->getPossibleWin());
+    }
+
+    public function __toString()
+    {
+        return "betLine: " . $this->getId();
     }
 
 }
