@@ -12,12 +12,15 @@ class SingleGenerator implements BetLineGenerator
     public function getBetLines(array $balls)
     {
         $lines = new ArrayCollection();
+
+        foreach($balls as $ball) {
+            $line = new BetLine();
+            $line->setBalls(array($ball));
+
+            $lines->add($line);
+        }
         
-        $line = new BetLine();
-        $line->setBalls($balls);
-        
-        $lines->add($line);
-        
+
         return $lines;
     }
 
