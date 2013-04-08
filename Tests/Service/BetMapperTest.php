@@ -15,6 +15,7 @@ use Qwer\LottoBundle\Entity\Client;
 use Qwer\LottoBundle\Entity\Time;
 use Qwer\LottoBundle\Entity\Type;
 use Qwer\LottoDocumentsBundle\Entity\DocumentType;
+use Qwer\LottoDocumentsBundle\Entity\BetLine;
 
 class BetMapperTest extends \PHPUnit_Framework_TestCase
 {
@@ -95,10 +96,30 @@ class BetMapperTest extends \PHPUnit_Framework_TestCase
         ->disableOriginalConstructor()
         ->getMock();
 
-        MockFactory::addMethod($stub, "get", new SingleGenerator());
+        $generatorStub = $this->getMock("Qwer\LottoDocumentsBundle\Service\BetLineGenerator");
+        //getBetLines
+
+        $generatorStub
+        ->expects($this->any())
+        ->method("getBetLines")
+        ->will($this->returnCallback(array($this, 'generatorCallback')));
+
+        MockFactory::addMethod($stub, "get", $generatorStub);
         MockFactory::addMethod($stub, "has", true);
 
         return $stub;
+    }
+
+    public function generatorCallback($balls)
+    {
+        $lines = new ArrayCollection();
+
+        $line = new BetLine();
+        $line->setBalls($balls);
+
+        $lines->add($line);
+
+        return $lines;
     }
 
     public function testMapper()
