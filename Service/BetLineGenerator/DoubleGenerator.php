@@ -9,7 +9,7 @@ class DoubleGenerator implements BetLineGenerator
 
     public function getBetLines(array $balls)
     {
-        
+        echo "adsd";
     }
 
 }
