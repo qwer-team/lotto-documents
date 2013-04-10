@@ -10,31 +10,39 @@ class GeneratorVariation
         $countBalls = $m;
         //Количество шаров в комбинации
         $ballInArray = $n;
+        //Используется как счетчик для генерации комбинации
         $vector = array();
+        //Масссив всех возможных комбинаций
         $outArray = array();
 
+        //??
         $delta = $countBalls - $ballInArray;
-
+        //Счетчик
         $num = 0;
         while ($num < $ballInArray) {
             $vector[$num] = $num;
             $num++;
         }
-
-        $combination_count = 0;
+        
+       
+        //$combination_count = 0;
+        //Переменная для выхода из цикла
         $is_nocycle = 0;
-        $num = 0;
+        //$num = 0;
         while (($num != $delta) || ($is_nocycle == 0)) {
             $num = 0;
             while ($num < $countBalls) {
-                $combination_count++;
+                //$combination_count++;
                 $i = 0;
+                //Массив комбинации
                 $combination = array();
+                //Цикл для генерации комбинации
                 while ($i < $ballInArray) {
                     $num = $vector[$i] + 1;
                     $combination[$i] = $num;
                     $i++;
                 }
+                
                 $outArray[] = $combination;
                 $vector[$ballInArray - 1] = $vector[$ballInArray - 1] + 1;
                 $num = $vector[$ballInArray - 1];

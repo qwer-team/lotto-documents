@@ -17,7 +17,9 @@ class DoubleGenerator implements BetLineGenerator
         $generatorVariation = new GeneratorVariation();
         //Вернёт нам массив с ключами по которым мы будем генерить BetLine
         $keySort = $generatorVariation->some(count($balls), $n);
-
+        
+        print_r($keySort);
+        
         $lines = new ArrayCollection();
 
         foreach ($keySort as $value) {
