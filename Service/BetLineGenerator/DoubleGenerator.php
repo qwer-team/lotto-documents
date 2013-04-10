@@ -2,14 +2,7 @@
 
 namespace Qwer\LottoDocumentsBundle\Service\BetLineGenerator;
 
-use Qwer\LottoDocumentsBundle\Service\BetLineGenerator;
-
-class DoubleGenerator implements BetLineGenerator
+class DoubleGenerator extends AbstractVariationsGenerator
 {
-
-    public function getBetLines(array $balls)
-    {
-        
-    }
-
+    protected $n = 2;
 }
