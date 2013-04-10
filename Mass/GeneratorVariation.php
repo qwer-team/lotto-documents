@@ -4,6 +4,7 @@ namespace Qwer\LottoDocumentsBundle\Mass;
 
 class GeneratorVariation
 {
+
     public function some($m, $n)
     {
         //Количество шаров выбраным пользователем
@@ -60,6 +61,19 @@ class GeneratorVariation
             $num = $vector[0];
         }
         return $outArray;
+    }
+
+    public function generateComplex($balls)
+    {
+        $results = array(array( ));
+        foreach ($balls as $element) {
+            foreach ($results as $combination) {
+                if (!in_array(array_merge(array($element), $combination), $results)) {
+                    array_push($results, array_merge(array($element), $combination));
+                }
+            }
+        }
+        return $results;
     }
 
 }
