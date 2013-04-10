@@ -33,6 +33,10 @@ class RawBet
         $this->balls = $balls;
     }
 
+    /**
+     * 
+     * @return \Qwer\LottoBundle\Entity\BetType
+     */
     public function getBetType()
     {
         return $this->betType;
