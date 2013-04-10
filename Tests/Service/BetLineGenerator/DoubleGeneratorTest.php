@@ -28,4 +28,50 @@ class DoubleGeneratorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($count, count($lines));
     }
 
+    public function gen2Provider()
+    {
+        return array(
+            array(
+                array(1, 2, 3),
+                array(
+                    array(1, 2),
+                    array(1, 3),
+                    array(2, 3),
+                ),
+            ),
+            array(
+                array(1, 2, 3, 4),
+                array(
+                    array(1, 2),
+                    array(1, 3),
+                    array(1, 4),
+                    array(2, 3),
+                    array(2, 4),
+                    array(3, 4),
+                ),
+            ),
+        );
+    }
+
+    /**
+     * 
+     * @dataProvider gen2Provider
+     */
+    public function testGen2($balls, $combinations)
+    {
+        $lineGenerator = new DoubleGenerator();
+
+        $lines = $lineGenerator->getBetLines($balls);
+
+        $linesCombinations = array();
+        foreach ($lines as $line) {
+            $linesCombinations[] = $line->getBalls();
+        }
+
+        foreach ($combinations as $combination) {
+            $res = in_array($combination, $linesCombinations);
+            $this->assertTrue($res);
+        }
+    }
+
 }

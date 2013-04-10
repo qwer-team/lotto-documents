@@ -1,11 +1,11 @@
 <?php
 
-namespace Qwer\LottoDocumentsBundle\Mass;
+namespace Qwer\LottoDocumentsBundle\Math;
 
 class GeneratorVariation
 {
 
-    public function some($m, $n)
+    public function combinationKeys($m, $n)
     {
         //Количество шаров выбраным пользователем
         $countBalls = $m;
@@ -24,8 +24,8 @@ class GeneratorVariation
             $vector[$num] = $num;
             $num++;
         }
-        
-       
+
+
         //$combination_count = 0;
         //Переменная для выхода из цикла
         $is_nocycle = 0;
@@ -43,7 +43,7 @@ class GeneratorVariation
                     $combination[$i] = $num;
                     $i++;
                 }
-                
+
                 $outArray[] = $combination;
                 $vector[$ballInArray - 1] = $vector[$ballInArray - 1] + 1;
                 $num = $vector[$ballInArray - 1];
@@ -71,9 +71,27 @@ class GeneratorVariation
         return $outArray;
     }
 
-    public function generateComplex($balls)
+    public function combinations($array, $k)
     {
-        $results = array(array( ));
+        $n = count($array);
+        $keysArray = $this->combinationKeys($n, $k);
+
+        $combinations = array();
+        foreach ($keysArray as $keys) {
+            $combination = array();
+
+            foreach ($keys as $key) {
+                $combination[] = $array[$key - 1];
+            }
+            $combinations[] = $combination;
+        }
+
+        return $combinations;
+    }
+
+    public function allCombinations($balls)
+    {
+        $results = array(array());
         foreach ($balls as $element) {
             foreach ($results as $combination) {
                 if (!in_array(array_merge(array($element), $combination), $results)) {
@@ -81,7 +99,20 @@ class GeneratorVariation
                 }
             }
         }
+        array_shift($results);
         return $results;
     }
 
+    public function combinationsWithoutSingle($balls)
+    {
+        $preresults = $this->allCombinations($balls);
+        $result = array();
+        foreach ($preresults as $preresult) {
+            if(count($preresult) > 1){
+                $result[] = $preresult;
+            }
+        }
+        
+        return $result;
+    }
 }
