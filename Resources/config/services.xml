@@ -68,5 +68,16 @@
             </call>
             <tag name="validator.constraint_validator" alias="cumulative_limit" />
         </service>
+        <service id="lotto.calculation" class="Qwer\LottoDocumentsBundle\Service\Calculation">
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+        </service>
+        <service id="send.bets.result_listener" class="Qwer\LottoDocumentsBundle\Listener\ResultNotification">
+            <call method="setClientsApi">
+                <argument type="service" id="lotto.client_api" />
+            </call>
+            <tag name="kernel.event_listener" event="send.bets.result" method="onEvent"/>
+        </service>
     </services>
 </container>

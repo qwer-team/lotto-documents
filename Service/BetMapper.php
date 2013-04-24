@@ -98,6 +98,7 @@ class BetMapper extends ContainerAware
         $summa = $rawBet->getSumma();
 
         $bet = new Bet();
+        $bet->setStatus(1);
         $bet->setBalls($balls);
 
         $betType = $rawBet->getBetType();

@@ -178,12 +178,16 @@ class Bet extends Document
         $this->documentLines = new \Doctrine\Common\Collections\ArrayCollection();
 
         $newLines = new \Doctrine\Common\Collections\ArrayCollection();
-        foreach($lines as $line) {
+        foreach ($lines as $line) {
             $newLine = clone($line);
             $newLine->setDocument($this);
             $newLines->add($newLine);
         }
         $this->documentLines = $newLines;
+    }
+    
+    public function addWonAmount($amount){
+        $this->summa2 += $amount;
     }
 
 }

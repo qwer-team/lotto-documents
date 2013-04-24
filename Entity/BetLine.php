@@ -128,4 +128,11 @@ class BetLine extends DocumentLine
         return "betLine: " . $this->getId();
     }
 
+    public function setWonAmount($amount)
+    {
+        $this->summa2 = $amount;
+        
+        $document = $this->getDocument();
+        $document->addWonAmount($amount);
+    }
 }

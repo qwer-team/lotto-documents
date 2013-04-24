@@ -9,6 +9,12 @@ itc_documents:
       bet:
         document_line_transactions:
           cumulative_limit:
+              status: 1
               input_account: "%cumulative_limit_account%"
               input: [ {level: 1, value: "{client.id}"}, { level: 2, value: "{externalUserId}" }, { level: 3, value: "{lottoDraw.id}" }, { level: 4, value: "{ballsString}", type: string }]
-              summa: "{ratedPossibleWin}"     
+              summa: "{ratedPossibleWin}"  
+          result_transaction:
+              status: 2
+              input_account: "5"
+              input: [ {level: 1, value: "{id}"}]
+              summa: "{ratedPossibleWin} + {ratedSumma}"

@@ -6,6 +6,6 @@ qwer_lotto_documents_currency:
     resource: "@QwerLottoDocumentsBundle/Resources/config/routing/currency.xml"
     prefix:   /currency
     
-qwer_lotto_documents_currency:
+qwer_lotto_documents_doctype:
     resource: "@QwerLottoDocumentsBundle/Resources/config/routing/documenttype.xml"
     prefix:   /documenttype
