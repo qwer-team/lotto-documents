@@ -39,9 +39,10 @@ class BetMapper extends ContainerAware
      */
     public function getBets(Body $body)
     {
-        $currency = $body->getCurrency();
-        $externalId = $body->getExternalId();
-        $client = $body->getClient();
+        $token = $body->getToken();
+        $currency = $token->getCurrency();
+        $externalId = $token->getExternalId();
+        $client = $token->getClient();
         $withBonus = $body->getWithBonus();
         $drawNum = $body->getDrawNum();
 

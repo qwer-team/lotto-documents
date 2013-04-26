@@ -27,7 +27,10 @@ class BetRequestListener extends ContainerAware
     public function onEvent(BetRequestEvent $event)
     {
         $body = $event->getBody();
-        $client = $body->getClient();
+        $token = $this->em->getRepository("QwerUserBundle:Token")
+                      ->findOneByToken($body->getTokenStr());
+        $body->setToken($token);
+        $client = $token->getClient();
 
         $bets = $this->mapper->getBets($body);
 

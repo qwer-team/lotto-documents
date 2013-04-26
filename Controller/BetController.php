@@ -229,9 +229,13 @@ class BetController extends Controller
             $this->get('session')->getFlashBag()->add(
                     'notice', 'request was processed!'
             );
+            return new \Symfony\Component\HttpFoundation\Response("ok");
+        } else {
+            $error = $form->getErrorsAsString();
+             return new \Symfony\Component\HttpFoundation\Response("$error");
         }
 
-        return $this->redirect($this->generateUrl('bet'));
+       
     }
 
     /**

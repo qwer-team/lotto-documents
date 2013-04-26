@@ -12,24 +12,6 @@ class Body
 
     /**
      *
-     * @var \Qwer\LottoBundle\Entity\Client 
-     */
-    private $client;
-
-    /**
-     *
-     * @var \Qwer\LottoDocumentsBundle\Entity\Currency 
-     */
-    private $currency;
-
-    /**
-     *
-     * @var int 
-     */
-    private $externalId;
-
-    /**
-     *
      * @var \Qwer\LottoBundle\Entity\Type 
      */
     private $lottoTime;
@@ -52,63 +34,21 @@ class Body
      */
     private $drawNum;
     
+    /**
+     *
+     * @var string 
+     */
+    private  $token;
+    
+    /**
+     *
+     * @var string 
+     */
+    private  $tokenStr;
+
     function __construct()
     {
         $this->rawBets = new ArrayCollection();
-    }
-
-    /**
-     * 
-     * @return \Qwer\LottoBundle\Entity\Client
-     */
-    public function getClient()
-    {
-        return $this->client;
-    }
-
-    /**
-     * 
-     * @param \Qwer\LottoBundle\Entity\Client $client
-     */
-    public function setClient(Client $client)
-    {
-        $this->client = $client;
-    }
-
-    /**
-     * 
-     * @return \Qwer\LottoDocumentsBundle\Entity\Currency
-     */
-    public function getCurrency()
-    {
-        return $this->currency;
-    }
-
-    /**
-     * 
-     * @param \Qwer\LottoDocumentsBundle\Entity\Currency $currency
-     */
-    public function setCurrency(Currency $currency)
-    {
-        $this->currency = $currency;
-    }
-
-    /**
-     * 
-     * @return integer
-     */
-    public function getExternalId()
-    {
-        return $this->externalId;
-    }
-
-    /**
-     * 
-     * @param integer $extenalId
-     */
-    public function setExternalId($extenalId)
-    {
-        $this->externalId = $extenalId;
     }
 
     /**
@@ -173,6 +113,26 @@ class Body
     public function setDrawNum($drawNum)
     {
         $this->drawNum = $drawNum;
+    }
+
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    public function setToken($token)
+    {
+        $this->token = $token;
+    }
+    
+    public function getTokenStr()
+    {
+        return $this->tokenStr;
+    }
+
+    public function setTokenStr($tokenStr)
+    {
+        $this->tokenStr = $tokenStr;
     }
 
 

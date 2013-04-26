@@ -7,7 +7,7 @@
     <route id="bet" pattern="/">
         <default key="_controller">QwerLottoDocumentsBundle:Bet:index</default>
     </route>
-    <route id="bet" pattern="/result">
+    <route id="bet_result" pattern="/result">
         <default key="_controller">QwerLottoDocumentsBundle:Bet:result</default>
     </route>
 
