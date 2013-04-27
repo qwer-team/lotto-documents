@@ -79,5 +79,11 @@
             </call>
             <tag name="kernel.event_listener" event="send.bets.result" method="onEvent"/>
         </service>
+        <service id="send.bets.create_listener" class="Qwer\LottoDocumentsBundle\Listener\BetsNotification">
+            <call method="setClientsApi">
+                <argument type="service" id="lotto.client_api" />
+            </call>
+            <tag name="kernel.event_listener" event="send.bets.create" method="onEvent"/>
+        </service>
     </services>
 </container>

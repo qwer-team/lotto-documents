@@ -5,9 +5,8 @@ namespace Qwer\LottoDocumentsBundle\Listener;
 use Qwer\LottoDocumentsBundle\Event\BetsEvent;
 use \Qwer\LottoDocumentsBundle\Service\ClientApi;
 
-class ResultNotification
+class BetsNotification
 {
-
     /**
      *
      * @var \Qwer\LottoDocumentsBundle\Service\ClientApi 
@@ -19,7 +18,7 @@ class ResultNotification
         $bets = $event->getBets();
         $client = $event->getToken()->getClient();
         
-        $this->clientApi->sendBetsResult($bets, $client);
+        $this->clientApi->sendBetsCreated($bets, $client);
     }
 
     /**
@@ -30,5 +29,4 @@ class ResultNotification
     {
         $this->clientApi = $clientApi;
     }
-
 }

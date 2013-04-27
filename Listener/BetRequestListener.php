@@ -30,7 +30,6 @@ class BetRequestListener extends ContainerAware
         $token = $this->em->getRepository("QwerUserBundle:Token")
                       ->findOneByToken($body->getTokenStr());
         $body->setToken($token);
-        $client = $token->getClient();
 
         $bets = $this->mapper->getBets($body);
 
@@ -62,7 +61,7 @@ class BetRequestListener extends ContainerAware
 
         $betsEvent = new BetsEvent();
         $betsEvent->setBets($bets);
-        $betsEvent->setClient($client);
+        $betsEvent->setToken($token);
 
         $this->dispatcher->dispatch("create.bets.event", $betsEvent);
     }

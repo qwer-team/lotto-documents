@@ -20,7 +20,7 @@ class BetsCreationListener extends ContainerAware
     public function onEvent(BetsEvent $event)
     {
         $bets = $event->getBets();
-        $client = $event->getClient();
+        $token = $event->getToken();
         $this->em->getConnection()->beginTransaction();
 
         try {
@@ -35,7 +35,7 @@ class BetsCreationListener extends ContainerAware
 
             $this->em->flush();
             
-            if (!$this->clientsApi->hasEnoughFunds($summa, $client)) {
+            if (!$this->clientsApi->hasEnoughFunds($summa, $token)) {
                 $exception = new FundsException();
                 throw $exception;
             }
@@ -46,6 +46,8 @@ class BetsCreationListener extends ContainerAware
             $this->em->close();
             throw $e;
         }
+        
+        $this->dispatcher->dispatch("send.bets.create", $event);
     }
     
     public function setClientsApi(ClientApi $clientsApi)
