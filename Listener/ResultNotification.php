@@ -17,7 +17,7 @@ class ResultNotification
     public function onEvent(BetsEvent $event)
     {
         $bets = $event->getBets();
-        $client = $event->getToken()->getClient();
+        $client = $event->getClient();
         
         $this->clientApi->sendBetsResult($bets, $client);
     }

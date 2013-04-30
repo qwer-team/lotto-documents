@@ -37,9 +37,6 @@
             <call method="setDrawFinder">
                 <argument type="service" id="lotto.draw_finder" />
             </call>
-            <call method="setRateService">
-                <argument type="service" id="lotto.rate_service"/>
-            </call>
             <call method="setContainer">
                 <argument type="service" id="service_container" />
             </call>
@@ -51,6 +48,7 @@
         </service>
         <service id="bet_line.generator.single" class="Qwer\LottoDocumentsBundle\Service\BetLineGenerator\SingleGenerator" />
         <service id="bet_line.generator.double" class="Qwer\LottoDocumentsBundle\Service\BetLineGenerator\DoubleGenerator" />
+        <service id="bet_line.generator.straight" class="Qwer\LottoDocumentsBundle\Service\BetLineGenerator\StraightGenerator" />
         <service id="lotto.stats" class="Qwer\LottoDocumentsBundle\Service\CumulativeLimitStats" >
             <call method="setEntityManager">
                 <argument type="service" id="doctrine.orm.entity_manager" />

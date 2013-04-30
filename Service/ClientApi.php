@@ -61,6 +61,7 @@ class ClientApi
             $arr = array();
             $arr["id"] = $bet->getId();
             $arr["externalId"] = $bet->getExternalUserId();
+            $arr["currency"] = $bet->getCurrency()->getCode();
             $arr["summa1"] = $bet->getSumma1();
             $arr["summa2"] = $bet->getSumma2();
 

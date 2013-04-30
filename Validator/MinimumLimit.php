@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraint;
  */
 class MinimumLimit extends Constraint
 {
-    public $message = "";
+    public $message = "yopt";
 
     public function getTargets()
     {

@@ -218,24 +218,24 @@ class BetController extends Controller
         $form = $this->createForm(new BodyType, $body);
 
         $form->bindRequest($request);
-
+        $response = new \stdClass();
         if ($form->isValid()) {
             $dispatcher = $this->getEventDispatcher();
 
             $event = new BetRequestEvent();
             $event->setBody($body);
-            $dispatcher->dispatch("bet.request.event", $event);
+            try {
+                $dispatcher->dispatch("bet.request.event", $event);
 
-            $this->get('session')->getFlashBag()->add(
-                    'notice', 'request was processed!'
-            );
-            return new \Symfony\Component\HttpFoundation\Response("ok");
-        } else {
-            $error = $form->getErrorsAsString();
-             return new \Symfony\Component\HttpFoundation\Response("$error");
+                $response->result = 'success';
+                return new \Symfony\Component\HttpFoundation\Response(json_encode($response));
+            } catch (\Exception $e) {
+                $message = $e->getMessage();
+                $response->errorMessage = $message;
+            }
         }
-
-       
+        $response->result = 'fail';
+        return new \Symfony\Component\HttpFoundation\Response(json_encode($response));
     }
 
     /**
@@ -252,12 +252,12 @@ class BetController extends Controller
     public function resultAction()
     {
         $calculation = $this->get("lotto.calculation");
-        
+
         $draw = $this->getDoctrine()->getManager()
-                        ->getRepository("QwerLottoBundle:Draw")
-                        ->find(3);
+                ->getRepository("QwerLottoBundle:Draw")
+                ->find(5);
         $calculation->calculate($draw);
-        
+
         return new \Symfony\Component\HttpFoundation\Response("<body>ok</body>");
     }
 

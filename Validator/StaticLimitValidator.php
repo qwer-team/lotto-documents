@@ -39,7 +39,6 @@ class StaticLimitValidator extends ConstraintValidator
     {
         $clientsCur = $client->getCurrency();
         $staticLimit = $clientsCur->convertToMain($client->getStaticLimit());
-
         return $possibleWin <= $staticLimit;
     }
 

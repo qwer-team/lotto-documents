@@ -9,7 +9,7 @@ use Itc\DocumentsBundle\Listener\ContainerAware;
 use Qwer\LottoDocumentsBundle\Entity\Request\RawBet;
 use Qwer\LottoBundle\Entity\BetType;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
-use Qwer\LottoBundle\Service\RateService;
+
 
 class BetMapper extends ContainerAware
 {
@@ -20,11 +20,7 @@ class BetMapper extends ContainerAware
      */
     private $drawFinder;
 
-    /**
-     *
-     * @var \Qwer\LottoBundle\Service\RateService 
-     */
-    private $rateService;
+   
 
     /**
      *
@@ -67,7 +63,7 @@ class BetMapper extends ContainerAware
             $betLines = $betPrototype->getDocumentLines();
             foreach ($betLines as $line) {
                 $balls = $line->getBalls();
-                $odd = $this->rateService->getRate($balls, $withBonus, $lottoType, $client);
+                $odd = $lottoType->getRate($balls, $withBonus);
                 $line->setOdd($odd);
             }
         }
@@ -139,10 +135,7 @@ class BetMapper extends ContainerAware
         $this->drawFinder = $drawFinder;
     }
 
-    public function setRateService(RateService $rateService)
-    {
-        $this->rateService = $rateService;
-    }
+    
 
     public function setDocumentType($documentType)
     {

@@ -15,6 +15,8 @@ class BetsEvent extends Event
      */
     private $token;
     
+    private $client;
+    
     public function getBets()
     {
         return $this->bets;
@@ -42,5 +44,17 @@ class BetsEvent extends Event
     {
         $this->token = $token;
     }
+    
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    public function setClient($client)
+    {
+        $this->client = $client;
+    }
+
+
     
 }

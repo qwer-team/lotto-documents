@@ -46,15 +46,15 @@ class BetRequestListener extends ContainerAware
                 $betLineViolations = $this->validator->validate($line);
                 
                 if (count($betLineViolations) > 0) {
-                    $ballsString = implode(",", $line->getBalls());
+                    $ballsString = implode(",", $bet->getBalls());
                     $violations[$ballsString] = $betLineViolations;
                 }
             }
         }
 
         if (count($violations) > 0) {
-            $exception = new BetRequestException();
-            $exception->setViolations($violations);
+            $message = BetRequestException::setViolations($violations);
+            $exception = new BetRequestException($message);
 
             throw $exception;
         }
