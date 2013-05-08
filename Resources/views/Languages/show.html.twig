@@ -1,17 +1,17 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Currency</h1>
+    <h1>Languages</h1>
 
-    <table class="record_properties table table-bordered table-hover table-striped">
+    <table class="record_properties  table table-bordered table-hover table-striped">
         <tbody>
+            <tr>
+                <th>Title</th>
+                <td>{{ entity.title }}</td>
+            </tr>
             <tr>
                 <th>Code</th>
                 <td>{{ entity.code }}</td>
-            </tr>
-            <tr>
-                <th>Ratetomain</th>
-                <td>{{ entity.rateToMain }}</td>
             </tr>
             <tr>
                 <th>Id</th>
@@ -22,20 +22,20 @@
 
         <ul class="record_actions">
     <li>
-        <a href="{{ path('currency') }}">
+        <a href="{{ path('languages') }}">
             {% trans%}Back to the list{%endtrans%}
         </a>
     </li>
     <li>
-        <a href="{{ path('currency_edit', { 'id': entity.id }) }}">
+        <a href="{{ path('languages_edit', { 'id': entity.id }) }}">
             {% trans%}Edit{%endtrans%}
         </a>
     </li>
     <li>
-        <form action="{{ path('currency_delete', { 'id': entity.id }) }}" method="post">
+        <form action="{{ path('languages_delete', { 'id': entity.id }) }}" method="post">
             <input type="hidden" name="_method" value="DELETE" />
             {{ form_widget(delete_form) }}
-            <button type="submit" class="btn btn-primary" data-loading-text="Loading...">{% trans%}Delete{%endtrans%}</button>
+           <button type="submit" class="btn btn-primary" data-loading-text="Loading...">{% trans%}Delete{%endtrans%}</button>
         </form>
     </li>
 </ul>
