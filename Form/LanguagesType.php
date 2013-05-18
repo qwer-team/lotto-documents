@@ -19,7 +19,7 @@ class LanguagesType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Qwer\LottoDocumentsBundle\Entity\Languages'
+            'data_class' => 'Qwer\LottoDocumentsBundle\Entity\Language'
         ));
     }
 

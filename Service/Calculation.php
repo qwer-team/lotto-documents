@@ -29,6 +29,18 @@ class Calculation extends ContainerAware
         foreach ($clients as $client) {
             $this->calculateForClient($client);
         }
+        $this->draw->setLottoStatus(2);
+        $this->em->flush();
+    }
+    
+    public function rallback(Draw $draw){
+        $this->draw = $draw;
+
+        $clients = $this->findClients();
+        foreach ($clients as $client) {
+            $this->rollbackForClient($client);
+        }
+        $this->draw->setLottoStatus(1);
         $this->em->flush();
     }
     
@@ -41,7 +53,26 @@ class Calculation extends ContainerAware
         return $clients;
     }
 
-            /**
+    /**
+     * 
+     * @param \Qwer\LottoBundle\Entity\Client $client
+     */
+    private function rollbackForClient(Client $client)
+    {
+        $bets = $this->getClientsBets($client, 2);
+
+        if (count($bets)) {
+            foreach ($bets as $bet) {
+                $this->rallbackBet($bet);
+            }
+            $resultEvent = new BetsEvent();
+            $resultEvent->setBets($bets);
+            $resultEvent->setClient($client);
+            $this->dispatcher->dispatch("send.bets.rollback", $resultEvent);
+        }
+    }
+    
+    /**
      * 
      * @param \Qwer\LottoBundle\Entity\Client $client
      */
@@ -62,12 +93,12 @@ class Calculation extends ContainerAware
     }
 
     
-    private function getClientsBets($client)
+    private function getClientsBets($client, $status = 1)
     {
         $betRepo = "QwerLottoDocumentsBundle:Bet";
         
         $repo = $this->em->getRepository($betRepo);
-        $bets = $repo->getClientsBets($client, $this->draw);
+        $bets = $repo->getClientsBets($client, $this->draw, $status);
         return $bets;
     }
 
@@ -82,7 +113,19 @@ class Calculation extends ContainerAware
         $event = new DocumentEvent($bet);
         $this->dispatcher->dispatch("approve.document.event", $event);
     }
-
+    
+    private function rallbackBet(Bet $bet)
+    {
+        foreach ($bet->getDocumentLines() as $line) {
+            $line->setWonAmount(0);
+        }
+        $bet->setStatus(1);
+        $bet->setSumma2(0);
+        
+        $event = new DocumentEvent($bet);
+        $this->dispatcher->dispatch("return.document.event", $event);
+    }
+    
     private function calculateBetLine(BetLine $betline)
     {
         $results = $this->draw->getResult();

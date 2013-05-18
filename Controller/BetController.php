@@ -10,25 +10,36 @@ use Qwer\LottoDocumentsBundle\Form\BodyType;
 use Qwer\LottoDocumentsBundle\Event\BetRequestEvent;
 use Qwer\LottoDocumentsBundle\Entity\Request\Body;
 
+
 /**
  * Bet controller.
  *
  */
 class BetController extends Controller
 {
+    /**
+     *
+     * @var \Doctrine\ORM\EntityRepository 
+     */
+    private $repo;
 
     /**
      * Lists all Bet entities.
      *
      */
-    public function indexAction()
+    public function indexAction($page)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('QwerLottoDocumentsBundle:Bet')->findAll();
-
+        $em = $this->getDoctrine()->getManager(); 
+        $this->repo = $em->getRepository('QwerLottoDocumentsBundle:Bet');
+        
+        $qb = $this->repo->createQueryBuilder("bet");
+        $paginator = $this->get("qwer.pagination");
+        $url = $this->generateUrl("bet");
+        $entities = $paginator->getIterator($qb, $url, $page, 10);
+        $html = $paginator->getHtml();
         return $this->render('QwerLottoDocumentsBundle:Bet:index.html.twig', array(
                     'entities' => $entities,
+                    'pagination' => $html,
                 ));
     }
 
@@ -95,21 +106,20 @@ class BetController extends Controller
      * Finds and displays a Bet entity.
      *
      */
-    public function showAction($id)
+    public function showAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('QwerLottoDocumentsBundle:Bet')->find($id);
+        $entities = $em->getRepository('QwerLottoDocumentsBundle:Bet')->findAll();
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Bet entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-
         return $this->render('QwerLottoDocumentsBundle:Bet:show.html.twig', array(
-                    'entity' => $entity,
-                    'delete_form' => $deleteForm->createView(),));
+                    'entities' => $entities,
+                    
+            ));
     }
 
     /**
@@ -216,7 +226,7 @@ class BetController extends Controller
     {
         $body = new Body();
         $form = $this->createForm(new BodyType, $body);
-
+        
         $form->bindRequest($request);
         $response = new \stdClass();
         if ($form->isValid()) {
@@ -231,7 +241,12 @@ class BetController extends Controller
                 return new \Symfony\Component\HttpFoundation\Response(json_encode($response));
             } catch (\Exception $e) {
                 $message = $e->getMessage();
-                $response->errorMessage = $message;
+                $response->errorMessage = $message." class:".print_r(get_class($e), true);
+            }
+        } else {
+            $errors = $form->getErrors();
+            foreach($errors as $error){
+               $response->errorMessage = $error->getMessage()."\n"; 
             }
         }
         $response->result = 'fail';
@@ -249,16 +264,42 @@ class BetController extends Controller
         return $dispatcher;
     }
 
-    public function resultAction()
+    public function resultAction(Request $request, $id)
     {
         $calculation = $this->get("lotto.calculation");
-
+        $message = 'Successful calculate';
+        
         $draw = $this->getDoctrine()->getManager()
                 ->getRepository("QwerLottoBundle:Draw")
-                ->find(5);
-        $calculation->calculate($draw);
+                ->find($id);
+         
+        try{
+            $calculation->calculate($draw);
+        } catch (\Exception $e){
+            $message = toString($e);
+        }
+        $this->get('session')->getFlashBag()->add('notice', $message);
+        
+        return $this->redirect($this->generateUrl('draw_edit', array('id' => $id)));
+    }
+    
+    public function rollbackAction(Request $request, $id)
+    {
+        $calculation = $this->get("lotto.calculation");
+        $message = 'Successful rollback';
+        
+        $draw = $this->getDoctrine()->getManager()
+                ->getRepository("QwerLottoBundle:Draw")
+                ->find($id);
 
-        return new \Symfony\Component\HttpFoundation\Response("<body>ok</body>");
+        try{
+           $calculation->rallback($draw);
+        } catch (\Exception $e){
+            $message = toString($e);
+        }
+        $this->get('session')->getFlashBag()->add('notice', $message);
+        
+        return $this->redirect($this->generateUrl('draw_edit', array('id' => $id)));
     }
 
 }

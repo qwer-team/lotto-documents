@@ -22,7 +22,7 @@ class LanguagesController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('QwerLottoDocumentsBundle:Languages')->findAll();
+        $entities = $em->getRepository('QwerLottoDocumentsBundle:Language')->findAll();
 
         return $this->render('QwerLottoDocumentsBundle:Languages:index.html.twig', array(
             'entities' => $entities,
@@ -30,12 +30,12 @@ class LanguagesController extends Controller
     }
 
     /**
-     * Creates a new Languages entity.
+     * Creates a new Language entity.
      *
      */
     public function createAction(Request $request)
     {
-        $entity  = new Languages();
+        $entity  = new Language();
         $form = $this->createForm(new LanguagesType(), $entity);
         $form->bind($request);
 
@@ -54,12 +54,12 @@ class LanguagesController extends Controller
     }
 
     /**
-     * Displays a form to create a new Languages entity.
+     * Displays a form to create a new Language entity.
      *
      */
     public function newAction()
     {
-        $entity = new Languages();
+        $entity = new Language();
         $form   = $this->createForm(new LanguagesType(), $entity);
 
         return $this->render('QwerLottoDocumentsBundle:Languages:new.html.twig', array(
@@ -76,7 +76,7 @@ class LanguagesController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('QwerLottoDocumentsBundle:Languages')->find($id);
+        $entity = $em->getRepository('QwerLottoDocumentsBundle:Language')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Languages entity.');
@@ -97,7 +97,7 @@ class LanguagesController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('QwerLottoDocumentsBundle:Languages')->find($id);
+        $entity = $em->getRepository('QwerLottoDocumentsBundle:Language')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Languages entity.');
@@ -121,7 +121,7 @@ class LanguagesController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('QwerLottoDocumentsBundle:Languages')->find($id);
+        $entity = $em->getRepository('QwerLottoDocumentsBundle:Language')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Languages entity.');
@@ -156,7 +156,7 @@ class LanguagesController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('QwerLottoDocumentsBundle:Languages')->find($id);
+            $entity = $em->getRepository('QwerLottoDocumentsBundle:Language')->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Languages entity.');

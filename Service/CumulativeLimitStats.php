@@ -8,6 +8,7 @@ use Qwer\LottoBundle\Entity\Draw;
 
 class CumulativeLimitStats
 {
+    
 
     /**
      *

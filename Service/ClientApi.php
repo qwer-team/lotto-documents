@@ -34,6 +34,14 @@ class ClientApi
         $this->makeRequest($url, $request);
     }
     
+    public function sendBetsRallback($bets, Client $client)
+    {
+        $url = $client->getRollbackUrl();
+        $request = array();
+        $request["data"] = $this->serialize($bets);
+        $this->makeRequest($url, $request);
+    }
+    
     public function sendBetsCreated($bets, Client $client){
         $url = $client->getBetsUrl();
         $request = array();

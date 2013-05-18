@@ -2,7 +2,7 @@
 
 namespace Qwer\LottoDocumentsBundle\Service;
 
-use Qwer\LottoBundle\Entity\Time;
+use Qwer\LottoBundle\Entity\Type;
 use Itc\DocumentsBundle\Listener\ContainerAware;
 use Doctrine\ORM\EntityManager;
 
@@ -11,10 +11,10 @@ class DrawFinder extends ContainerAware
 
     /**
      * 
-     * @param \Qwer\LottoBundle\Entity\Time $type
+     * @param \Qwer\LottoBundle\Entity\Type $type
      * @param integer $drawNum
      */
-    public function getDraws(Time $type, $drawNum)
+    public function getDraws(Type $type, $drawNum)
     {
         $draws = $this->getDrawsRepo()->findNextDraws($type, $drawNum);
 

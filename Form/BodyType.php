@@ -11,7 +11,7 @@ class BodyType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $lottoTimeOptions = array('class' => 'QwerLottoBundle:Time');
+        $lottoTypeOptions = array('class' => 'QwerLottoBundle:Type');
         $rawBetsOptions =  array(
             'type'         => new RawBetType(),
             'allow_add'    => true,
@@ -19,7 +19,7 @@ class BodyType extends AbstractType
         );
         
         $builder
-            ->add('lottoTime', 'entity', $lottoTimeOptions)
+            ->add('lottoType', 'entity', $lottoTypeOptions)
             ->add('withBonus', 'checkbox')
             ->add('drawNum', 'integer')
             ->add('rawBets', 'collection', $rawBetsOptions )

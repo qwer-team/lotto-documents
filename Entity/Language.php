@@ -5,9 +5,9 @@ namespace Qwer\LottoDocumentsBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Languages
+ * Language
  */
-class Languages
+class Language
 {
     /**
      * @var integer

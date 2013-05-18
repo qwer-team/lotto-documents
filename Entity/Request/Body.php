@@ -5,7 +5,7 @@ namespace Qwer\LottoDocumentsBundle\Entity\Request;
 use Doctrine\Common\Collections\ArrayCollection;
 use Qwer\LottoBundle\Entity\Client;
 use Qwer\LottoDocumentsBundle\Entity\Currency;
-use Qwer\LottoBundle\Entity\Time;
+use Qwer\LottoBundle\Entity\Type;
 
 class Body
 {
@@ -14,7 +14,7 @@ class Body
      *
      * @var \Qwer\LottoBundle\Entity\Type 
      */
-    private $lottoTime;
+    private $lottoType;
 
     /**
      *
@@ -53,20 +53,20 @@ class Body
 
     /**
      * 
-     * @return \Qwer\LottoBundle\Entity\Time
+     * @return \Qwer\LottoBundle\Entity\Type
      */
-    public function getLottoTime()
+    public function getLottoType()
     {
-        return $this->lottoTime;
+        return $this->lottoType;
     }
 
     /**
      * 
-     * @param \Qwer\LottoBundle\Entity\Time $lottoTime
+     * @param \Qwer\LottoBundle\Entity\Type $lottoType
      */
-    public function setLottoTime(Time $lottoTime)
+    public function setLottoType(Type $lottoType)
     {
-        $this->lottoTime = $lottoTime;
+        $this->lottoType = $lottoType;
     }
 
     /**

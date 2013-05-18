@@ -19,7 +19,6 @@ class BetMapper extends ContainerAware
      * @var DrawFinder 
      */
     private $drawFinder;
-
    
 
     /**
@@ -56,8 +55,9 @@ class BetMapper extends ContainerAware
             $betsPrototypes->add($bet);
         }
 
-        $lottoTime = $body->getLottoTime();
-        $lottoType = $lottoTime->getLottoType();
+        $lottoType = $body->getLottoType(); 
+        
+        
 
         foreach ($betsPrototypes as $betPrototype) {
             $betLines = $betPrototype->getDocumentLines();
@@ -68,7 +68,7 @@ class BetMapper extends ContainerAware
             }
         }
 
-        $draws = $this->drawFinder->getDraws($lottoTime, $drawNum);
+        $draws = $this->drawFinder->getDraws($lottoType, $drawNum);
 
         $bets = new ArrayCollection();
 
