@@ -19,5 +19,10 @@
                 <join-column name="lotto_draw_id" referenced-column-name="id"/>
             </join-columns>
         </many-to-one>
+        <many-to-one field="betType" target-entity="Qwer\LottoBundle\Entity\BetType">
+            <join-columns>
+                <join-column name="bet_type_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
     </entity>
 </doctrine-mapping>

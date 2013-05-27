@@ -5,7 +5,7 @@ namespace Qwer\LottoDocumentsBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use Qwer\LottoDocumentsBundle\Entity\Languages;
+use Qwer\LottoDocumentsBundle\Entity\Language;
 use Qwer\LottoDocumentsBundle\Form\LanguagesType;
 
 /**

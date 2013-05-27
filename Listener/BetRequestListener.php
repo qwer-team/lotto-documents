@@ -27,7 +27,8 @@ class BetRequestListener extends ContainerAware
     public function onEvent(BetRequestEvent $event)
     {
         $body = $event->getBody();
-        $token = $this->em->getRepository("QwerUserBundle:Token")
+        $class = $this->container->getParameter('users.token_class');
+        $token = $this->em->getRepository($class)
                       ->findOneByToken($body->getTokenStr());
         $body->setToken($token);
 
@@ -58,7 +59,7 @@ class BetRequestListener extends ContainerAware
 
             throw $exception;
         }
-
+        $body->setBets($bets);
         $betsEvent = new BetsEvent();
         $betsEvent->setBets($bets);
         $betsEvent->setToken($token);

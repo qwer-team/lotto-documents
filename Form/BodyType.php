@@ -20,7 +20,7 @@ class BodyType extends AbstractType
         
         $builder
             ->add('lottoType', 'entity', $lottoTypeOptions)
-            ->add('withBonus', 'checkbox')
+            ->add('withBonus', 'checkbox', array('required' => false))
             ->add('drawNum', 'integer')
             ->add('rawBets', 'collection', $rawBetsOptions )
             ->add('tokenStr')

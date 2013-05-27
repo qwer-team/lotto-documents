@@ -236,12 +236,16 @@ class BetController extends Controller
             $event->setBody($body);
             try {
                 $dispatcher->dispatch("bet.request.event", $event);
-
+                $ids = array();
+                foreach($body->getBets() as $bet){
+                    $ids[] = $bet->getId();
+                }
                 $response->result = 'success';
+                $response->ids = $ids;
                 return new \Symfony\Component\HttpFoundation\Response(json_encode($response));
             } catch (\Exception $e) {
-                $message = $e->getMessage();
-                $response->errorMessage = $message." class:".print_r(get_class($e), true);
+                $message = $e->getMessage()."\n".$e->getTraceAsString();
+                $response->errorMessage = $message;
             }
         } else {
             $errors = $form->getErrors();
@@ -252,6 +256,8 @@ class BetController extends Controller
         $response->result = 'fail';
         return new \Symfony\Component\HttpFoundation\Response(json_encode($response));
     }
+    
+   
 
     /**
      * 

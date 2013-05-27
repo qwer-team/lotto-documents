@@ -46,6 +46,7 @@ class Body
      */
     private  $tokenStr;
 
+    private $bets;
     function __construct()
     {
         $this->rawBets = new ArrayCollection();
@@ -135,5 +136,13 @@ class Body
         $this->tokenStr = $tokenStr;
     }
 
+    public function getBets()
+    {
+        return $this->bets;
+    }
 
+    public function setBets($bets)
+    {
+        $this->bets = $bets;
+    }
 }

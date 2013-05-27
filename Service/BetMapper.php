@@ -99,6 +99,7 @@ class BetMapper extends ContainerAware
         $bet->setBalls($balls);
 
         $betType = $rawBet->getBetType();
+        $bet->setBetType($betType);
         $generator = $this->getBetLineGenerator($betType);
 
         $betLines = $generator->getBetLines($balls);

@@ -41,6 +41,9 @@ class Bet extends Document
      * @var \Qwer\LottoBundle\Entity\Draw
      */
     protected $lottoDraw;
+    
+    
+    protected $betType;
 
     /**
      * Set externalUserId
@@ -189,5 +192,24 @@ class Bet extends Document
     public function addWonAmount($amount){
         $this->summa2 += $amount;
     }
+
+    public function getPossibleWin(){
+        $win = 0;
+        foreach($this->getDocumentLines() as $line){
+            $win += $line->getPossibleWin();
+        }
+        return round($win + $this->getSumma(),2);
+    }
+    
+    public function getBetType()
+    {
+        return $this->betType;
+    }
+
+    public function setBetType($betType)
+    {
+        $this->betType = $betType;
+    }
+
 
 }
