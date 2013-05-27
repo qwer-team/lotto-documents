@@ -92,5 +92,11 @@
             </call>
             <tag name="kernel.event_listener" event="send.bets.create" method="onEvent"/>
         </service>
+        <service id="lotto.result_parser" class="Qwer\LottoDocumentsBundle\Service\ParsingService">
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+        </service>
+        <service id="lotto_documents_result_parser.france" class="Qwer\LottoDocumentsBundle\Service\ResultParser\FranceLotoParser" />
     </services>
 </container>
