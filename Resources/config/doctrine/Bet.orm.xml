@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-    <entity name="Qwer\LottoDocumentsBundle\Entity\Bet" table="lotto_bet">
+    <entity name="Qwer\LottoDocumentsBundle\Entity\Bet" table="lotto_bet" repository-class="Qwer\LottoDocumentsBundle\Repository\BetRepository">
         <field name="externalUserId" type="string" column="external_user_id" length="45" nullable="true"/>
         <field name="balls" type="array" column="balls" />
         <field name="withBonus" type="boolean" column="with_bonus" nullable="true"/>
@@ -9,7 +9,7 @@
                 <join-column name="lotto_client_id" referenced-column-name="id" nullable="true"/>
             </join-columns>
         </many-to-one>
-        <one-to-many field="documentLines" target-entity="BetLine" mapped-by="lottoBet">
+        <one-to-many field="documentLines" target-entity="BetLine" mapped-by="document">
             <cascade>
                 <cascade-all/>
             </cascade>
@@ -17,6 +17,11 @@
         <many-to-one field="lottoDraw" target-entity="Qwer\LottoBundle\Entity\Draw">
             <join-columns>
                 <join-column name="lotto_draw_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
+        <many-to-one field="betType" target-entity="Qwer\LottoBundle\Entity\BetType">
+            <join-columns>
+                <join-column name="bet_type_id" referenced-column-name="id"/>
             </join-columns>
         </many-to-one>
     </entity>

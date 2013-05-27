@@ -6,26 +6,23 @@ namespace Qwer\LottoDocumentsBundle\Exception;
 class BetRequestException extends \Exception
 {
     /**
-     *
-     * @var array 
-     */
-    private $violations;
-    
-    /**
-     * 
-     * @return array
-     */
-    public function getViolations()
-    {
-        return $this->violations;
-    }
-
-    /**
      * 
      * @param array $violations
      */
-    public function setViolations($violations)
+    public static function setViolations($violations)
     {
-        $this->violations = $violations;
+        $message = "";
+        foreach($violations as $balls => $viols){
+            $message .= "{$balls}: ";
+            $errors = array();
+            foreach($viols as $violation){
+                $errors[] = $violation->getMessage();
+            }
+            $message .= implode(";", $errors);
+            $message .= "\n";
+        }
+        
+        return $message;
+        //$this->setMessage($message);
     }
 }

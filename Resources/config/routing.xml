@@ -11,4 +11,10 @@
     <route id="bet_request" pattern="/betreq" methods="POST">
         <default key="_controller">QwerLottoDocumentsBundle:Bet:betRequest</default>
     </route>
+    
+    <route id="bet" pattern="/bet/{page}">
+        <default key="_controller">QwerLottoDocumentsBundle:Bet:index</default>
+        <default key="page" >1</default>
+        <requirement key="page">\d+</requirement>
+    </route>
 </routes>

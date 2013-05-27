@@ -11,9 +11,7 @@ class BodyType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $clientsOptions = array('class' => 'QwerLottoBundle:Client');
-        $currencyOptions = array('class' => 'QwerLottoDocumentsBundle:Currency');
-        $lottoTimeOptions = array('class' => 'QwerLottoBundle:Time');
+        $lottoTypeOptions = array('class' => 'QwerLottoBundle:Type');
         $rawBetsOptions =  array(
             'type'         => new RawBetType(),
             'allow_add'    => true,
@@ -21,13 +19,11 @@ class BodyType extends AbstractType
         );
         
         $builder
-            ->add('client', 'entity', $clientsOptions)
-            ->add('currency', 'entity', $currencyOptions)
-            ->add('externalId', 'integer')
-            ->add('lottoTime', 'entity', $lottoTimeOptions)
-            ->add('withBonus', 'checkbox')
+            ->add('lottoType', 'entity', $lottoTypeOptions)
+            ->add('withBonus', 'checkbox', array('required' => false))
             ->add('drawNum', 'integer')
             ->add('rawBets', 'collection', $rawBetsOptions )
+            ->add('tokenStr')
         ;
     }
 
@@ -40,6 +36,6 @@ class BodyType extends AbstractType
     
     public function getName()
     {
-        return 'qwer_lottodocumentsbundle_request_bodytype';
+        return 'body';
     }
 }

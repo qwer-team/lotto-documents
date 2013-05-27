@@ -37,9 +37,6 @@
             <call method="setDrawFinder">
                 <argument type="service" id="lotto.draw_finder" />
             </call>
-            <call method="setRateService">
-                <argument type="service" id="lotto.rate_service"/>
-            </call>
             <call method="setContainer">
                 <argument type="service" id="service_container" />
             </call>
@@ -51,6 +48,16 @@
         </service>
         <service id="bet_line.generator.single" class="Qwer\LottoDocumentsBundle\Service\BetLineGenerator\SingleGenerator" />
         <service id="bet_line.generator.double" class="Qwer\LottoDocumentsBundle\Service\BetLineGenerator\DoubleGenerator" />
+        <service id="bet_line.generator.treble" class="Qwer\LottoDocumentsBundle\Service\BetLineGenerator\TrebleGenerator" />
+        <service id="bet_line.generator.straight" class="Qwer\LottoDocumentsBundle\Service\BetLineGenerator\StraightGenerator" />
+        <service id="bet_line.generator.trixie" class="Qwer\LottoDocumentsBundle\Service\BetLineGenerator\TrixieGenerator" />
+        <service id="bet_line.generator.patent" class="Qwer\LottoDocumentsBundle\Service\BetLineGenerator\PatentGenerator" />
+        <service id="bet_line.generator.yankee" class="Qwer\LottoDocumentsBundle\Service\BetLineGenerator\YankeeGenerator" />
+        <service id="bet_line.generator.accumulator" class="Qwer\LottoDocumentsBundle\Service\BetLineGenerator\AccumulatorGenerator" />
+        <service id="bet_line.generator.canadian" class="Qwer\LottoDocumentsBundle\Service\BetLineGenerator\CanadianGenerator" />
+        <service id="bet_line.generator.four_folds" class="Qwer\LottoDocumentsBundle\Service\BetLineGenerator\FourFoldsGenerator" />
+        <service id="bet_line.generator.five_folds" class="Qwer\LottoDocumentsBundle\Service\BetLineGenerator\FiveFoldsGenerator" />
+        <service id="bet_line.generator.lucky" class="Qwer\LottoDocumentsBundle\Service\BetLineGenerator\LuckyGenerator" />
         <service id="lotto.stats" class="Qwer\LottoDocumentsBundle\Service\CumulativeLimitStats" >
             <call method="setEntityManager">
                 <argument type="service" id="doctrine.orm.entity_manager" />
@@ -67,6 +74,23 @@
                 <argument type="service" id="lotto.stats" />
             </call>
             <tag name="validator.constraint_validator" alias="cumulative_limit" />
+        </service>
+        <service id="lotto.calculation" class="Qwer\LottoDocumentsBundle\Service\Calculation">
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+        </service>
+        <service id="send.bets.result_listener" class="Qwer\LottoDocumentsBundle\Listener\ResultNotification">
+            <call method="setClientsApi">
+                <argument type="service" id="lotto.client_api" />
+            </call>
+            <tag name="kernel.event_listener" event="send.bets.result" method="onEvent"/>
+        </service>
+        <service id="send.bets.create_listener" class="Qwer\LottoDocumentsBundle\Listener\BetsNotification">
+            <call method="setClientsApi">
+                <argument type="service" id="lotto.client_api" />
+            </call>
+            <tag name="kernel.event_listener" event="send.bets.create" method="onEvent"/>
         </service>
     </services>
 </container>

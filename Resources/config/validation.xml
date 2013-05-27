@@ -8,5 +8,24 @@
         <constraint name="Qwer\LottoDocumentsBundle\Validator\MinimumLimit"/>
         <constraint name="Qwer\LottoDocumentsBundle\Validator\CumulativeLimit"/>
     </class>
+    <class name="Qwer\LottoDocumentsBundle\Entity\Request\Body">
+        <property name="rawBets">
+            <constraint name="Count">
+                <option name="min">1</option>
+                <option name="minMessage">You must choose least one bet</option>
+            </constraint>
+        </property>
+    </class>
+    <class name="Qwer\LottoDocumentsBundle\Entity\Request\RawBet">
+        <property name="summa">
+            <constraint name="NotNull" />
+        </property>
+        <property name="betType">
+            <constraint name="NotNull" />
+        </property>
+        <property name="balls">
+            <constraint name="NotNull" />
+        </property>
+    </class>
     
 </constraint-mapping>

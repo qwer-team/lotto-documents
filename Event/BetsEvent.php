@@ -3,7 +3,7 @@
 namespace Qwer\LottoDocumentsBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
-USE Qwer\LottoBundle\Entity\Client;
+use Qwer\UserBundle\Entity\Token;
 
 class BetsEvent extends Event
 {
@@ -11,8 +11,10 @@ class BetsEvent extends Event
     
     /**
      *
-     * @var \Qwer\LottoBundle\Entity\Client 
+     * @var \Qwer\UserBundle\Entity\Token 
      */
+    private $token;
+    
     private $client;
     
     public function getBets()
@@ -27,20 +29,32 @@ class BetsEvent extends Event
     
     /**
      * 
-     * @return \Qwer\LottoBundle\Entity\Client
+     * @return \Qwer\UserBundle\Entity\Token
      */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * 
+     * @param \Qwer\UserBundle\Entity\Token $token
+     */
+    public function setToken(Token $token)
+    {
+        $this->token = $token;
+    }
+    
     public function getClient()
     {
         return $this->client;
     }
 
-    /**
-     * 
-     * @param \Qwer\LottoBundle\Entity\Client $client
-     */
-    public function setClient(Client $client)
+    public function setClient($client)
     {
         $this->client = $client;
     }
 
+
+    
 }

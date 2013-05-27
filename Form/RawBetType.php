@@ -8,15 +8,16 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class RawBetType extends AbstractType
 {
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $ballsOptions = array('type' => 'integer','allow_add' => true);
+        $ballsOptions = array('type' => 'integer', 'allow_add' => true);
         $betTypeOptions = array('class' => 'QwerLottoBundle:BetType');
         $summaOptions = array('currency' => 'RUR');
         $builder
-            ->add('balls', 'collection', $ballsOptions)
-            ->add('betType', 'entity', $betTypeOptions)
-            ->add('summa', 'money', $summaOptions)
+                ->add('balls', 'collection', $ballsOptions)
+                ->add('betType', 'entity', $betTypeOptions)
+                ->add('summa', 'money', $summaOptions)
         ;
     }
 
@@ -26,9 +27,10 @@ class RawBetType extends AbstractType
             'data_class' => 'Qwer\LottoDocumentsBundle\Entity\Request\RawBet'
         ));
     }
-    
+
     public function getName()
     {
         return 'qwer_lottodocumentsbundle_request_rawbettype';
     }
+
 }

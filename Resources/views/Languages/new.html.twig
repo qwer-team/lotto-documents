@@ -1,9 +1,9 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Currency creation</h1>
+    <h1>Languages creation</h1>
 
-    <form action="{{ path('currency_create') }}" method="post" {{ form_enctype(form) }}>
+    <form action="{{ path('languages_create') }}" method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
         <p>
             <button type="submit" class="btn btn-primary" data-loading-text="Loading...">{% trans%}Create{%endtrans%}</button>
@@ -12,7 +12,7 @@
 
         <ul class="record_actions">
     <li>
-        <a href="{{ path('currency') }}">
+        <a href="{{ path('languages') }}">
             {% trans%}Back to the list{%endtrans%}
         </a>
     </li>

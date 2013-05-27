@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraint;
 class StaticLimit extends Constraint
 {
 
-    public $message = "";
+    public $message = "static limit";
 
     public function getTargets()
     {

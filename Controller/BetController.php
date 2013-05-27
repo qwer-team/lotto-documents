@@ -10,26 +10,37 @@ use Qwer\LottoDocumentsBundle\Form\BodyType;
 use Qwer\LottoDocumentsBundle\Event\BetRequestEvent;
 use Qwer\LottoDocumentsBundle\Entity\Request\Body;
 
+
 /**
  * Bet controller.
  *
  */
 class BetController extends Controller
 {
+    /**
+     *
+     * @var \Doctrine\ORM\EntityRepository 
+     */
+    private $repo;
 
     /**
      * Lists all Bet entities.
      *
      */
-    public function indexAction()
+    public function indexAction($page)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('QwerLottoDocumentsBundle:Bet')->findAll();
-
+        $em = $this->getDoctrine()->getManager(); 
+        $this->repo = $em->getRepository('QwerLottoDocumentsBundle:Bet');
+        
+        $qb = $this->repo->createQueryBuilder("bet");
+        $paginator = $this->get("qwer.pagination");
+        $url = $this->generateUrl("bet");
+        $entities = $paginator->getIterator($qb, $url, $page, 10);
+        $html = $paginator->getHtml();
         return $this->render('QwerLottoDocumentsBundle:Bet:index.html.twig', array(
-            'entities' => $entities,
-        ));
+                    'entities' => $entities,
+                    'pagination' => $html,
+                ));
     }
 
     /**
@@ -57,14 +68,13 @@ class BetController extends Controller
             $collection->add($value);
         }
         $body->setRawBets($collection);
-        $rawBetForm = $this->createForm( new \Qwer\LottoDocumentsBundle\Form\BodyType(),
-        $body);
-        
+        $rawBetForm = $this->createForm(new \Qwer\LottoDocumentsBundle\Form\BodyType(), $body);
+
         return $this->render('QwerLottoDocumentsBundle:Bet:new.html.twig', array(
-            'entity' => $entity,
-            'form' => $form->createView(),
-            'raw_bet_form' => $rawBetForm->createView(),
-        ));
+                    'entity' => $entity,
+                    'form' => $form->createView(),
+                    'raw_bet_form' => $rawBetForm->createView(),
+                ));
     }
 
     /**
@@ -83,35 +93,33 @@ class BetController extends Controller
             $collection->add($value);
         }
         $body->setRawBets($collection);
-        $rawBetForm = $this->createForm( new \Qwer\LottoDocumentsBundle\Form\BodyType(),
-        $body);
-        
+        $rawBetForm = $this->createForm(new \Qwer\LottoDocumentsBundle\Form\BodyType(), $body);
+
         return $this->render('QwerLottoDocumentsBundle:Bet:new.html.twig', array(
-            'entity' => $entity,
-            'form' => $form->createView(),
-            'raw_bet_form' => $rawBetForm->createView(),
-        ));
+                    'entity' => $entity,
+                    'form' => $form->createView(),
+                    'raw_bet_form' => $rawBetForm->createView(),
+                ));
     }
 
     /**
      * Finds and displays a Bet entity.
      *
      */
-    public function showAction($id)
+    public function showAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('QwerLottoDocumentsBundle:Bet')->find($id);
+        $entities = $em->getRepository('QwerLottoDocumentsBundle:Bet')->findAll();
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Bet entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-
         return $this->render('QwerLottoDocumentsBundle:Bet:show.html.twig', array(
-            'entity' => $entity,
-            'delete_form' => $deleteForm->createView(),));
+                    'entities' => $entities,
+                    
+            ));
     }
 
     /**
@@ -131,13 +139,13 @@ class BetController extends Controller
         $editForm = $this->createForm(new BetType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        
+
 
         return $this->render('QwerLottoDocumentsBundle:Bet:edit.html.twig', array(
-            'entity' => $entity,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
+                ));
     }
 
     /**
@@ -169,10 +177,10 @@ class BetController extends Controller
         }
 
         return $this->render('QwerLottoDocumentsBundle:Bet:edit.html.twig', array(
-            'entity' => $entity,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
+                ));
     }
 
     /**
@@ -209,8 +217,8 @@ class BetController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder(array('id' => $id))
-        ->add('id', 'hidden')
-        ->getForm()
+                        ->add('id', 'hidden')
+                        ->getForm()
         ;
     }
 
@@ -218,24 +226,38 @@ class BetController extends Controller
     {
         $body = new Body();
         $form = $this->createForm(new BodyType, $body);
-
+        
         $form->bindRequest($request);
-
+        $response = new \stdClass();
         if ($form->isValid()) {
             $dispatcher = $this->getEventDispatcher();
-            
+
             $event = new BetRequestEvent();
             $event->setBody($body);
-            $dispatcher->dispatch("bet.request.event", $event);
-            
-            $this->get('session')->getFlashBag()->add(
-                'notice',
-                'request was processed!'
-            );
+            try {
+                $dispatcher->dispatch("bet.request.event", $event);
+                $ids = array();
+                foreach($body->getBets() as $bet){
+                    $ids[] = $bet->getId();
+                }
+                $response->result = 'success';
+                $response->ids = $ids;
+                return new \Symfony\Component\HttpFoundation\Response(json_encode($response));
+            } catch (\Exception $e) {
+                $message = $e->getMessage()."\n".$e->getTraceAsString();
+                $response->errorMessage = $message;
+            }
+        } else {
+            $errors = $form->getErrors();
+            foreach($errors as $error){
+               $response->errorMessage = $error->getMessage()."\n"; 
+            }
         }
-        
-        return $this->redirect($this->generateUrl('bet'));
+        $response->result = 'fail';
+        return new \Symfony\Component\HttpFoundation\Response(json_encode($response));
     }
+    
+   
 
     /**
      * 
@@ -244,8 +266,46 @@ class BetController extends Controller
     private function getEventDispatcher()
     {
         $dispatcher = $this->get("event_dispatcher");
-        
+
         return $dispatcher;
+    }
+
+    public function resultAction(Request $request, $id)
+    {
+        $calculation = $this->get("lotto.calculation");
+        $message = 'Successful calculate';
+        
+        $draw = $this->getDoctrine()->getManager()
+                ->getRepository("QwerLottoBundle:Draw")
+                ->find($id);
+         
+        try{
+            $calculation->calculate($draw);
+        } catch (\Exception $e){
+            $message = toString($e);
+        }
+        $this->get('session')->getFlashBag()->add('notice', $message);
+        
+        return $this->redirect($this->generateUrl('draw_edit', array('id' => $id)));
+    }
+    
+    public function rollbackAction(Request $request, $id)
+    {
+        $calculation = $this->get("lotto.calculation");
+        $message = 'Successful rollback';
+        
+        $draw = $this->getDoctrine()->getManager()
+                ->getRepository("QwerLottoBundle:Draw")
+                ->find($id);
+
+        try{
+           $calculation->rallback($draw);
+        } catch (\Exception $e){
+            $message = toString($e);
+        }
+        $this->get('session')->getFlashBag()->add('notice', $message);
+        
+        return $this->redirect($this->generateUrl('draw_edit', array('id' => $id)));
     }
 
 }

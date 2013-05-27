@@ -16,11 +16,6 @@ class BallsCount extends Constraint
         return self::CLASS_CONSTRAINT;
     }
 
-    public function validatedBy()
-    {
-        return "balls_count";
-    }
-
     public function getMessage()
     {
         return $this->message;

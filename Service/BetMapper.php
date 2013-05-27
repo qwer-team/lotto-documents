@@ -9,7 +9,7 @@ use Itc\DocumentsBundle\Listener\ContainerAware;
 use Qwer\LottoDocumentsBundle\Entity\Request\RawBet;
 use Qwer\LottoBundle\Entity\BetType;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
-use Qwer\LottoBundle\Service\RateService;
+
 
 class BetMapper extends ContainerAware
 {
@@ -19,12 +19,7 @@ class BetMapper extends ContainerAware
      * @var DrawFinder 
      */
     private $drawFinder;
-
-    /**
-     *
-     * @var \Qwer\LottoBundle\Service\RateService 
-     */
-    private $rateService;
+   
 
     /**
      *
@@ -39,9 +34,10 @@ class BetMapper extends ContainerAware
      */
     public function getBets(Body $body)
     {
-        $currency = $body->getCurrency();
-        $externalId = $body->getExternalId();
-        $client = $body->getClient();
+        $token = $body->getToken();
+        $currency = $token->getCurrency();
+        $externalId = $token->getExternalId();
+        $client = $token->getClient();
         $withBonus = $body->getWithBonus();
         $drawNum = $body->getDrawNum();
 
@@ -59,19 +55,20 @@ class BetMapper extends ContainerAware
             $betsPrototypes->add($bet);
         }
 
-        $lottoTime = $body->getLottoTime();
-        $lottoType = $lottoTime->getLottoType();
+        $lottoType = $body->getLottoType(); 
+        
+        
 
         foreach ($betsPrototypes as $betPrototype) {
             $betLines = $betPrototype->getDocumentLines();
             foreach ($betLines as $line) {
                 $balls = $line->getBalls();
-                $odd = $this->rateService->getRate($balls, $withBonus, $lottoType, $client);
+                $odd = $lottoType->getRate($balls, $withBonus);
                 $line->setOdd($odd);
             }
         }
 
-        $draws = $this->drawFinder->getDraws($lottoTime, $drawNum);
+        $draws = $this->drawFinder->getDraws($lottoType, $drawNum);
 
         $bets = new ArrayCollection();
 
@@ -98,9 +95,11 @@ class BetMapper extends ContainerAware
         $summa = $rawBet->getSumma();
 
         $bet = new Bet();
+        $bet->setStatus(1);
         $bet->setBalls($balls);
 
         $betType = $rawBet->getBetType();
+        $bet->setBetType($betType);
         $generator = $this->getBetLineGenerator($betType);
 
         $betLines = $generator->getBetLines($balls);
@@ -137,10 +136,7 @@ class BetMapper extends ContainerAware
         $this->drawFinder = $drawFinder;
     }
 
-    public function setRateService(RateService $rateService)
-    {
-        $this->rateService = $rateService;
-    }
+    
 
     public function setDocumentType($documentType)
     {

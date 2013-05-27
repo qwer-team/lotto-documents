@@ -27,7 +27,10 @@ class BetRequestListener extends ContainerAware
     public function onEvent(BetRequestEvent $event)
     {
         $body = $event->getBody();
-        $client = $body->getClient();
+        $class = $this->container->getParameter('users.token_class');
+        $token = $this->em->getRepository($class)
+                      ->findOneByToken($body->getTokenStr());
+        $body->setToken($token);
 
         $bets = $this->mapper->getBets($body);
 
@@ -44,22 +47,22 @@ class BetRequestListener extends ContainerAware
                 $betLineViolations = $this->validator->validate($line);
                 
                 if (count($betLineViolations) > 0) {
-                    $ballsString = implode(",", $line->getBalls());
+                    $ballsString = implode(",", $bet->getBalls());
                     $violations[$ballsString] = $betLineViolations;
                 }
             }
         }
 
         if (count($violations) > 0) {
-            $exception = new BetRequestException();
-            $exception->setViolations($violations);
+            $message = BetRequestException::setViolations($violations);
+            $exception = new BetRequestException($message);
 
             throw $exception;
         }
-
+        $body->setBets($bets);
         $betsEvent = new BetsEvent();
         $betsEvent->setBets($bets);
-        $betsEvent->setClient($client);
+        $betsEvent->setToken($token);
 
         $this->dispatcher->dispatch("create.bets.event", $betsEvent);
     }
