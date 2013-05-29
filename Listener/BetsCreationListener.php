@@ -26,7 +26,7 @@ class BetsCreationListener extends ContainerAware
         try {
             $summa = 0;
             foreach ($bets as $bet) {
-                $summa = $bet->getSumma();
+                $summa += $bet->getSumma();
 
                 $documentEvent = new DocumentEvent($bet);
                 $this->dispatcher
@@ -36,7 +36,8 @@ class BetsCreationListener extends ContainerAware
             $this->em->flush();
             
             if (!$this->clientsApi->hasEnoughFunds($summa, $token)) {
-                $exception = new FundsException();
+                $translator = $this->container->get("translator");
+                $exception = new FundsException($translator->trans("limit.message.funds", array(), 'validators'));
                 throw $exception;
             }
             

@@ -4,9 +4,15 @@
                     xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
     <class name="Qwer\LottoDocumentsBundle\Entity\BetLine">
-        <constraint name="Qwer\LottoDocumentsBundle\Validator\StaticLimit"/>
-        <constraint name="Qwer\LottoDocumentsBundle\Validator\MinimumLimit"/>
-        <constraint name="Qwer\LottoDocumentsBundle\Validator\CumulativeLimit"/>
+        <constraint name="Qwer\LottoDocumentsBundle\Validator\StaticLimit">
+            <option name="message">limit.message.static</option>
+        </constraint>
+        <constraint name="Qwer\LottoDocumentsBundle\Validator\MinimumLimit">
+            <option name="message">limit.message.minimum</option>
+        </constraint>
+        <constraint name="Qwer\LottoDocumentsBundle\Validator\CumulativeLimit">
+            <option name="message">limit.message.cumulative</option>
+        </constraint>
     </class>
     <class name="Qwer\LottoDocumentsBundle\Entity\Request\Body">
         <property name="rawBets">

@@ -35,6 +35,7 @@ class BetRequestListener extends ContainerAware
         $bets = $this->mapper->getBets($body);
 
         $violations = array();
+        $errors = array();
         foreach ($bets as $bet) {
             $betViolations = $this->validator->validate($bet);
 
@@ -54,8 +55,9 @@ class BetRequestListener extends ContainerAware
         }
 
         if (count($violations) > 0) {
-            $message = BetRequestException::setViolations($violations);
-            $exception = new BetRequestException($message);
+            $translator = $this->container->get("translator");
+            $ballsLabel = $translator->trans("limit.message.balls", array(), 'validators');
+            $exception = new BetRequestException("fail", $violations, $ballsLabel);
 
             throw $exception;
         }

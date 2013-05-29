@@ -27,10 +27,7 @@ class FranceLotoParser implements Parser
     
     public function getUrl()
     {
-        $search = array("{year}");
-        $replace = array(date('Y'));
-        $url = str_replace($search, $replace, $this->templateUrl);
-        return $url;
+        return $this->templateUrl;
     }
 
     public function hasResults()

@@ -24,14 +24,23 @@ class MinimumLimitValidator extends ConstraintValidator
         $client = $this->betLine->getClient();
 
         if (!$this->checkLimitation($ratedSumma, $client)) {
-            $this->context->addViolation($constraint->getMessage());
+            $currency = $this->betLine->getCurrency();
+            $limit = $currency->convertFromMain($this->getRatedLimit($client));
+            $params = array(
+                 "%number1%" => $limit
+            );
+            $this->context->addViolation($constraint->getMessage(), $params);
         }
     }
 
-    public function checkLimitation($ratedSumma, Client $client)
-    {
+    private function getRatedLimit(Client $client){
         $clientsCur = $client->getCurrency();
         $ratedLimit = $clientsCur->convertToMain($client->getMinimumLimit());
+        return $ratedLimit;
+    }
+    public function checkLimitation($ratedSumma, Client $client)
+    {
+        $ratedLimit = $this->getRatedLimit($client);
         
         return $ratedSumma >= $ratedLimit;
     }
