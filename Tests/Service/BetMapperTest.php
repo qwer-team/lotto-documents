@@ -6,16 +6,16 @@ use Qwer\LottoDocumentsBundle\Service\BetMapper;
 use Itc\DocumentsBundle\Tests\Service\MockFactory;
 use Qwer\LottoBundle\Entity\Draw;
 use Qwer\LottoDocumentsBundle\Entity\Request\Body;
-use Qwer\LottoDocumentsBundle\Entity\Currency;
 use Qwer\LottoDocumentsBundle\Entity\Request\RawBet;
 use Qwer\LottoBundle\Entity\BetType;
 use Doctrine\Common\Collections\ArrayCollection;
-use Qwer\LottoDocumentsBundle\Service\BetLineGenerator\SingleGenerator;
-use Qwer\LottoBundle\Entity\Client;
-use Qwer\LottoBundle\Entity\Time;
 use Qwer\LottoBundle\Entity\Type;
 use Qwer\LottoDocumentsBundle\Entity\DocumentType;
 use Qwer\LottoDocumentsBundle\Entity\BetLine;
+use Qwer\LottoBundle\Entity\Token;
+use Qwer\LottoBundle\Entity\User;
+use Qwer\LottoBundle\Entity\Client;
+use Qwer\LottoDocumentsBundle\Entity\Currency;
 
 class BetMapperTest extends \PHPUnit_Framework_TestCase
 {
@@ -31,7 +31,6 @@ class BetMapperTest extends \PHPUnit_Framework_TestCase
         $this->service = new BetMapper();
         $this->service->setDrawFinder($this->getDrawFinder());
         $this->service->setContainer($this->getContainerMock());
-        $this->service->setRateService($this->getRateServiceMock());
         $this->service->setDocumentType(new DocumentType());
     }
 
@@ -59,15 +58,19 @@ class BetMapperTest extends \PHPUnit_Framework_TestCase
     {
         $body = new Body();
 
-        $body->setCurrency(new Currency());
-        $body->setExternalId(1);
-        $body->setClient(new Client());
         $body->setWithBonus(true);
         $body->setDrawNum(2);
-        $time = new Time();
         $type = new Type();
-        $time->setLottoType($type);
-        $body->setLottoTime($time);
+        
+        $token = new Token();
+        $token->setExternalId(1);
+        $user = new User();
+        $user->setClient(new Client());
+        $token->setCurrency(new Currency());
+        $token->setUser($user);
+        
+        $body->setToken($token);
+        $body->setLottoType($type);
 
         $rawBets = $this->getRawBets();
         $body->setRawBets($rawBets);

@@ -49,11 +49,8 @@ class MaximumBallsValidatorTest extends AbstractValidatorTest
         $type = new Type();
         $type->setTottalBalls($total);
         
-        $time = new Time();
-        $time->setLottoType($type);
-        
         $body = new Body();
-        $body->setLottoTime($time);
+        $body->setLottoType($type);
         
         $rawBets = new ArrayCollection();
         $rawBet = new RawBet();

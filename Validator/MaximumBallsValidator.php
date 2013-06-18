@@ -17,7 +17,7 @@ class MaximumBallsValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         $this->body = $value;
-        $type = $this->body->getLottoTime()->getLottoType();
+        $type = $this->body->getLottoType();
 
         $total = $type->getTottalBalls();
         $availableBalls = range(1, $total);
