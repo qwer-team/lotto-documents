@@ -4,42 +4,16 @@ namespace Qwer\LottoDocumentsBundle\Service\ResultParser;
 
 use Qwer\LottoDocumentsBundle\Service\ResultParser\Parser;
 use Goutte\Client;
+use Qwer\LottoDocumentsBundle\Service\AbstactLotoParser;
 
-class FranceLotoParser implements Parser
+class FranceLotoParser extends AbstractLotoParser
 {
-    /**
-     *
-     * @var \Qwer\LottoBundle\Entity\Draw
-     */
-    private $draw;
-    private $templateUrl = 'https://www.fdj.fr/jeux/jeux-de-tirage/loto/resultats';
-    private $hasResult = false;
-    
-    function __construct()
-    {
-        $draw = new \Qwer\LottoBundle\Entity\Draw();
-        $draw->setDate(new \DateTime('2013-5-25'));
-        $result = new \Qwer\LottoBundle\Entity\Result();
 
-        $draw->setResult($result);
-        $this->draw = $draw;
-    }
-    
-    public function getUrl()
-    {
-        return $this->templateUrl;
-    }
-
-    public function hasResults()
-    {
-     return $this->hasResult;   
-    }
+    protected $templateUrl = 'https://www.fdj.fr/jeux/jeux-de-tirage/loto/resultats';
 
     public function parse()
     {
-        $client = new Client();
-        $url = $this->getUrl();
-        $crawler = $client->request("GET", $url);
+        $crawler = $this->getCrawler();
         $rawDate = $crawler->filter('div.resultats-tirage h3.dateTirage')->text();
         $date = $this->getDate($rawDate);
         $ballsNodes = $crawler->filter('div.resultats-tirage div.loto_numeros p.loto_boule');
@@ -53,19 +27,14 @@ class FranceLotoParser implements Parser
         }
 
         $bonus = trim($crawler->filter('div.resultats-tirage div.loto_numeros p.loto_boule_c')->text());
-        
+
         $this->validate($date);
-        if($this->hasResults()){
+        if ($this->hasResults()) {
             $result = $this->draw->getResult();
             $result->setResult($balls);
             $result->setBonusResult(array($bonus));
         }
         return $this->hasResults();
-    }
-
-    private function validate($date){
-        $format = "Y-m-d";
-        $this->hasResult = ($date->format($format) == $this->draw->getDate()->format($format));
     }
 
     private function getDate($rawDate)
@@ -84,22 +53,12 @@ class FranceLotoParser implements Parser
             'novembre' => 11,
             'décembre' => 12,
         );
-        $words = explode(" ",$rawDate);
+        $words = explode(" ", $rawDate);
         $day = $words[1];
         $month = $frMonth[strtolower($words[2])];
         $year = $words[3];
-        
+
         $date = new \DateTime("$year-$month-$day");
         return $date;
     }
-
-    /**
-     * 
-     * @param \Qwer\LottoBundle\Entity\Draw $draw
-     */
-    public function setDraw($draw)
-    {
-        $this->draw = $draw;
-    }
-
 }
