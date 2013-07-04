@@ -7,6 +7,7 @@ abstract class AbstractLotoParser
     protected $draw;
     protected $hasResult = false;
     protected $crawler = null;
+    protected $htmlPage = null;
 
     public function getUrl()
     {
@@ -21,6 +22,10 @@ abstract class AbstractLotoParser
     public function setCrawler($crawler)
     {
         $this->crawler = $crawler;
+    }
+    public function setHtmlPage($htmlPage) 
+    {
+        $this->htmlPage = $htmlPage;
     }
 
     public function setDraw($draw)
@@ -45,6 +50,15 @@ abstract class AbstractLotoParser
         }
         
         return $crawler;
+    }
+    
+    public function getHtmlPage() {
+        if(is_null($this->htmlPage)) {
+            $htmlPage = file_get_contents($templateUrl);
+        }
+        else $htmlPage = $this->htmlPage;
+        
+        return $htmlPage;
     }
 }
 ?>
