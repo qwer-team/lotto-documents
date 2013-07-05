@@ -7,7 +7,7 @@ use Goutte\Client;
 
 class MaxLotoParser extends AbstractLotoParser {
     
-     private $templateUrl = 'http://www.lotterycanada.com/lotto-max';
+     protected $templateUrl = 'http://www.lotterycanada.com/lotto-max';
      
      public function parse() {
          

@@ -6,7 +6,7 @@ use Qwer\LottoDocumentsBundle\Service\ResultParser\AbstractLotoParser;
 
 class QuebecLotoParser extends AbstractLotoParser {
     
-     private $templateUrl = 'http://www.lotterycanada.com/quebec-49';
+     protected $templateUrl = 'http://www.lotterycanada.com/quebec-49';
      
      public function parse() {
          

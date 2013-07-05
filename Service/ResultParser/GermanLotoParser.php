@@ -6,7 +6,7 @@ use Qwer\LottoDocumentsBundle\Service\ResultParser\AbstractLotoParser;
 
 class GermanLotoParser extends AbstractLotoParser {
     
-     private $templateUrl = 'http://www.lotto.de/de/ergebnisse/6aus49_results/archiv/results_6aus49.xhtml';
+     protected $templateUrl = 'http://www.lotto.de/de/ergebnisse/6aus49_results/archiv/results_6aus49.xhtml';
      
      public function parse() {
          

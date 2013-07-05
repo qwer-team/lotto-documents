@@ -7,7 +7,7 @@ use Qwer\LottoDocumentsBundle\Service\ResultParser\AbstractLotoParser;
 
 class UKLotoParser extends AbstractLotoParser {
     
-     private $templateUrl = 'https://www.national-lottery.co.uk/player/lotto/results/results.ftl';
+     protected $templateUrl = 'https://www.national-lottery.co.uk/player/lotto/results/results.ftl';
      
      public function parse() {
          

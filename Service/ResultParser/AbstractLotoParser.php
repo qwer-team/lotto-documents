@@ -1,6 +1,7 @@
 <?php
 
 namespace Qwer\LottoDocumentsBundle\Service\ResultParser;
+use Goutte\Client;
 
 abstract class AbstractLotoParser 
 {
@@ -43,9 +44,11 @@ abstract class AbstractLotoParser
     {
         if (is_null($this->crawler)) {
             $client = new Client();
+            $client->setHeader('User-Agent', 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:22.0) Gecko/20100101 Firefox/22.0');
             $url = $this->getUrl();
             $crawler = $client->request("GET", $url);
-        } else {
+            //print_r($crawler);
+        } elseif ($this->crawler != null) {
             $crawler = $this->crawler;
         }
         

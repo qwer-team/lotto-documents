@@ -6,7 +6,7 @@ use Qwer\LottoDocumentsBundle\Service\ResultParser\AbstractLotoParser;
 
 class WesternLotoParser extends AbstractLotoParser {
     
-     private $templateUrl = 'http://www.lotterycanada.com/western-max';
+     protected $templateUrl = 'http://www.lotterycanada.com/western-max';
      
      public function parse() {
          

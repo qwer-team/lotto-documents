@@ -6,7 +6,7 @@ use Qwer\LottoDocumentsBundle\Service\ResultParser\AbstractLotoParser;
 
 class EuroLotoParser extends AbstractLotoParser {
     
-    private $templateUrl = 'http://www.euro-millions.com/results.asp';
+     protected $templateUrl = 'http://www.euro-millions.com/results.asp';
     
     public function parse() {
         

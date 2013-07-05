@@ -6,7 +6,7 @@ use Qwer\LottoDocumentsBundle\Service\ResultParser\AbstractLotoParser;
 
 class TagLotoParser extends AbstractLotoParser {
     
-     private $templateUrl = 'http://www.lotterycanada.com/atlantic-tag';
+     protected $templateUrl = 'http://www.lotterycanada.com/atlantic-tag';
      
      public function parse() {
          

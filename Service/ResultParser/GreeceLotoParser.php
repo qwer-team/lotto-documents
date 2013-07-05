@@ -6,7 +6,7 @@ use Qwer\LottoDocumentsBundle\Service\ResultParser\AbstractLotoParser;
 
 class GreeceLotoParser extends AbstractLotoParser {
     
-     private $templateUrl = 'http://www.opap.gr/en/web/guest/lotto-draw-results';
+     protected $templateUrl = 'http://www.opap.gr/en/web/guest/lotto-draw-results';
      
      
      public function parse() {

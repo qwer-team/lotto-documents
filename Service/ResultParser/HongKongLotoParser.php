@@ -6,7 +6,7 @@ use Qwer\LottoDocumentsBundle\Service\ResultParser\AbstractLotoParser;
 
 class HongKongLotoParser extends AbstractLotoParser {
     
-     private $templateUrl = 'http://bet.hkjc.com/marksix/index.aspx?lang=en';
+     protected $templateUrl = 'http://bet.hkjc.com/marksix/index.aspx?lang=en';
      
      public function parse() {
          

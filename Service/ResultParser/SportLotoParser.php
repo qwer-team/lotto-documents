@@ -6,7 +6,7 @@ use Qwer\LottoDocumentsBundle\Service\ResultParser\AbstractLotoParser;
 
 class SportLotoParser extends AbstractLotoParser {
     
-     private $templateUrl = 'http://www.sportloto6x49.ru/archive';
+     protected $templateUrl = 'http://www.sportloto6x49.ru/archive';
      
      public function parse() {
          

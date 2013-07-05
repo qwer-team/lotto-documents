@@ -6,7 +6,7 @@ use Qwer\LottoDocumentsBundle\Service\ResultParser\AbstractLotoParser;
 
 class JokerLotoParser extends AbstractLotoParser {
     
-     private $templateUrl = 'http://www.opap.gr/en/web/guest/joker-draw-results';
+     protected $templateUrl = 'http://www.opap.gr/en/web/guest/joker-draw-results';
      
      
      public function parse() {

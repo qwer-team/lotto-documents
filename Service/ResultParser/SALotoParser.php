@@ -6,7 +6,7 @@ use Qwer\LottoDocumentsBundle\Service\ResultParser\AbstractLotoParser;
 
 class SALotoParser extends AbstractLotoParser {
     
-     private $templateUrl = 'https://www.nationallottery.co.za/lotto_home/results.asp?type=1';
+     protected $templateUrl = 'https://www.nationallottery.co.za/lotto_home/results.asp?type=1';
      
      public function parse() {
          

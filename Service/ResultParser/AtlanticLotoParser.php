@@ -7,7 +7,7 @@ use Goutte\Client;
 
 class AtlanticLotoParser extends AbstractLotoParser {
 
-     private $templateUrl = 'http://www.lotterycanada.com/atlantic-49';
+     protected $templateUrl = 'http://www.lotterycanada.com/atlantic-49';
      
      public function parse() {
          

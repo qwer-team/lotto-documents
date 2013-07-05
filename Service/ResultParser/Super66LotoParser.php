@@ -8,7 +8,7 @@ use Qwer\LottoDocumentsBundle\Service\ResultParser\Parser;
 
 class Super66LotoParser extends AbstractLotoParser {
     
-    private $templateUrl = 'tatts.com/tattersalls/results/last-10-results?product=Super66';
+     protected $templateUrl = 'tatts.com/tattersalls/results/last-10-results?product=Super66';
 
     public function parse() {
         $crawler = $this->getCrawler();

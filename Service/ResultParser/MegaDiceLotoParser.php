@@ -6,7 +6,7 @@ use Qwer\LottoDocumentsBundle\Service\ResultParser\AbstractLotoParser;
 
 class MegaDiceLotoParser extends AbstractLotoParser {
     
-     private $templateUrl = 'http://www.lotterycanada.com/megadice-lotto';
+     protected $templateUrl = 'http://www.lotterycanada.com/megadice-lotto';
      
      public function parse() {
          
