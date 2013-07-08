@@ -6,7 +6,7 @@ use Qwer\LottoDocumentsBundle\Service\ResultParser\AbstractLotoParser;
 
 class PrimitivaLotoParser extends AbstractLotoParser {
     
-     private $templateUrl = 'http://www.primitivalottery.com/Spanish-Lotto-Results.php';
+     protected $templateUrl = 'http://www.primitivalottery.com/Spanish-Lotto-Results.php';
      
      public function parse() {
          
