@@ -4,28 +4,26 @@ namespace Qwer\LottoDocumentsBundle\Service\ResultParser;
 
 use Qwer\LottoDocumentsBundle\Service\ResultParser\AbstractLotoParser;
 
-class SAPlusLotoParser extends AbstractLotoParser {
+class ElGordoLotoParser extends AbstractLotoParser {
     
-     protected $templateUrl = 'https://www.nationallottery.co.za/lotto_home/results.asp?type=2';
+     protected $templateUrl = 'http://www.elgordo.com/results/maslottoen.asp';
      
      public function parse() {
          
          $crawler = $this->getCrawler();
-         $rawDate = trim($crawler->filter('tr td span.onGreenBackground')->text());
+         $rawDate = trim($crawler->filter('tr.tg th div.d_d')->text());
          $date = $this->getDate($rawDate);
          
-         $ballsNodes = $crawler->filter('tr td.bbottomYellow div img')->extract(array('src'));
-         $ballsNodes = array_unique($ballsNodes);
-         $ballsCnt = 7;
+         $ballsNodes = $crawler->filter('tr td div.cuad');
+         $ballsCnt = 5;
          $balls = array();
          foreach ($ballsNodes as $ball) {
              if($ballsCnt == 0)
                  break;
-             preg_match('/[\d]+/', $ball, $ballNum);
-             $balls[] = $ballNum[0];
+             $balls[] = trim($ball->nodeValue);
              $ballsCnt--;
          }
-         $bonus = array_pop($balls);
+         $bonus = trim($crawler->filter('tr td div.esp')->text());
          
          $this->validate($date);
          if($this->hasResult) {
@@ -34,10 +32,8 @@ class SAPlusLotoParser extends AbstractLotoParser {
              $result->setBonusResult(array($bonus));
          }
          return $this->hasResults();
-         
      }
      public function getDate($rawDate) {
-         
          $frMonth = array(
              'january' => 1,
              'february' => 2,
@@ -52,13 +48,12 @@ class SAPlusLotoParser extends AbstractLotoParser {
              'november' => 11,
              'decembre' => 12
          );
-         $rawDate = preg_replace('/[\D]+,\s/', '', $rawDate);
-         $words = explode(' ', $rawDate);
+         preg_match('/([\d]+)\W+([\D]+)[\W]\W+([\d]+)/', $rawDate, $words);
+         
          $day = $words[1];
-         $month = $frMonth[strtolower($words[0])];
-         $year = $words[2];
+         $month = $frMonth[strtolower($words[2])];
+         $year = $words[3];
          $date = new \DateTime("$year-$month-$day");
          return $date;
      }
 }
-?>

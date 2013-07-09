@@ -12,6 +12,6 @@ class SuperLotoParser extends AbstractLotoParser {
          
          $crawler = $this->getCrawler();
          $rawDate = trim($crawler->filter('tr td span')->text());
-         print_r($rawDate);
+         
      }
 }

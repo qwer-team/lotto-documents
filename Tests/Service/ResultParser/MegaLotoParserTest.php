@@ -18,7 +18,7 @@ class MegaLotoParserTest extends \PHPUnit_Framework_TestCase {
         $draw->setDate($date);
         $parser->setCrawler($crawler);
         $parser->setDraw($draw);
-        //$parser->parse();
+        $parser->parse();
         
     }
 }

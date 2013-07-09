@@ -11,15 +11,8 @@ class SuperLotoParserTest extends \PHPUnit_Framework_TestCase
     public function testParser()
     {
 
-        // $file = 
-        // $file = iconv("cp1251", "UTF8", $file);
-        $file = new SplFileObject(__DIR__ . '/UAsuper.html');
-        $text = "";
-        while (!$file->eof()) {
-            $text .= $file->current();
-            $file->next();
-        }
-        $crawler = new Crawler($text);
+        $file = file_get_contents(__DIR__ . '/UAsuper.html');
+        $crawler = new Crawler($file);
         $parser = new SuperLotoParser();
         $draw = new Draw();
         $result = new Result();
@@ -28,7 +21,7 @@ class SuperLotoParserTest extends \PHPUnit_Framework_TestCase
         $draw->setDate($date);
         $parser->setCrawler($crawler);
         $parser->setDraw($draw);
-        //$parser->parse();
+        $parser->parse();
     }
 
 }

@@ -32,17 +32,7 @@ class MegaLotoParser extends AbstractLotoParser {
              'листопада' => 11,
              'грудня' => 12
          );
-         /*$tab = array( "CP1251");
-         foreach($tab as $set){
-             echo $set."\n";
-             echo iconv($set, "UTF-8", $rawDate);
-             echo "\n";
-         }*/
-      //echo $rawDate;
-         $rawDate = substr($rawDate, 13);
-         $words = explode(' ', $rawDate);
-         $month = $frMonth[$words[1]];
-         //print_r($words);
+         //print_r($rawDate);
      }
     
 }
