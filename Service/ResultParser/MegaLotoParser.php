@@ -6,33 +6,40 @@ use Qwer\LottoDocumentsBundle\Service\ResultParser\AbstractLotoParser;
 
 class MegaLotoParser extends AbstractLotoParser {
     
-     protected $templateUrl = 'http://www.msl.ua/?code=ml';
+     protected $templateUrl = 'http://www.msl.ua/?code=ml-results_archive';
      
      public function parse() {
          
          $crawler = $this->getCrawler();
-         $rawDate = trim($crawler->filter('span.ml_title span')->text());
+         $rawDate = trim($crawler->filter('table.results_item tbody tr td')->text());
          $date = $this->getDate($rawDate);
          
-     }
+         $balls = array();
+         $ballsNodes = $crawler->filter('html body div.main_frame table.results_item tbody tr td p span')->text();
+         $ball = str_replace('+ мегакулька:', ',', $ballsNodes);
+         $ballsSpace = explode(',',  $ball);
+         foreach ($ballsSpace as $ball) {
+             $balls[] = trim($ball);
+         }
+         $bonus = array_pop($balls);
+         
+         $this->validate($date);
+         if($this->hasResult) {
+             $result = $this->draw->getResult();
+             $result->setResult($balls);
+             $result->setBonusResult(array($bonus));
+         }
+         return $this->hasResults();
+     }    
      
      public function getDate($rawDate) {
-         
-         $frMonth = array(
-             'січня' => 1,
-             'лютого' => 2,
-             'березня' => 3,
-             'квітня' => 4,
-             'травня' => 5,
-             'червня' => 6,
-             'липня' => 7,
-             'серпня' => 8,
-             'вересня' => 9,
-             'жовтня' => 10,
-             'листопада' => 11,
-             'грудня' => 12
-         );
-         //print_r($rawDate);
+           
+         $words = explode('.', $rawDate);
+         $day = $words[0];
+         $month = $words[1];
+         $year = $words[2];
+         $date = new \DateTime("$year-$month-$day");
+         return $date;
      }
     
 }

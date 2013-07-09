@@ -47,7 +47,8 @@ abstract class AbstractLotoParser
             $client->setHeader('User-Agent', 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:22.0) Gecko/20100101 Firefox/22.0');
             $url = $this->getUrl();
             $crawler = $client->request("GET", $url);
-            //print_r($crawler);
+            $array = (array) $crawler; 
+            //print_r($array);
         } elseif ($this->crawler != null) {
             $crawler = $this->crawler;
         }

@@ -14,11 +14,14 @@ class MegaLotoParserTest extends \PHPUnit_Framework_TestCase {
         $draw = new Draw();
         $result = new Result();
         $draw->setResult($result);
-        $date = new \DateTime("2013-07-03");
+        $date = new \DateTime("2013-07-06");
         $draw->setDate($date);
         $parser->setCrawler($crawler);
         $parser->setDraw($draw);
         $parser->parse();
+        
+        $this->assertTrue($parser->hasResults());
+        $this->assertEquals($result->getAllBalls(), array(3, 4, 7, 20, 28, 35, 3));
         
     }
 }

@@ -4,9 +4,9 @@ namespace Qwer\LottoDocumentsBundle\Service\ResultParser;
 
 use Qwer\LottoDocumentsBundle\Service\ResultParser\AbstractLotoParser;
 
-class SuperLotoParser extends AbstractLotoParser {
+class MaximLotoParser extends AbstractLotoParser {
     
-     protected $templateUrl = 'http://www.lottery.com.ua/pages/results/loto.php';
+     protected $templateUrl = 'http://www.lottery.com.ua/pages/results/lotomx.php';
      
      public function parse() {
          
@@ -15,7 +15,7 @@ class SuperLotoParser extends AbstractLotoParser {
          $date = $this->getDate($rawDate);
          
          $i = 0;
-         $ballsCnt = 5;
+         $ballsCnt = 4;
          $balls = array();
          while ($i <= $ballsCnt) {
              $balls[] = trim($crawler->filter("tr td div span#n$i")->text());
@@ -53,3 +53,4 @@ class SuperLotoParser extends AbstractLotoParser {
          return $date;
      }
 }
+?>
