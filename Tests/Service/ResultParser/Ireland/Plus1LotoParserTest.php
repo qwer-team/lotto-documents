@@ -1,17 +1,17 @@
 <?php
 
-use Qwer\LottoDocumentsBundle\Service\ResultParser\Hungary\OtosLotoParser;
+use Qwer\LottoDocumentsBundle\Service\ResultParser\Ireland\Plus1LotoParser;
 use Qwer\LottoBundle\Entity\Draw;
 use Qwer\LottoBundle\Entity\Result;
 use Symfony\Component\DomCrawler\Crawler;
 
-class OtosLotoParserTest extends \PHPUnit_Framework_TestCase {
+class Plus1LotoParserTest extends \PHPUnit_Framework_TestCase {
     
     public function testParser() {
         
-        $file = file_get_contents(__DIR__.'/otos.htm');
+        $file = file_get_contents(__DIR__.'/plus1.htm');
         $crawler = new Crawler($file);
-        $parser = new OtosLotoParser();
+        $parser = new Plus1LotoParser();
         $draw = new Draw();
         $result = new Result();
         $draw->setResult($result);
@@ -22,6 +22,6 @@ class OtosLotoParserTest extends \PHPUnit_Framework_TestCase {
         $parser->parse();
         
         $this->assertTrue($parser->hasResults());
-        $this->assertEquals($result->getAllBalls(), array(2, 13, 15, 36, 69));
+        $this->assertEquals($result->getAllBalls(), array(6, 11, 15, 23, 27, 44, 40));
     }
 }
