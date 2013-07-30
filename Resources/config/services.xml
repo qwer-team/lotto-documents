@@ -97,6 +97,40 @@
                 <argument type="service" id="service_container" />
             </call>
         </service>
-        <service id="lotto_documents_result_parser.france" class="Qwer\LottoDocumentsBundle\Service\ResultParser\FranceLotoParser" />
+        <service id="lotto_documents_result_parser.france" class="Qwer\LottoDocumentsBundle\Service\ResultParser\France\FranceLotoParser" />
+        <service id="lotto_documents_result_parser.tatts" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Australia\TatsLotoParser" />
+        <service id="lotto_documents_result_parser.OzLotto" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Australia\OzLotoParser" />
+        <service id="lotto_documents_result_parser.Super66" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Australia\Super66LotoParser" />
+        <service id="lotto_documents_result_parser.Pools" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Australia\PoolsLotoParser" />
+        <service id="lotto_documents_result_parser.National" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Canada\NationalLotoParser" />
+        <service id="lotto_documents_result_parser.LottoMax" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Canada\MaxLotoParser" />
+        <service id="lotto_documents_result_parser.Atlantic" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Canada\AtlanticLotoParser" />
+        <service id="lotto_documents_result_parser.Tag" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Canada\TagLotoParser" />
+        <service id="lotto_documents_result_parser.Quebec" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Canada\QuebecLotoParser" />
+        <service id="lotto_documents_result_parser.Ontario" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Canada\OntarioLotoParser" />
+        <service id="lotto_documents_result_parser.MegaDice" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Canada\MegaDiceLotoParser" />
+        <service id="lotto_documents_result_parser.Western" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Canada\WesternLotoParser" />
+        <service id="lotto_documents_result_parser.MegaLot" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Ukraine\MegaLotoParser" />
+        <service id="lotto_documents_result_parser.Sport649" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Russia\Sport649LotoParser" />
+        <service id="lotto_documents_result_parser.German" class="Qwer\LottoDocumentsBundle\Service\ResultParser\German\GermanLotoParser" />
+        <service id="lotto_documents_result_parser.SuperLoto" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Ukraine\SuperLotoParser" />
+        <service id="lotto_documents_result_parser.Million" class="Qwer\LottoDocumentsBundle\Service\ResultParser\USA\MillionLotoParser" />
+        <service id="lotto_documents_result_parser.UKLoto" class="Qwer\LottoDocumentsBundle\Service\ResultParser\UK\UKLotoParser" />
+        <service id="lotto_documents_result_parser.EuroLoto" class="Qwer\LottoDocumentsBundle\Service\ResultParser\European_Union\EuroLotoParser" />
+        <service id="lotto_documents_result_parser.Primitiva" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Spain\PrimitivaLotoParser" />
+        <service id="lotto_documents_result_parser.Sayisal" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Turkey\SayisalLotoParser" />
+        <service id="lotto_documents_result_parser.S49" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Ireland\S49LotoParser" />
+        <service id="lotto_documents_result_parser.LotoGreece" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Greece\GreeceLotoParser" />
+        <service id="lotto_documents_result_parser.Powerball" class="Qwer\LottoDocumentsBundle\Service\ResultParser\South_Africa\PowerballLotoParser" />
+        <service id="lotto_documents_result_parser.HongKong" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Hong_Kong\HongKongLotoParser" />
+        <service id="lotto_documents_result_parser.IrelandPlus1" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Ireland\Plus1LotoParser" />
+        <service id="lotto_documents_result_parser.IrelandPlus2" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Ireland\Plus2LotoParser" />
+        <service id="lotto_documents_result_parser.SALoto" class="Qwer\LottoDocumentsBundle\Service\ResultParser\South_Africa\SALotoParser" />
+        <service id="lotto_documents_result_parser.SAPlusLoto" class="Qwer\LottoDocumentsBundle\Service\ResultParser\South_Africa\SAPlusLotoParser" />
+        <service id="lotto_documents_result_parser.Daily" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Ireland\DailyLotoParser" />
+        <service id="lotto_documents_result_parser.JokerFrance" class="Qwer\LottoDocumentsBundle\Service\ResultParser\France\JokerFranceLotoParser" />
+        <service id="lotto_documents_result_parser.JokerGreece" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Greece\JokerLotoParser" />
+        <service id="lotto_documents_result_parser.MaximLoto" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Ukraine\MaximLotoParser" />
+        <service id="lotto_documents_result_parser.Formula749" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Russia\Formula749LotoParser" />
     </services>
 </container>
