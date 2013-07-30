@@ -132,5 +132,6 @@
         <service id="lotto_documents_result_parser.JokerGreece" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Greece\JokerLotoParser" />
         <service id="lotto_documents_result_parser.MaximLoto" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Ukraine\MaximLotoParser" />
         <service id="lotto_documents_result_parser.Formula749" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Russia\Formula749LotoParser" />
+        <service id="lotto_documents_result_parser.IrishLoto" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Ireland\IrishLotoParser" />
     </services>
 </container>
