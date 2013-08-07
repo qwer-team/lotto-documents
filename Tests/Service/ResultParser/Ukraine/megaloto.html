@@ -1,0 +1,981 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=8" >
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Архiв результатiв: Лотерея Мегалот — Оператор державних лотерей Молодьспортлото</title>
+<meta name="keywords" content="Архiв результатiв, Мегалот">
+<meta name="description" content="Архiв результатiв. Лотерея Мегалот оператора державних лотерей Молодьспортлото">
+
+<meta property="og:url" content="http://www.msl.ua/?code=ml-results_archive"/>
+<meta property="og:image" content="http://msl.ua/i/ml_logo.jpg"/>
+
+<link href="css/total.css" rel="stylesheet" type="text/css">
+<link href="css/news_block.css" rel="stylesheet" type="text/css">
+<link href="css/megalot.css" rel="stylesheet" type="text/css">
+<link href="css/ml_inside.css" rel="stylesheet" type="text/css">
+<link href="css/footer.css" rel="stylesheet" type="text/css">
+
+<!--[if IE 7]>
+<link href="css/IE7.css" rel="stylesheet" type="text/css">
+<link href="css/IE7_ml.css" rel="stylesheet" type="text/css">
+<![endif]-->
+
+<style>
+.dd_m_2 {
+	position: absolute;
+	width: 853px;
+	left: 300px;
+	top: -800px;
+	height:150px;
+	background-image: url(../i/total/dd_menu_bg_wide.png);
+	background-repeat: repeat-y;
+	padding-left: 10px;
+	padding-bottom: 1px;
+	z-index: 510;
+	padding-top: 10px;
+}
+
+.dd_m_2 table tr td{
+vertical-align:top;
+padding-left:3px;
+}
+.dd_m_2 p {
+	font-size: 13px;
+	font-style: italic;
+	padding-bottom: 1px;
+}
+.dd_m_2 .dd_bottom {
+	/*visibility:hidden;*/
+	position: absolute;
+	height: 26px;
+	width: 853px;
+	left: 0px;
+	bottom: -26px;
+}
+.dd_m_2 p a:link, .dd_m_2 p a:visited {
+	color: #000000;
+	font-size: 13px;
+	font-style: italic;
+}
+.dd_m_2 p a:hover {
+	color: #006822;
+}
+#sign_in_new {
+	position: absolute;
+	right: 5%;
+	bottom: 25px;
+	width:327px;
+	/* background-image: url(../i/sign_in_bg.png);
+	background-repeat: no-repeat; */
+}
+
+#sign_in_new form{
+	font-size: 12px;
+	font-style:italic;
+	color:#534A38;
+}
+#sign_in_new form table tr td p{
+margin-left:0px;
+} 
+
+#sign_in_new form table {
+width:98%;
+}
+#sign_in_new form table tr td{
+vertical-align:middle;
+}
+</style>
+<script type="text/javascript" src="jquery-1.3.2.js"></script>
+
+<script>
+$(document).ready(function(){
+	var  closer;
+	var current_l;
+	var current_b;
+        var openCheck;
+        var dempfer=0;
+        var dempfer_time=200;
+	 function close_it(video){
+	 	 if (video)
+                {
+                var left_p=current_l.offset().left-560;
+                }
+                else var left_p=current_l.offset().left-70;
+		var top_p=0-current_b.height()-50;
+		current_l.css('font-weight', 'normal');
+		current_b.css('left', left_p);
+		current_b.animate({top: top_p},300);
+	 }
+	 
+	 function drive(video)
+	 {
+                if (video)
+                {
+                var left_p=current_l.offset().left-560;
+                }
+                else var left_p=current_l.offset().left-70;
+		var top_p='91px';
+		current_l.css('font-weight', 'normal');
+		current_b.css('left', left_p);
+		current_b.animate({top: top_p},300);
+	 }
+	$('#tm_1, #tm_2, #tm_3').mouseout( function(){ clearTimeout(openCheck); });
+
+	$('#tm_1').hover(function(event){
+		clearTimeout(closer);
+		current_l=$('#tm_2');
+		current_b=$('.dd_m_2');
+		close_it(1);
+		current_l=$('#tm_3');
+		current_b=$('.dd_m_3');
+		close_it();
+		current_l=$('#tm_4');
+		current_b=$('.dd_m_4');
+		close_it();
+		current_l=$('#tm_1');
+		current_b=$('.dd_m_1');
+		openCheck=setTimeout(function(){drive()}, dempfer_time);
+	});
+	
+	$('.dd_m_1').mouseover(function(){
+		clearTimeout(closer);
+	});
+	$('.dd_m_1').mouseout(function(){
+		closer = setTimeout(function(){close_it()}, 700);
+	});
+	
+	$('#tm_1').mouseout(function(event){
+		closer = setTimeout(function(){close_it()}, 700);
+		
+	});
+	
+	// ////////////////////////////////
+	
+	$('#tm_2').hover(function(event){
+		clearTimeout(closer);
+		current_l=$('#tm_1');
+		current_b=$('.dd_m_1');
+		close_it();
+		current_l=$('#tm_4');
+		current_b=$('.dd_m_4');
+		close_it();
+		current_l=$('#tm_3');
+		current_b=$('.dd_m_3');
+		close_it();
+		current_l=$('#tm_2');
+		current_b=$('.dd_m_2');
+		openCheck=setTimeout(function(){drive(1)}, dempfer_time);
+	});
+	$('.dd_m_2').mouseover(function(){
+		clearTimeout(closer);
+	});
+	$('.dd_m_2').mouseout(function(){
+		closer = setTimeout(function(){close_it(1)}, 700);
+	});
+	
+	$('#tm_2').mouseout(function(event){
+		closer = setTimeout(function(){close_it(1)}, 700);
+		
+	});
+	
+	// /////////////////////////////
+	
+	$('#tm_3').hover(function(event){
+		clearTimeout(closer);
+		current_l=$('#tm_1');
+		current_b=$('.dd_m_1');
+		close_it();
+		current_l=$('#tm_2');
+		current_b=$('.dd_m_2');
+		close_it(1);
+		current_l=$('#tm_4');
+		current_b=$('.dd_m_4');
+		close_it();
+		current_l=$('#tm_3');
+		current_b=$('.dd_m_3');
+		openCheck=setTimeout(function(){drive()}, dempfer_time);
+	});
+	$('.dd_m_3').mouseover(function(){
+		clearTimeout(closer);
+	});
+	$('.dd_m_3').mouseout(function(){
+		closer = setTimeout(function(){close_it()}, 700);
+	});
+	
+	$('#tm_3').mouseout(function(event){
+		closer = setTimeout(function(){close_it()}, 700);
+		
+	});
+	
+	// /////////////////////////////
+
+$('#tm_4').hover(function(event){
+		clearTimeout(closer);
+		current_l=$('#tm_1');
+		current_b=$('.dd_m_1');
+		close_it();
+		current_l=$('#tm_2');
+		current_b=$('.dd_m_2');
+		close_it(1);
+		current_l=$('#tm_3');
+		current_b=$('.dd_m_3');
+		close_it();
+		current_l=$('#tm_4');
+		current_b=$('.dd_m_4');
+		openCheck=setTimeout(function(){drive()}, dempfer_time);
+	});
+	$('.dd_m_4').mouseover(function(){
+		clearTimeout(closer);
+	});
+	$('.dd_m_4').mouseout(function(){
+		closer = setTimeout(function(){close_it()}, 700);
+	});
+	
+	$('#tm_4').mouseout(function(event){
+		closer = setTimeout(function(){close_it()}, 700);
+		
+	});
+	
+	// /////////////////////////////
+	
+
+});
+
+</script>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-26967497-1']);
+_gaq.push(['_setDomainName', 'msl.ua']);
+_gaq.push(['_addOrganic', 'blogsearch.google.ru', 'q', true]);
+_gaq.push(['_addOrganic', 'blogs.yandex.ru', 'text', true]);
+_gaq.push(['_addOrganic', 'go.mail.ru', 'q']);
+_gaq.push(['_addOrganic', 'search.qip.ru', 'query']);
+_gaq.push(['_addOrganic', 'search.livetool.ru', 'text']);
+_gaq.push(['_addOrganic', 'poisk.ngs.ru', 'q']);
+_gaq.push(['_addOrganic', 'search.tyt.by', 'query']);
+_gaq.push(['_addOrganic', 'search.ukr.net', 'q']);
+_gaq.push(['_addOrganic', 'search.bigmir.net', 'z']);
+_gaq.push(['_addOrganic', 'meta.ua', 'q']);
+_gaq.push(['_addOrganic', 'nigma.ru', 's']);
+_gaq.push(['_addOrganic', 'bpes.com.ua', 'q']);
+_gaq.push(['_addOrganic', 'webalta.ru', 'q']);
+_gaq.push(['_addOrganic', 'search.i.ua', 'q']);
+_gaq.push(['_addOrganic', 'search.icq.com', 'q']);
+_gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+
+// --- SITE MAP ---  
+$(document).ready(function(){
+   $('.site_map_link, .close_site_map').click( 
+        function(event){
+              event.preventDefault();
+             $('.site_map').toggle(50);
+        }
+   );
+
+  new_left=$('.site_map_link').offset().left - 500;
+  $('.site_map').css('left', new_left);
+});
+// --------------
+
+</script>
+
+<!-- ADD FAVORITES -->
+<script language="javascript" type="text/javascript">
+ATBookmarkApp = function () {
+    var isIEmac = false; /*@cc_on @if(@_jscript&&!(@_win32||@_win16)&& 
+(@_jscript_version<5.5)) isIEmac=true; @end @*/
+    var isMSIE = (-[1,]) ? false : true;
+    var cjTitle = document.title;
+    var cjHref = location.href;
+
+    function hotKeys() {
+        var ua = navigator.userAgent.toLowerCase();
+        var str = '';
+        var isWebkit = (ua.indexOf('webkit') != - 1);
+        var isMac = (ua.indexOf('mac') != - 1);
+
+        if (ua.indexOf('konqueror') != - 1) {
+            str = 'CTRL + B'; // Konqueror
+        } else if (window.home || isWebkit || isIEmac || isMac) {
+            str = (isMac ? 'Command/Cmd' : 'CTRL') + ' + D'; // Netscape, Safari, iCab, IE5/Mac
+        }
+        return ((str) ? 'Натисніть клавіші  ' + str + ' щоб додати цю сторінку.' : str); //Натисніть клавіші CTRL відзначати цю сторінку
+    }
+
+    function isIE8() {
+        var rv = -1;
+        if (navigator.appName == 'Microsoft Internet Explorer') {
+            var ua = navigator.userAgent;
+            var re = new RegExp("MSIE ([0-9]{1,}[.0-9]{0,})");
+            if (re.exec(ua) != null) {
+                rv = parseFloat(RegExp.$1);
+            }
+        }
+        if (rv > - 1) {
+            if (rv >= 8.0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function addBookmark(a) {
+        try {
+            if (typeof a == "object" && a.tagName.toLowerCase() == "a") {
+                a.style.cursor = 'pointer';
+                if ((typeof window.sidebar == "object") && (typeof window.sidebar.addPanel == "function")) {
+                    window.sidebar.addPanel(cjTitle, cjHref, ""); // Gecko
+                    return false;   
+                } else if (isMSIE && typeof window.external == "object") {
+                    if (isIE8()) {
+                        window.external.AddToFavoritesBar(cjHref, cjTitle); // IE 8                    
+                    } else {
+                        window.external.AddFavorite(cjHref, cjTitle); // IE <=7
+                    }
+                    return false;
+                } else if (window.opera) {
+                    a.href = cjHref;
+                    a.title = cjTitle;
+                    a.rel = 'sidebar'; // Opera 7+
+                    return true;
+                } else {
+                    alert(hotKeys());
+                }
+            } else {
+                // throw "Error occured.rnNote, only A tagname is allowed!";
+            }
+        } catch (err) {
+            alert(err);
+        }
+
+    }
+
+    return {
+        addBookmark : addBookmark
+    }
+}();
+</script>
+<!-- #ADD FAVORITES -->
+</head>
+
+<body>
+<!-- Верхнее меню -->
+<!-- 18 -->
+ <script>
+    $(document).ready(function(){
+        if (sessionStorage.getItem('is18') != 1) {
+        $('._18_1').parent().show();
+        $('._18_1').fadeIn();
+
+        $('._18_yes a').click(function(e){
+            e.preventDefault();
+            $('._18_1').parent().fadeOut();
+            sessionStorage.setItem('is18', '1');
+        });
+    }
+
+    });
+    //testing
+</script>
+
+<div style="display:none;    position: fixed;background: rgba(0, 104, 34, 0.7);
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+z-index: 99999;">
+<div class="_18_1" style="position:absolute; width:502px; height:303px; top:50%; left:50%;margin:-150px 0 0 -250px; background:url(/i/_18/_18_1.png) no-repeat; z-index:500000; ">
+<div style="position:absolute; width:108px; height:53px; top:181px; left:130px;" class="_18_yes"><a href="#"><img style="border:none;" src="/i/_18/_18_yes.png"></a></div>
+<div style="position:absolute; width:108px; height:53px; top:181px; left:271px;" class="_18_no"><a href="http://msl.ua/?code=under-18" target="_self"><img style="border:none;" src="/i/_18/_18_no.png"></a></div>
+<div style="position:absolute; top:-40px; right:-30px; width:150px; height:94px;"><img src="/f/i/RGS-x.png"></div>
+</div></div>
+<!-- #18 -->
+
+<!-- Ярлык Сертификованности -->
+
+<div style="position:absolute; right:22px; top:33px; width:137; height:86px; z-index:10000;"><img src="/f/i/rgs_inside.png"></div>
+
+
+<!-- #Ярлык Сертификованности -->
+
+<div id="white_bg"></div>
+<div id="top_menu_container"><!-- Украшение --><!-- <img src="/i/const_2013.jpg"> -->
+ <div id="logo"><a href="/"><img src="i/main/logo.png" width="141" height="63" border="0"></a></div>
+
+ <div id="top_menu" style="left:20%">
+ <table width="700" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+        <td class="menu_tile"><a href="/" class="top_menu_link" onclick="_gaq.push(['_trackEvent','header','click','main']);">Головна</a></td>
+        <td>&nbsp;</td>
+        <td class="menu_tile"><a href="?code=about-us" class="top_menu_link"  id="tm_4" onclick="_gaq.push(['_trackEvent','header','click','about_us']);">Про компанію</a></td>
+        <td>&nbsp;</td>
+        <td class="menu_tile"><a href="?code=lottery" class="top_menu_link"  id="tm_1" onclick="_gaq.push(['_trackEvent','header','click','lottery']);">Лотереї</a></td>
+        <td>&nbsp;</td>
+        <td class="menu_tile"><a href="?code=buy" class="top_menu_link" id="tm_2" onclick="_gaq.push(['_trackEvent','header','click','buyticket']);">Де я можу купити бiлет</a></td>
+        <td>&nbsp;</td>
+        <td class="menu_tile"><a href="?code=contacts" class="top_menu_link" id="tm_3" onclick="_gaq.push(['_trackEvent','header','click','contacts']);">Контакти</a></td>
+        <td>&nbsp;</td>
+        <td class="menu_tile"><a href="?code=faq" class="top_menu_link">&nbsp;&nbsp;</a></td>
+        <!-- <td>&nbsp;</td>
+        <td class="menu_tile"><a href="?code=faq" class="top_menu_link"> Запитання-відповідь</a></td>-->
+    </tr>
+</table>
+ </div>
+</div>
+<div class="dd_m_4">
+<p><a href="?code=about-us" onclick="_gaq.push(['_trackEvent','header','contacts','common_info']);">Загальна інформація</a></p>
+<p><a href="?code=history">Історія</a></p>
+<p><a href="?code=sv">Соціальна відповідальність</a></p>
+<!--<p><a href="#">Наші досягнення</a></p>-->
+<p><a href="?code=pres-zmi">Прес-центр</a></p>
+<p><a href="?code=job">Кар&rsquo;єра</a></p>
+<p><a href="?code=partners">Наші партнери</a></p>
+<p><a href="?code=tenders">Тендери</a></p>
+<div class="dd_bottom"><img src="i/total/dd_menu_bottom.png"></div>
+</div>
+<div class="dd_m_1">
+<p><a href="?code=lz" onclick="_gaq.push(['_trackEvent','header','click','zabava']);">Лото-Забава</a></p>
+<p><a href="?code=ht" onclick="_gaq.push(['_trackEvent','header','click','hto_tam']);">ХТО ТАМ</a></p>
+<p><a href="?code=ml" onclick="_gaq.push(['_trackEvent','header','click','megalot']);">Мегалот</a></p>
+<p><a href="?code=sl" onclick="_gaq.push(['_trackEvent','header','click','sportliga']);">Спортліга</a></p>
+<p><a href="?code=sp" onclick="_gaq.push(['_trackEvent','header','click','sportprognoz']);">Спортпрогноз</a></p>
+<p><a href="?code=gg" onclick="_gaq.push(['_trackEvent','header','click','gonka_na_groshi']);">Гонка на Гроші</a></p>
+<p><a href="?code=sg" onclick="_gaq.push(['_trackEvent','header','click','shvidkogray']);">Швидкограй</a> <sup>Миттєві лотереї</sup></p>
+<div class="dd_bottom"><img src="i/total/dd_menu_bottom.png"></div>
+</div>
+
+
+<div class="dd_m_2" style="margin-left:160px;">
+<table width="97%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td>
+<p><a href="?code=buy&region=Київ+та+Київська" onclick="_gaq.push(['_trackEvent','header','buyticket','Київ']);">Київ</a></p>
+<p><a href="?code=buy&region=Київ+та+Київська" onclick="_gaq.push(['_trackEvent','header','buyticket','Київська область']);">Київська область</a></p>
+<p><a href="?code=buy&region=Вінницька" onclick="_gaq.push(['_trackEvent','header','buyticket','Вінницька']);">Вінницька область</a></p>
+<p><a href="?code=buy&region=Волинська" onclick="_gaq.push(['_trackEvent','header','buyticket','Волинська']);">Волинська область</a></p>
+<p><a href="?code=buy&region=Дніпропетровська" onclick="_gaq.push(['_trackEvent','header','buyticket','Дніпропетровська']);">Дніпропетровська область</a></p>
+<p><a href="?code=buy&region=Донецька" onclick="_gaq.push(['_trackEvent','header','buyticket','Донецька']);">Донецька область</a></p>
+</td>
+<td>
+<p><a href="?code=buy&region=Житомирська" onclick="_gaq.push(['_trackEvent','header','buyticket','Житомирська']);">Житомирська область</a></p>
+<p><a href="?code=buy&region=Закарпатська" onclick="_gaq.push(['_trackEvent','header','buyticket','Закарпатська']);">Закарпатська область</a></p>
+<p><a href="?code=buy&region=Запорізька" onclick="_gaq.push(['_trackEvent','header','buyticket','Запорізька']);">Запорізька область</a></p>
+<p><a href="?code=buy&region=Івано-Франківська" onclick="_gaq.push(['_trackEvent','header','buyticket','Івано-Франківська']);">Івано-Франківська область</a></p>
+<p><a href="?code=buy&region=Кіровоградська" onclick="_gaq.push(['_trackEvent','header','buyticket','Кіровоградська']);">Кіровоградська область</a></p>
+<p><a href="?code=buy&region=Автономна+республіка+Крим" onclick="_gaq.push(['_trackEvent','header','buyticket','Кримська']);">АР Крим</a></p>
+</td>
+<td>
+<p><a href="?code=buy&region=Луганська" onclick="_gaq.push(['_trackEvent','header','buyticket','Луганська']);">Луганська область</a></p>
+<p><a href="?code=buy&region=Львівська" onclick="_gaq.push(['_trackEvent','header','buyticket','Львівська']);">Львівська область</a></p>
+<p><a href="?code=buy&region=Миколаївська" onclick="_gaq.push(['_trackEvent','header','buyticket','Миколаївська']);">Миколаївська область</a></p>
+<p><a href="?code=buy&region=Одеська" onclick="_gaq.push(['_trackEvent','header','buyticket','Одеська']);">Одеська область</a></p>
+<p><a href="?code=buy&region=Полтавська" onclick="_gaq.push(['_trackEvent','header','buyticket','Полтавська']);">Полтавська область</a></p>
+<p><a href="?code=buy&region=Рівненська" onclick="_gaq.push(['_trackEvent','header','buyticket','Рівненська']);">Рівненська область</a></p>
+</td>
+<td>
+<p><a href="?code=buy&region=Сумська" onclick="_gaq.push(['_trackEvent','header','buyticket','Сумська']);">Сумська область</a></p>
+<p><a href="?code=buy&region=Тернопільська" onclick="_gaq.push(['_trackEvent','header','buyticket','Тернопільська']);">Тернопільська область</a></p>
+<p><a href="?code=buy&region=Харківська" onclick="_gaq.push(['_trackEvent','header','buyticket','Харківська']);">Харківська область</a></p>
+<p><a href="?code=buy&region=Херсонська" onclick="_gaq.push(['_trackEvent','header','buyticket','Херсонська']);">Херсонська область</a></p>
+<p><a href="?code=buy&region=Хмельницька" onclick="_gaq.push(['_trackEvent','header','buyticket','Хмельницька']);">Хмельницька область</a></p>
+<p><a href="?code=buy&region=Черкаська" onclick="_gaq.push(['_trackEvent','header','buyticket','Черкаська']);">Черкаська область</a></p>
+</td>
+<td>
+<p><a href="?code=buy&region=Чернівецька" onclick="_gaq.push(['_trackEvent','header','buyticket','Чернівецька']);">Чернівецька область</a></p>
+<p><a href="?code=buy&region=Чернігівська" onclick="_gaq.push(['_trackEvent','header','buyticket','Чернігівська']);">Чернігівська область</a></p>
+<p><a href="?code=contacts_offices">Адреси представництв</a></p>
+</td>
+</tr>
+</table>
+<div class="dd_bottom"><img src="i/total/dd_menu_bottom_wide.png"></div>
+</div>
+<div class="dd_m_3">
+<p><a href="?code=contacts">Центральний офіс</a></p>
+<p><a href="?code=contacts_offices"  onclick="_gaq.push(['_trackEvent','header','contacts','address']);">Адреси представництв</a></p>
+<div class="dd_bottom"><img src="i/total/dd_menu_bottom.png"></div>
+</div>
+<!-- #Верхнее меню -->
+<div class="inside_top">
+  <div class="ins_logo"><a href="?code=ml"><img src="i/ML/inside/logo_2.png" width="146" height="92" border="0"></a></div>
+  <div id="inside_top_menu">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td class="menu_tile_ins"><a href="?code=ml" class="inside_top_menu_link">Мегалот</a></td>
+        <td>&nbsp;</td>
+        <td class="menu_tile_ins"><a href="?code=ml_rules" class="inside_top_menu_link">Правила гри</a></td>
+        <!-- <td>&nbsp;</td>
+        <td class="menu_tile_ins"><a href="?code=ml-stst" class="inside_top_menu_link">Статистика</a></td> -->
+        <td>&nbsp;</td>
+        <td class="menu_tile_ins"><a href="?code=ml_umovy" class="inside_top_menu_link">Умови проведення лотереї</a></td>
+		<td>&nbsp;</td>
+        <td class="menu_tile_ins"><a href="?code=ml-results_archive" class="inside_top_menu_link">Архiв результатiв </a></td>
+        <td>&nbsp;</td>
+        <td class="menu_tile_ins"><a href="?code=ml_news_archive" class="inside_top_menu_link">Статті в газеті Азарт</a></td>
+      </tr>
+    </table>
+  </div>
+</div>
+<!-- Breadcramps -->
+<div style="position:absolute; left:25%; top:180px; font-size:13px; color:#aaaaaa; font-style:italic; z-index:200;" xmlns:v="http://rdf.datavocabulary.org/#">
+<span typeof="v:Breadcrumb"><a href="/" rel="v:url" property="v:title">Головна</a></span> ><span typeof="v:Breadcrumb"><a href="?code=ml" rel="v:url" property="v:title">Лотерея Мегалот: играть в лото онлайн, результаты лотереи | МолодьСпортЛото</a></span> >Архiв результатiв</div>
+
+<!-- #Breadcramps -->
+<div class="main_frame"><h1 style="padding-bottom:23px;">Архiв результатiв</h1>
+                    
+				<table border="0" cellpadding="0" cellspacing="0" class="results_item" width="100%" style="margin-bottom:23px;">
+					<tbody>
+						<tr>
+							<td width="100">
+									6.07.2013</td>
+								<td>
+									<p>
+									<a class="results_a" href="?code=ml-results_archive&lot_number=1237">Тираж 1237</a></p>
+								<p>
+									Результати: <span>3, 4, 7, 20, 28, 35 + мегакулька: 3</span></p>
+								<p>
+									МЕГАПРИЗ: <span><strong>2 900 000</strong> грн</span></p>
+								<p>
+									МЕГА ДЖЕК-ПОТ: <span><strong>15 000 000</strong> грн</span></p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			
+				<table border="0" cellpadding="0" cellspacing="0" class="results_item" width="100%" style="margin-bottom:23px;">
+					<tbody>
+						<tr>
+							<td width="100">
+									3.07.2013</td>
+								<td>
+									<p>
+									<a class="results_a" href="?code=ml-results_archive&lot_number=1236">Тираж 1236</a></p>
+								<p>
+									Результати: <span>8, 11, 17, 21, 30, 36 + мегакулька: 5</span></p>
+								<p>
+									МЕГАПРИЗ: <span><strong>2 800 000</strong> грн</span></p>
+								<p>
+									МЕГА ДЖЕК-ПОТ: <span><strong>15 000 000</strong> грн</span></p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			
+				<table border="0" cellpadding="0" cellspacing="0" class="results_item" width="100%" style="margin-bottom:23px;">
+					<tbody>
+						<tr>
+							<td width="100">
+									29.06.2013</td>
+								<td>
+									<p>
+									<a class="results_a" href="?code=ml-results_archive&lot_number=1235">Тираж 1235</a></p>
+								<p>
+									Результати: <span>10, 12, 14, 15, 24, 40 + мегакулька: 8</span></p>
+								<p>
+									МЕГАПРИЗ: <span><strong>2 700 000</strong> грн</span></p>
+								<p>
+									МЕГА ДЖЕК-ПОТ: <span><strong>15 000 000</strong> грн</span></p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			
+				<table border="0" cellpadding="0" cellspacing="0" class="results_item" width="100%" style="margin-bottom:23px;">
+					<tbody>
+						<tr>
+							<td width="100">
+									26.06.2013</td>
+								<td>
+									<p>
+									<a class="results_a" href="?code=ml-results_archive&lot_number=1234">Тираж 1234</a></p>
+								<p>
+									Результати: <span>11, 12, 18, 21, 26, 36 + мегакулька: 3</span></p>
+								<p>
+									МЕГАПРИЗ: <span><strong>2 600 000</strong> грн</span></p>
+								<p>
+									МЕГА ДЖЕК-ПОТ: <span><strong>15 000 000</strong> грн</span></p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			
+				<table border="0" cellpadding="0" cellspacing="0" class="results_item" width="100%" style="margin-bottom:23px;">
+					<tbody>
+						<tr>
+							<td width="100">
+									22.06.2013</td>
+								<td>
+									<p>
+									<a class="results_a" href="?code=ml-results_archive&lot_number=1233">Тираж 1233</a></p>
+								<p>
+									Результати: <span>16, 30, 34, 36, 37, 42 + мегакулька: 5</span></p>
+								<p>
+									МЕГАПРИЗ: <span><strong>2 500 000</strong> грн</span></p>
+								<p>
+									МЕГА ДЖЕК-ПОТ: <span><strong>15 000 000</strong> грн</span></p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			
+				<table border="0" cellpadding="0" cellspacing="0" class="results_item" width="100%" style="margin-bottom:23px;">
+					<tbody>
+						<tr>
+							<td width="100">
+									19.06.2013</td>
+								<td>
+									<p>
+									<a class="results_a" href="?code=ml-results_archive&lot_number=1232">Тираж 1232</a></p>
+								<p>
+									Результати: <span>5, 15, 18, 19, 27, 40 + мегакулька: 7</span></p>
+								<p>
+									МЕГАПРИЗ: <span><strong>7 500 000</strong> грн</span></p>
+								<p>
+									МЕГА ДЖЕК-ПОТ: <span><strong>15 000 000</strong> грн</span></p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			
+				<table border="0" cellpadding="0" cellspacing="0" class="results_item" width="100%" style="margin-bottom:23px;">
+					<tbody>
+						<tr>
+							<td width="100">
+									15.06.2013</td>
+								<td>
+									<p>
+									<a class="results_a" href="?code=ml-results_archive&lot_number=1231">Тираж 1231</a></p>
+								<p>
+									Результати: <span>22, 23, 24, 26, 27, 34 + мегакулька: 1</span></p>
+								<p>
+									МЕГАПРИЗ: <span><strong>7 500 000</strong> грн</span></p>
+								<p>
+									МЕГА ДЖЕК-ПОТ: <span><strong>15 000 000</strong> грн</span></p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			
+				<table border="0" cellpadding="0" cellspacing="0" class="results_item" width="100%" style="margin-bottom:23px;">
+					<tbody>
+						<tr>
+							<td width="100">
+									12.06.2013</td>
+								<td>
+									<p>
+									<a class="results_a" href="?code=ml-results_archive&lot_number=1230">Тираж 1230</a></p>
+								<p>
+									Результати: <span>7, 29, 33, 36, 38, 39 + мегакулька: 2</span></p>
+								<p>
+									МЕГАПРИЗ: <span><strong>7 500 000</strong> грн</span></p>
+								<p>
+									МЕГА ДЖЕК-ПОТ: <span><strong>15 000 000</strong> грн</span></p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			
+				<table border="0" cellpadding="0" cellspacing="0" class="results_item" width="100%" style="margin-bottom:23px;">
+					<tbody>
+						<tr>
+							<td width="100">
+									8.06.2013</td>
+								<td>
+									<p>
+									<a class="results_a" href="?code=ml-results_archive&lot_number=1229">Тираж 1229</a></p>
+								<p>
+									Результати: <span>1, 12, 21, 25, 26, 27 + мегакулька: 8</span></p>
+								<p>
+									МЕГАПРИЗ: <span><strong>7 500 000</strong> грн</span></p>
+								<p>
+									МЕГА ДЖЕК-ПОТ: <span><strong>15 000 000</strong> грн</span></p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			
+				<table border="0" cellpadding="0" cellspacing="0" class="results_item" width="100%" style="margin-bottom:23px;">
+					<tbody>
+						<tr>
+							<td width="100">
+									5.06.2013</td>
+								<td>
+									<p>
+									<a class="results_a" href="?code=ml-results_archive&lot_number=1228">Тираж 1228</a></p>
+								<p>
+									Результати: <span>9, 14, 19, 21, 29, 33 + мегакулька: 7</span></p>
+								<p>
+									МЕГАПРИЗ: <span><strong>7 500 000</strong> грн</span></p>
+								<p>
+									МЕГА ДЖЕК-ПОТ: <span><strong>15 000 000</strong> грн</span></p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			<div style="position:relative; width:100%; text-align:center; padding-top:23px; clear:both; font-size:18px;"><div style="display:inline-block; margin-right:10px;"><strong>1</strong></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=10">2</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=20">3</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=30">4</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=40">5</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=50">6</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=60">7</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=70">8</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=80">9</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=90">10</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=100">11</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=110">12</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=120">13</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=130">14</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=140">15</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=150">16</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=160">17</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=170">18</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=180">19</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=190">20</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=200">21</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=210">22</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=220">23</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=230">24</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=240">25</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=250">26</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=260">27</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=270">28</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=280">29</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=290">30</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=300">31</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=310">32</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=320">33</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=330">34</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=340">35</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=350">36</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=360">37</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=370">38</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=380">39</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=390">40</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=400">41</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=410">42</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=420">43</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=430">44</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=440">45</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=450">46</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=460">47</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=470">48</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=480">49</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=490">50</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=500">51</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=510">52</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=520">53</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=530">54</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=540">55</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=550">56</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=560">57</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=570">58</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=580">59</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=590">60</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=600">61</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=610">62</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=620">63</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=630">64</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=640">65</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=650">66</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=660">67</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=670">68</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=680">69</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=690">70</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=700">71</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=710">72</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=720">73</a></div><div style="display:inline-block; margin-right:10px;"><strong><a class="listing_link" href="?code=ml-results_archive&lang=1&cat_from=730">74</a></div></div><div style="clear:both; padding-bottom:46px;"></div>
+  
+</div>
+
+
+<!-- шапка --> 
+
+<!-- шапка --> 
+
+<!-- # Подвал -->
+<!-- <div style="position:relative; padding-bottom:46px; padding-top:23px; margin-left:45%;"> -->
+
+
+<div id="hot_line" style="clear:both;">
+<div style="width:400px;">
+    <p class="hot_line_text">Гаряча лінія:</p><p class="hot_line_number"><em>(044)</em> 205 00 95</p><!--<p>&nbsp;</p>
+<p style="font-size:15px; font-style:italic; color:#006822; font-weight:bold;">Сайт у стані розробки.<br> Просимо вибачення за заподіяні незручності</p>-->
+</div>
+<img src="i/hot_line.jpg" width="307" height="152"></div>
+
+<div id="footer" style="min-width:980px; height:185px; position:relative;">
+<div style="position:absolute; right:3%; top:-20px; z-index:100000;">
+<img src="/i/18.png" width="195" height="200">
+</div>
+<div style="position:absolute; top:40px; right: 21%;"><img src="/i/_18/msl-responsible.png"></div>
+	<div id="sign_in_new" style="top:64px; padding:15px; background-repeat: repeat; background-position:right top; right:20%;">
+    	<p>Розсилка новин на e-mail:</p>
+<script language=javascript>
+//<!--
+function ml_window() {
+   var act = '';
+   for (var k=0; k < document.sub_form.elements.length; k++) {
+      var radioObj = document.sub_form.elements[k];
+      if (radioObj.type == 'radio' && radioObj.checked == true) {
+         act = radioObj.value;
+         var c_id = k;
+      }
+   }
+   if (act == '') {
+      return false;
+   }
+   var path = 'http://tools.mirohost.net/ml/mail.php?id=2534&action=' + act + '_form';
+   var subwin = window.open( path, "ml_window", "width=400, height=200");
+   document.sub_form.elements[c_id].checked = false;
+   return false;
+}
+//-->
+</script>
+<form name=sub_form>
+<table border="0">
+<tr>
+<td>
+   <input type=radio name=action value=sub id="f1"> <strong><label for="f1">підписатися</label></strong>&nbsp;&nbsp;
+   <input type=radio name=action value=confirm id="f2"> <label for="f2">підтвердити підписку</label><br>
+   <input type=radio name=action value=remind id="f3"> <label for="f3">нагадати пароль</label>&nbsp;&nbsp;
+   <input type=radio name=action value=unsub id="f4"> <label for="f4">відписатися</label>
+</td>
+<td>
+   <p><input type="image" src="i/sign_in_button.png"  onclick="return ml_window();"></p>
+</td>
+</tr>
+</table>
+</form>
+        <!-- <form action="" method="post">
+        	<div id="email_send" ><input name="email_send" type="text"></div> 
+        	<div id="send_email_button"><input name="" type="image"  src="i/main/button_pidpisatis.png"></div>
+        </form> -->
+    </div>
+    
+     <!-- COUNTER -->  
+    <div style="position:absolute; margin-left:5px; bottom:10px;">
+<!--LiveInternet counter--><script type="text/javascript"><!--
+document.write("<a href='http://www.liveinternet.ru/click' "+
+"target=_blank><img src='//counter.yadro.ru/hit?t54.6;r"+
+escape(document.referrer)+((typeof(screen)=="undefined")?"":
+";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+";"+Math.random()+
+"' alt='' title='LiveInternet: number of pageviews and visitors"+
+" for 24 hours is shown' "+
+"border='0' width='88' height='31'><\/a>")
+//--></script><!--/LiveInternet-->
+</div>
+
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+(function (d, w, c) {
+    (w[c] = w[c] || []).push(function() {
+        try {
+            w.yaCounter20087653 = new Ya.Metrika({id:20087653,
+                    webvisor:true,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true});
+        } catch(e) { }
+    });
+
+    var n = d.getElementsByTagName("script")[0],
+        s = d.createElement("script"),
+        f = function () { n.parentNode.insertBefore(s, n); };
+    s.type = "text/javascript";
+    s.async = true;
+    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+    if (w.opera == "[object Opera]") {
+        d.addEventListener("DOMContentLoaded", f, false);
+    } else { f(); }
+})(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="//mc.yandex.ru/watch/20087653" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+
+<!-- COUNTER -->
+    <div id="copy" style="margin-top:auto; bottom:10px;">
+    	<p class="text_green_italic">© МСЛ 2011</p>
+        <!-- <p><a href="#" class="small_link">Соціальна відповідальність</a></p> -->
+    </div>
+ 
+
+<div style="position:absolute; margin-left:45%; margin-top:-30px;">
+<!-- AddThis Button BEGIN -->
+<div class="addthis_toolbox addthis_default_style">
+<span style="float:left; font-size:13px; font-style:italic; color:#41403d; margin-right:3px;">Поділитися: </span>  
+<a class="addthis_button_facebook"></a>
+<a class="addthis_button_vk"></a>
+<a class="addthis_button_twitter"></a>
+<a class="addthis_button_facebook_like"></a>
+
+</div>
+<script type="text/javascript">var addthis_config = {"data_track_clickback":true};</script>
+<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4ec0f8975b585a72"></script>
+<!-- AddThis Button END -->
+</div>
+
+ 
+    
+</div>
+
+<!--   КАРТА  -->
+<div class="site_map" style="z-index:100000;">
+<div class="_1">
+<h4><a href="?code=lz" onclick="_gaq.push(['_trackEvent','sitemap','zabava','zabava']);">Лото-Забава</a></h4>
+<p><a href="?code=lz-results_archive" onclick="_gaq.push(['_trackEvent','sitemap','zabava','archive']);">Архів результатів</a></p>
+<p><a href="?code=lz-millioners" onclick="_gaq.push(['_trackEvent','sitemap','zabava','millioners']);">Нашi мiльйонери</a></p>
+<p><a href="?code=lz-news" onclick="_gaq.push(['_trackEvent','sitemap','zabava','newspaper']);">Статті в газеті Азарт</a></p>
+<p><a href="?code=lz-first-time" onclick="_gaq.push(['_trackEvent','sitemap','zabava','first_time']);">Я граю перший раз</a></p>
+<p><a href="?code=lz-rules" onclick="_gaq.push(['_trackEvent','sitemap','zabava','rules']);">Правила гри</a></p>
+<p><a href="?code=lz-umovy" onclick="_gaq.push(['_trackEvent','sitemap','zabava','umovy']);">Умови проведення лотереї</a></p>
+</div>
+
+<div class="_2">
+<h4><a href="?code=ht" onclick="_gaq.push(['_trackEvent','sitemap','hto-tam','hto-tam']);">ХТО ТАМ</a></h4>
+<p><a href="?code=ht-winners" onclick="_gaq.push(['_trackEvent','sitemap','hto-tam','winners']);">Наші переможці</a></p>
+<p><a href="?code=ht-win-rooms" onclick="_gaq.push(['_trackEvent','sitemap','hto-tam','winn_rooms']);">Про останню квартиру</a></p>
+<p><a href="?code=ht-rooms" onclick="_gaq.push(['_trackEvent','sitemap','hto-tam','rooms']);">Виграні квартири</a></p>
+<p><a href="?code=ht-first-time" onclick="_gaq.push(['_trackEvent','sitemap','hto-tam','first_time']);">Я граю перший раз</a></p>
+<p><a href="?code=ht-archive" onclick="_gaq.push(['_trackEvent','sitemap','hto-tam','archive']);">Архів результатів</a></p>
+<p><a href="?code=actions" onclick="_gaq.push(['_trackEvent','sitemap','hto-tam','Akcia']);">Акция!</a></p>
+<p><a href="?code=ht-video" onclick="_gaq.push(['_trackEvent','sitemap','hto-tam','game_video']);">Вiдео з гри</a></p>
+<p><a href="?code=video-2" onclick="_gaq.push(['_trackEvent','sitemap','hto-tam','video_suzhet']);">Відео сюжети</a></p>
+<p><a href="?code=ht_news_archive" onclick="_gaq.push(['_trackEvent','sitemap','hto-tam','newspaper']);">Статті в газеті Азарт</a></p>
+<p><a href="?code=ht-umovy" onclick="_gaq.push(['_trackEvent','sitemap','hto-tam','umovy']);">Умови проведення лотереї</a></p>
+</div>
+
+<div class="_3">
+<h4><a href="?code=ml" onclick="_gaq.push(['_trackEvent','sitemap','megalot','megalot']);">Мегалот</a></h4>
+<p><a href="?code=ml_results" onclick="_gaq.push(['_trackEvent','sitemap','megalot','archive']);">Архів результатів</a></p>
+<p><a href="?code=ml_rules" onclick="_gaq.push(['_trackEvent','sitemap','megalot','megalot']);">Правила гри</a></p>
+<p><a href="?code=ml_news_archive" onclick="_gaq.push(['_trackEvent','sitemap','megalot','newspaper']);">Статті в газеті Азарт</a></p>
+<p><a href="?code=megalot#sys" onclick="_gaq.push(['_trackEvent','sitemap','megalot','analiz']);">Аналіз системної гри</a></p>
+<p><a href="?code=ml_umovy" onclick="_gaq.push(['_trackEvent','sitemap','megalot','umovy']);">Умови проведення лотереї</a></p>
+<!-- <p><a href="?code=">Акция!</a></p> -->
+</div>
+
+<div class="_4">
+<h4><a href="?code=sl" onclick="_gaq.push(['_trackEvent','sitemap','sportliga','sportliga']);">Спортліга</a></h4>
+<p><a href="?code=sl_results_archive" onclick="_gaq.push(['_trackEvent','sitemap','sportliga','archive']);">Архів результатів</a></p>
+<p><a href="?code=sl_rules" onclick="_gaq.push(['_trackEvent','sitemap','sportliga','rules']);">Правила гри</a></p>
+<p><a href="?code=sl_first_time" onclick="_gaq.push(['_trackEvent','sitemap','sportliga','first_time']);">Я граю перший раз</a></p>
+<p><a href="?code=sl_toto_archive" onclick="_gaq.push(['_trackEvent','sitemap','sportliga','newspaper']);">Статті з ТОТО плюс</a></p>
+<p><a href="?code=sl_umovy" onclick="_gaq.push(['_trackEvent','sitemap','sportliga','umovy']);">Умови проведення лотереї</a></p>
+</div>
+
+<div class="_5">
+<h4><a href="?code=gg" onclick="_gaq.push(['_trackEvent','sitemap','gonka','gonka']);">Гонка на гроші</a></h4>
+<p><a href="?code=gg-first-time" onclick="_gaq.push(['_trackEvent','sitemap','gonka','first_time']);">Я граю перший раз</a></p>
+<p><a href="?code=gg-rules" onclick="_gaq.push(['_trackEvent','sitemap','gonka','rules']);">Правила гри</a></p>
+<p><a href="?code=gg_archive" onclick="_gaq.push(['_trackEvent','sitemap','gonka','archive']);">Архів результатів</a></p>
+<p><a href="?code=gg_umovy" onclick="_gaq.push(['_trackEvent','sitemap','gonka','umovy']);">Умови проведення лотереї</a></p>
+</div>
+
+<div class="_6">
+<h4><a href="?code=sp" onclick="_gaq.push(['_trackEvent','sitemap','sportprognoz','sportprognoz']);">Спортпрогноз</a></h4>
+<p><a href="?code=sp-archive" onclick="_gaq.push(['_trackEvent','sitemap','sportprognoz','archive']);">Архів результатів</a></p>
+<p><a href="?code=sp-rules" onclick="_gaq.push(['_trackEvent','sitemap','sportprognoz','rules']);">Правила гри</a></p>
+<p><a href="?code=sp-umovy" onclick="_gaq.push(['_trackEvent','sitemap','sportprognoz','umovy']);">Умови проведення лотереї</a></p>
+<p><a href="?code=sp-news-archive" onclick="_gaq.push(['_trackEvent','sitemap','sportprognoz','newspaper']);">Статті з ТОТО плюс</a></p>
+</div>
+
+<div class="_7">
+<h4><a href="?code=sg" onclick="_gaq.push(['_trackEvent','sitemap','shvidkogray','shvidkogray']);">Швидкограй</a></h4>
+<p><a href="?code=sg-news" onclick="_gaq.push(['_trackEvent','sitemap','shvidkogray','newspaper']);">Новини</a></p>
+<p><a href="?code=10grn" onclick="_gaq.push(['_trackEvent','sitemap','shvidkogray','tickets_10UAH']);">Миттєві лотереї<br>по 10 грн</a></p>
+<p><a href="?code=5grn" onclick="_gaq.push(['_trackEvent','sitemap','shvidkogray','tickets_5UAH']);">Миттєві лотереї<br>по 5 грн</a></p>
+<p><a href="?code=2grn" onclick="_gaq.push(['_trackEvent','sitemap','shvidkogray','tickets_2UAH']);">Миттєві лотереї<br>по 2 грн</a></p>
+</div>
+
+<div class="_8">
+<h4><a href="?code=about-us">Про компанію</a></h4>
+<p><a href="?code=contacts" onclick="_gaq.push(['_trackEvent','sitemap','about_us','common_info']);">Загальна  нформація</a></p>
+<p><a href="?code=history" onclick="_gaq.push(['_trackEvent','sitemap','about_us','history']);">Історія МСЛ</a></p>
+<p><a href="?code=pres-zmi" onclick="_gaq.push(['_trackEvent','sitemap','about_us','pres_zmi']);">Презентація для ЗМІ</a></p>
+<p><a href="?code=pres-partners" onclick="_gaq.push(['_trackEvent','sitemap','about_us','pres_partners']);">Презентація для партнерів</a></p>
+</div>
+
+<div class="_9">
+<h4><a href="?code=videoteka" onclick="_gaq.push(['_trackEvent','sitemap','videoteka','videoteka']);">Відеотека</a></h4>
+<p><a href="?code=ns" onclick="_gaq.push(['_trackEvent','sitemap','videoteka','news']);">Новинні сюжети</a></p>
+<p><a href="?code=va" onclick="_gaq.push(['_trackEvent','sitemap','videoteka','anons']);">Анонси</a></p>
+<p><a href="?code=nr" onclick="_gaq.push(['_trackEvent','sitemap','videoteka','train']);">Навчальнi ролiки</a></p>
+<p><a href="?code=zp" onclick="_gaq.push(['_trackEvent','sitemap','videoteka','prog']);">Записи програм</a></p>
+</div>
+
+<div class="_10">
+<h4><a href="?code=buy" onclick="_gaq.push(['_trackEvent','sitemap','click','buyticket']);">Де я можу купити білет</a></h4>
+<h4><a href="?code=contacts" onclick="_gaq.push(['_trackEvent','sitemap','click','contacts']);">Контакти</a></h4>
+<h4><a href="?code=faq" onclick="_gaq.push(['_trackEvent','sitemap','click','A&Q']);">Питання-відповідь</a></h4>
+<h4><a href="?code=partners" onclick="_gaq.push(['_trackEvent','sitemap','click','partners']);">Наші партнери</a></h4>
+<h4><a href="?code=job" onclick="_gaq.push(['_trackEvent','sitemap','click','career']);">Кар’єра</a></h4>
+<h4><a href="?code=team" onclick="_gaq.push(['_trackEvent','sitemap','click','team']);">Команда</a></h4>
+<h4><a href="?code=world-news" onclick="_gaq.push(['_trackEvent','sitemap','click','lotteryworldnews']);">Світові лотерейні новини</a></h4>
+<h4><a href="?code=humor" onclick="_gaq.push(['_trackEvent','sitemap','click','humor']);">Cторінка гумору</a></h4>
+<h4><a href="?code=sv" onclick="_gaq.push(['_trackEvent','sitemap','click','social']);">Соціальна відповідальність</a></h4>
+</div>
+
+<div style="position:absolute; top:15px; right:15px; width:43px; height:43px;"><a class="close_site_map" href="#"><img src="i/blank.png" style="width:43px; height:43px; border:none;"></a></div>
+
+
+</div>
+<!--   КАРТА  -->
+
+
+
+<div style="position:absolute; top:10px; right:12%; width=400px; z-index:5000">
+<div id="top_1" class="site_map_link"><a href="#" class="small_green_link">Мапа сайту</a></div>
+<form action="?code=search" method="post">
+        	 
+        	<input name="search" type="text" class="txt" style="width:150px; border:solid #aaaaaa 1px; height:23px;">
+                <input type="image" src="i/main_new/search_button.png" style="margin-bottom:-8px;">
+        </form>
+		<div class="favorits" style="right:-50px;"><a class="book" href="javascript:void(0)" onClick="return ATBookmarkApp.addBookmark(this)" title="Додати в обране"><img src="i/main_new/favites.png" alt="Додати в обране"  border="0"></a></div>
+
+<div class="favorits" style="right:-120px;"><a href="?lang=4"><img src="i/eng.png" border="0"></a></div>
+
+</div>
+</body>
+</html>
