@@ -20,23 +20,18 @@
         </tbody>
     </table>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('languages') }}">
-            {% trans%}Back to the list{%endtrans%}
+        
+    <a class="btn"href="{{ path('languages') }}" title="{% trans%}Back to the list{%endtrans%}">
+           <i class="icon-list"> </i>  
         </a>
-    </li>
-    <li>
-        <a href="{{ path('languages_edit', { 'id': entity.id }) }}">
-            {% trans%}Edit{%endtrans%}
+    
+    <a class="btn btn-warning" href="{{ path('languages_edit', { 'id': entity.id }) }}" title="{% trans%}Edit{%endtrans%}">
+           <i class="icon-edit icon-white"> </i>
         </a>
-    </li>
-    <li>
+    
         <form action="{{ path('languages_delete', { 'id': entity.id }) }}" method="post">
             <input type="hidden" name="_method" value="DELETE" />
             {{ form_widget(delete_form) }}
            <button type="submit" class="btn btn-primary" data-loading-text="Loading...">{% trans%}Delete{%endtrans%}</button>
-        </form>
-    </li>
-</ul>
+        
 {% endblock %}
