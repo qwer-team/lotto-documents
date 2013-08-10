@@ -39,15 +39,16 @@ class SuperLotoParser extends AbstractLotoParser {
              'Мая' => 5,
              'Июня' => 6,
              'Июля' => 7,
-             'Августа' => 8,
+             'Àâãóñòà' => 8,
              'Сентября' => 9,
              'Октября' => 10,
              'Ноября' => 11,
              'Декабря' => 12
          );
-         preg_match('/\s([\d]+)\s([\D]+)\s([\d]+)/', $rawDate, $words);
-         $day = $words[1];
-         $month = $frMonth[strtolower($words[2])];
+
+         preg_match('/\s([\d]+)\s([\D]+)\s([\d]+)/u', $rawDate, $words);
+	 $day = $words[1];
+         $month = $frMonth[$words[2]];
          $year = $words[3];
          $date = new \DateTime("$year-$month-$day");
          return $date;

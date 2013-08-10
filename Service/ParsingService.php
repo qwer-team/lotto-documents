@@ -32,9 +32,14 @@ class ParsingService extends ContainerAware
        }
        $parser = $this->container->get("lotto_documents_result_parser.".$parserTag);
        $parser->setDraw($draw);
-       $parser->parse();
-       if(!$parser->hasResults()){
-           //TODO
+       try{
+          $parser->parse();
+          if(!$parser->hasResults()){
+              //TODO
+          }
+       } catch (\Exception $e){
+           $message = $e->getMessage();
+           echo 'vse ploho '.$message."\n";
        }
     }
     private function getUnresaltedDraws(){
