@@ -1,37 +1,43 @@
 <?php
 
-namespace Qwer\LottoDocumentsBundle\Service\ResultParser\Russia;
+namespace Qwer\LottoDocumentsBundle\Service\ResultParser\Belarus;
 
 use Qwer\LottoDocumentsBundle\Service\ResultParser\AbstractLotoParser;
-
-class Sport649LotoParser extends AbstractLotoParser {
+use Liuggio\ExcelBundle;
+ 
+ 
+class PjatorochkaLotoParser extends AbstractLotoParser  {
     
+     protected $templateUrl = 'http://belloto.by/peterochka/5ka-akts/';
      
-      protected $templateUrl = 'http://www.stoloto.ru/6x49/archive';
-      
      public function parse() {
         
-         $crawler = $this->getCrawler();
-           
-         $rawDate = trim($crawler->filter('ins.pseudo')->text());
-        
+          $crawler = $this->getCrawler();
+         $rawDate = trim($crawler->filter('table.tirag_table tr td')->text());
+         $ar= explode("/", $rawDate);
+         $rawDate =trim($ar[1]);
          $date = $this->getDate($rawDate);
+    //     print_r($date);
+          $drawNo=trim( $ar[0]);
+     // print($drawNo." \n");
          
-          $rawDrawNo = trim($crawler->filter('div.draw a')->text());
-         $drawNo=$this->getDrawNo($rawDrawNo);
-       //  print($drawNo."\n");
-         $ballsNodes = $crawler->filter('div.numbers div b');
-         $ballsCnt = 7;
-         $balls = array();
-         foreach($ballsNodes as $ball) {
-             if($ballsCnt == 0)
-                 break;
-             $balls[] = trim($ball->nodeValue);
-             $ballsCnt--;
-         }
-         $bonus = array_pop($balls);
+        $fr = fopen("http://belloto.by/files/news/files/1489_act_l5_278.xls", "r");
+        $fw = fopen("x.xsl","w");
+        $c= stream_get_contents($fr);
+        fwrite($fw, $c);
+        fclose($fr);
+        fclose($fw);
+         $f= new ExcelBundle\Factory();
+        $phpExcelObject = $f->createPHPExcelObject("x.xsl");
+        //$phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject("x.xsl");
+        $ballsNodes= $phpExcelObject->getActiveSheet()->getCell('A8')->getValue();
+      
+        $ballsNodes= trim(str_replace("Порядок выпадения чисел:", "",$ballsNodes));
+         $balls=  explode(", ", $ballsNodes);
+   //     print_r($balls);
          
-          $t=$this->draw->getLottoTime()->getLottoType();
+         
+         $t=$this->draw->getLottoTime()->getLottoType();
           if(!$this->repoResAll->findResultAllByTypeDrowNo($t,$drawNo)) {
             $drawTime=$this->draw->getLottoTime()->getTime();
             $h=$drawTime->format("H");
@@ -41,8 +47,7 @@ class Sport649LotoParser extends AbstractLotoParser {
             $this->resultAll->setLottoType($t);
             $this->resultAll->setDt($date);
             $this->resultAll->setDrawName($drawNo);
-            $this->resultAll->setResult($balls); 
-            $this->resultAll->setBonusResult(array($bonus));
+            $this->resultAll->setResult($balls);  
             $this->resultAll->setUCor("parsing");
 
              $t->addLottoResultsAll( $this->resultAll);
@@ -52,9 +57,8 @@ class Sport649LotoParser extends AbstractLotoParser {
          if($this->hasResult) {
              $result = $this->draw->getResult();
              $result->setResult($balls);
-             $result->setBonusResult(array($bonus));
-              $this->draw->setLottoStatus(2);
-         }
+             $this->draw->setLottoStatus(2);
+         }  
          return $this->hasResults();
      }
      public function getDate($rawDate) {
@@ -72,8 +76,7 @@ class Sport649LotoParser extends AbstractLotoParser {
              'ноября' => 11,
              'декабря' => 12
          );
-         $rawDate = trim($rawDate);
-         $words = explode(' ', $rawDate);
+        $words = explode(' ', $rawDate);
          $day = $words[0];
          $month = $frMonth[strtolower($words[1])];  
          $year=date("Y");
@@ -83,7 +86,7 @@ class Sport649LotoParser extends AbstractLotoParser {
      
       private function getDrawNo($rawNo)
     {
-       // $rawNo= str_replace("тиража №", "",$rawNo); 
+        $rawNo= str_replace("№", "",$rawNo); 
         $rawNo = trim($rawNo);
          return  $rawNo;
          

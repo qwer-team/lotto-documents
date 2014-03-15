@@ -2,13 +2,21 @@
 
 namespace Qwer\LottoDocumentsBundle\Service\ResultParser;
 use Goutte\Client;
+use Qwer\LottoBundle\Entity\ResultAll;
 
 abstract class AbstractLotoParser 
 {
     protected $draw;
+    protected $repoResAll;
+    protected $resultAll;
     protected $hasResult = false;
     protected $crawler = null;
     protected $htmlPage = null;
+    
+    public function __construct() {
+        
+       $this->resultAll =new ResultAll();
+    }
 
     public function getUrl()
     {
@@ -29,9 +37,17 @@ abstract class AbstractLotoParser
         $this->htmlPage = $htmlPage;
     }
 
+    
     public function setDraw($draw)
-    {
+    { 
         $this->draw = $draw;
+       
+    }
+    
+    public function setRepoResAll($repoResAll)
+    {  
+        $this->repoResAll = $repoResAll;
+       
     }
     
     public function validate($date)
@@ -64,5 +80,7 @@ abstract class AbstractLotoParser
         
         return $htmlPage;
     }
+    
+     
 }
 ?>

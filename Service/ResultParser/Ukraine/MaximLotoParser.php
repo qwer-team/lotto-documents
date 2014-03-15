@@ -6,51 +6,69 @@ use Qwer\LottoDocumentsBundle\Service\ResultParser\AbstractLotoParser;
 
 class MaximLotoParser extends AbstractLotoParser {
     
-     protected $templateUrl = 'http://www.lottery.com.ua/pages/results/lotomx.php';
+     protected $templateUrl = 'http://lottery.com.ua/ru/lottery/';
      
      public function parse() {
          
          $crawler = $this->getCrawler();
-         $rawDate = $crawler->filter('tr td span')->eq(8)->text();
+          $crawler = $this->getCrawler();
+         $rawDate = trim($crawler->filter('span #MAXIMA_RESULT_DATE')->text());
+        // print($rawDate."\n");
          $date = $this->getDate($rawDate);
+         $rawDrawNo = trim($crawler->filter('span #MAXIMA_RESULT_DRAW')->text());
+         $drawNo=$this->getDrawNo($rawDrawNo);
          
-         $i = 0;
-         $ballsCnt = 4;
+         $ballsCnt = 5;
          $balls = array();
-         while ($i <= $ballsCnt) {
-             $balls[] = trim($crawler->filter("tr td div span#n$i")->text());
-             $i++;
+         $ballsNodes = $crawler->filter('div #MAXIMA_RESULT_BALLS div');
+         
+         
+         foreach ($ballsNodes as $ball) {
+             if($ballsCnt == 0) 
+                 break;
+             $balls[] =  $rawNo= str_replace("small_ball c", "", trim($ball->getAttribute('class'))); 
+             $ballsCnt--;
+         }
+         
+         $t=$this->draw->getLottoTime()->getLottoType();
+          if(!$this->repoResAll->findResultAllByTypeDrowNo($t,$drawNo)) {
+            $drawTime=$this->draw->getLottoTime()->getTime();
+            $h=$drawTime->format("H");
+            $m=$drawTime->format("i");
+            $date->setTime($h, $m);
+
+            $this->resultAll->setLottoType($t);
+            $this->resultAll->setDt($date);
+            $this->resultAll->setDrawName($drawNo);
+            $this->resultAll->setResult($balls);  
+            $this->resultAll->setUCor("parsing");
+
+             $t->addLottoResultsAll( $this->resultAll);
          }
          
          $this->validate($date);
          if($this->hasResult) {
              $result = $this->draw->getResult();
              $result->setResult($balls);
+             $this->draw->setLottoStatus(2);
          }
          return $this->hasResults();
      }
      public function getDate($rawDate) {
-         
-         $frMonth = array(
-             'Января' => 1,
-             'Февраля' => 2,
-             'Марта' => 3,
-             'Апреля' => 4,
-             'Мая' => 5,
-             'Июня' => 6,
-             'Июля' => 7,
-             'Августа' => 8,
-             'Сентября' => 9,
-             'Октября' => 10,
-             'Ноября' => 11,
-             'Декабря' => 12
-         );
-         preg_match('/\s([\d]+)\s([\D]+)\s([\d]+)/', $rawDate, $words);
-         $day = $words[1];
-         $month = $frMonth[strtolower($words[2])];
-         $year = $words[3];
+          $words = explode('.', $rawDate);
+	 $day = $words[0];
+         $month = $words[1];
+         $year = $words[2];
          $date = new \DateTime("$year-$month-$day");
          return $date;
      }
+     
+      private function getDrawNo($rawNo)
+    {
+        $rawNo= str_replace("№", "",$rawNo); 
+        $rawNo = trim($rawNo);
+         return  $rawNo;
+         
+    }
 }
 ?>

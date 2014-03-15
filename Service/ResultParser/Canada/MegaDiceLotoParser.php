@@ -13,6 +13,7 @@ class MegaDiceLotoParser extends AbstractLotoParser {
          $crawler = $this->getCrawler();
          $rawDate = trim($crawler->filter('div.drawing dl dt')->text());
          $date = $this->getDate($rawDate);
+         $drawNo=$this->getDrawNo($rawDate);
          
          $ballsNodes = $crawler->filter('span.regNums span');    
          $ballsCnt = 6;
@@ -25,11 +26,29 @@ class MegaDiceLotoParser extends AbstractLotoParser {
          }
          $bonus = trim($crawler->filter('span.bonus span')->text());
          
+         $t=$this->draw->getLottoTime()->getLottoType();
+          if(!$this->repoResAll->findResultAllByTypeDrowNo($t,$drawNo)) {
+            $drawTime=$this->draw->getLottoTime()->getTime();
+            $h=$drawTime->format("H");
+            $m=$drawTime->format("i");
+            $date->setTime($h, $m);
+
+            $this->resultAll->setLottoType($t);
+            $this->resultAll->setDt($date);
+            $this->resultAll->setDrawName($drawNo);
+            $this->resultAll->setResult($balls); 
+            $this->resultAll->setBonusResult(array($bonus));
+            $this->resultAll->setUCor("parsing");
+
+             $t->addLottoResultsAll( $this->resultAll);
+         }
+         
          $this->validate($date);
          if($this->hasResult) {
              $result = $this->draw->getResult();
              $result->setResult($balls);
              $result->setBonusResult(array($bonus));
+             $this->draw->setLottoStatus(2);
          }
          return $this->hasResults();
      }
@@ -50,6 +69,8 @@ class MegaDiceLotoParser extends AbstractLotoParser {
              'decembre' => 12
          );
          $rawDate = str_replace(',', '', $rawDate);
+         $rawDate = str_replace('  ', ' ', $rawDate);
+         $rawDate = trim($rawDate);
          $words = explode(' ', $rawDate);
          $day = $words[1];
          $month = $frMonth[strtolower($words[0])];
@@ -59,5 +80,13 @@ class MegaDiceLotoParser extends AbstractLotoParser {
          
          return $date;
      }
+      private function getDrawNo($rawNo)
+    {
+        $rawNo= str_replace(" ", "",$rawNo);
+        $rawNo= str_replace(",", "",$rawNo);
+        $rawNo = trim($rawNo);
+         return  $rawNo;
+         
+    }
 }
 ?>

@@ -2,19 +2,21 @@
 
 namespace Qwer\LottoDocumentsBundle\Service\ResultParser\Canada;
 
-use Qwer\LottoDocumentsBundle\Service\ResultParser\AbstractLotoParser;
 use Goutte\Client;
+use Qwer\LottoDocumentsBundle\Service\ResultParser\AbstractLotoParser;
+use Qwer\LottoDocumentsBundle\Service\ResultParser\Parser;
+
 
 class NationalLotoParser extends AbstractLotoParser {
     
-     protected $tamplateUrl = "http://www.lotterycanada.com/lotto-649";
+     protected $templateUrl = "http://www.lotterycanada.com/lotto-649";
      
      public function parse() {
          
          $crawler = $this->getCrawler();
          $rawDate = $crawler->filter('div.drawing dl dt')->text();
          $date = $this->getDate($rawDate);
-         
+         $drawNo=$this->getDrawNo($rawDate);
          $ballsNodes = $crawler->filter('span.regNums span');
          $ballsCnt = 6;
          $balls = array();
@@ -27,11 +29,31 @@ class NationalLotoParser extends AbstractLotoParser {
          
          $bonus = trim($crawler->filter('span.bonus span')->text());
          
+         
+          $t=$this->draw->getLottoTime()->getLottoType();
+       if(!$this->repoResAll->findResultAllByTypeDrowNo($t,$drawNo)) {
+        $drawTime=$this->draw->getLottoTime()->getTime();
+        $h=$drawTime->format("H");
+        $m=$drawTime->format("i");
+        $date->setTime($h, $m);
+       
+        $this->resultAll->setLottoType($t);
+        $this->resultAll->setDt($date);
+        $this->resultAll->setDrawName($drawNo);
+        $this->resultAll->setResult($balls); 
+        $this->resultAll->setBonusResult(array($bonus));
+        $this->resultAll->setUCor("parsing");
+      
+         $t->addLottoResultsAll( $this->resultAll);
+       }
+         
+       
          $this->validate($date);
          if($this->hasResult) {
              $result = $this->draw->getResult();
              $result->setResult($balls);
              $result->setBonusResult(array($bonus));
+             $this->draw->setLottoStatus(2); 
          }
          
          return $this->hasResults();
@@ -53,9 +75,15 @@ class NationalLotoParser extends AbstractLotoParser {
              'november' => 11,
              'december' => 12
          );
-         $rawDate = substr($rawDate, 5, 13);
+         
+         
+     //    print_r($rawDate);
+        // $rawDate = substr($rawDate, 5, 13);
          $rawDate = str_replace(',', '', $rawDate);
+         $rawDate = str_replace('  ', ' ', $rawDate);
+         $rawDate = trim($rawDate);
          $words = explode(" ", $rawDate);
+         
          $day = $words[1];
          $month = $frMonth[strtolower($words[0])];
          $year = $words[2];
@@ -63,5 +91,14 @@ class NationalLotoParser extends AbstractLotoParser {
          
          return $date;
          }
+         
+         
+           private function getDrawNo($rawNo)
+    {
+        $rawNo= str_replace(" ", "",$rawNo);
+        $rawNo= str_replace(",", "",$rawNo);
+        $rawNo = trim($rawNo);
+         return  $rawNo;
+         
+    }
 }
-?>

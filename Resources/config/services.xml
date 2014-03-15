@@ -103,6 +103,7 @@
         <service id="lotto_documents_result_parser.Super66" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Australia\Super66LotoParser" />
         <service id="lotto_documents_result_parser.Pools" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Australia\PoolsLotoParser" />
         <service id="lotto_documents_result_parser.National" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Canada\NationalLotoParser" />
+        <service id="lotto_documents_result_parser.Pjatorochka" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Belarus\PjatorochkaLotoParser" />
         <service id="lotto_documents_result_parser.LottoMax" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Canada\MaxLotoParser" />
         <service id="lotto_documents_result_parser.Atlantic" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Canada\AtlanticLotoParser" />
         <service id="lotto_documents_result_parser.Tag" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Canada\TagLotoParser" />
@@ -112,7 +113,7 @@
         <service id="lotto_documents_result_parser.Western" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Canada\WesternLotoParser" />
         <service id="lotto_documents_result_parser.MegaLot" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Ukraine\MegaLotoParser" />
         <service id="lotto_documents_result_parser.Sport649" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Russia\Sport649LotoParser" />
-        <service id="lotto_documents_result_parser.German" class="Qwer\LottoDocumentsBundle\Service\ResultParser\German\GermanLotoParser" />
+        <service id="lotto_documents_result_parser.German" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Germany\GermanLotoParser" />
         <service id="lotto_documents_result_parser.SuperLoto" class="Qwer\LottoDocumentsBundle\Service\ResultParser\Ukraine\SuperLotoParser" />
         <service id="lotto_documents_result_parser.Million" class="Qwer\LottoDocumentsBundle\Service\ResultParser\USA\MillionLotoParser" />
         <service id="lotto_documents_result_parser.UKLoto" class="Qwer\LottoDocumentsBundle\Service\ResultParser\UK\UKLotoParser" />

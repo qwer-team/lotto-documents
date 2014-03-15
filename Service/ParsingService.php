@@ -10,9 +10,12 @@ class ParsingService extends ContainerAware
         $draws = $this->getUnresaltedDraws();
         
         if(!count($draws)){
-            return;
+             // echo "id 222 \n";
+         return;
         }
         foreach($draws as $draw){
+            echo "id ".$draw->getId()."\n";
+            
             $this->getResult($draw);
         }
         
@@ -32,6 +35,9 @@ class ParsingService extends ContainerAware
        }
        $parser = $this->container->get("lotto_documents_result_parser.".$parserTag);
        $parser->setDraw($draw);
+       $repoResAll=$this->container->get("doctrine.orm.entity_manager")->getRepository('QwerLottoBundle:ResultAll');
+       $parser->setRepoResAll($repoResAll);
+       
        try{
           $parser->parse();
           if(!$parser->hasResults()){
@@ -42,6 +48,7 @@ class ParsingService extends ContainerAware
            echo 'vse ploho '.$message."\n";
        }
     }
+    
     private function getUnresaltedDraws(){
         $em = $this->container->get("doctrine.orm.entity_manager");
         $draws = $em->getRepository("QwerLottoBundle:Draw")

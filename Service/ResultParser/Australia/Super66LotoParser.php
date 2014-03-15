@@ -8,12 +8,15 @@ use Qwer\LottoDocumentsBundle\Service\ResultParser\Parser;
 
 class Super66LotoParser extends AbstractLotoParser {
     
-     protected $templateUrl = 'tatts.com/tattersalls/results/last-10-results?product=Super66';
+     protected $templateUrl = 'http://tatts.com/tattersalls/results/last-10-results?product=Super66';
 
     public function parse() {
         $crawler = $this->getCrawler();
         $rawDate = $crawler->filter('span.resultHeadingDrawDateSpn')->text();
+                
+
         $date = $this->getDate($rawDate);
+        $drawNo=$this->getDrawNo($rawDate);
         
         $ballsNodes = $crawler->filter('span.resultNumberSpn');
         $ballsCnt = 6;
@@ -21,13 +24,36 @@ class Super66LotoParser extends AbstractLotoParser {
         foreach ($ballsNodes as $ball) {
             if($ballsCnt == 0)
                 break;
+            
             $balls[] = trim($ball->nodeValue);
             $ballsCnt--;
         }
+        
+        $t=$this->draw->getLottoTime()->getLottoType();
+       
+        
+       if(!$this->repoResAll->findResultAllByTypeDrowNo($t,$drawNo)) {
+        $drawTime=$this->draw->getLottoTime()->getTime();
+        $h=$drawTime->format("H");
+        $m=$drawTime->format("i");
+        $date->setTime($h, $m);
+       
+        $this->resultAll->setLottoType($t);
+        $this->resultAll->setDt($date);
+        $this->resultAll->setDrawName($drawNo);
+        $this->resultAll->setResult($balls); 
+        $this->resultAll->setUCor("parsing");
+        
+         
+         $t->addLottoResultsAll( $this->resultAll);
+       }
+        
+        
             $this->validate($date);
             if($this->hasResult) {
                 $result = $this->draw->getResult();
                 $result->setResult($balls);
+                $this->draw->setLottoStatus(2); 
             }
             return $this->hasResults();
         
@@ -59,8 +85,14 @@ class Super66LotoParser extends AbstractLotoParser {
        // print_r($date);
         return $date;
         }
+        
+        private function getDrawNo($rawNo)
+    {
+        $rawNo=  trim($rawNo);
+        $rawNo=substr($rawNo, -5);
+        $rawNo=  trim($rawNo);
+       // print($rawNo."\n");
+         return  $rawNo;
+         
+    }
 }
-
-
-
-?>
