@@ -13,6 +13,8 @@ class SayisalLotoParser extends AbstractLotoParser {
          $crawler = $this->getCrawler();
          $rawDate = trim($crawler->filter('TR TD a.menucount h2')->text());
          $date = $this->getDate($rawDate);
+         print_r($date);
+         $drawNo=$this->getDrawNo($rawDate);
          
          $ballsNodes = $crawler->filter('tr td a img')->extract(array('src'));
          $ballsNodes = array_unique($ballsNodes);
@@ -26,10 +28,27 @@ class SayisalLotoParser extends AbstractLotoParser {
              $ballsCnt--;
          }
          
+         $t=$this->draw->getLottoTime()->getLottoType();
+          if(!$this->repoResAll->findResultAllByTypeDrowNo($t,$drawNo)) {
+            $drawTime=$this->draw->getLottoTime()->getTime();
+            $h=$drawTime->format("H");
+            $m=$drawTime->format("i");
+            $date->setTime($h, $m);
+
+            $this->resultAll->setLottoType($t);
+            $this->resultAll->setDt($date);
+            $this->resultAll->setDrawName($drawNo);
+            $this->resultAll->setResult($balls);  
+            $this->resultAll->setUCor("parsing");
+
+             $t->addLottoResultsAll( $this->resultAll);
+         }
+         
          $this->validate($date);
          if($this->hasResult) {
              $result = $this->draw->getResult();
              $result->setResult($balls);
+             $this->draw->setLottoStatus(2);
          }
          return $this->hasResults();
          
@@ -50,12 +69,23 @@ class SayisalLotoParser extends AbstractLotoParser {
              'Aralık' => 12
          );
          preg_match('/[\d]+\s[\D]+\s[\d]+/', $rawDate, $dateTurk);
-         $words = explode(' ', $dateTurk[0]);
+         $dtTxt = str_replace('  ', ' ', $dateTurk[0]);
+         $dtTxt = trim($dtTxt);
+         
+         $words = explode(' ', $dtTxt);
+        // print_r($words);
          $day = $words[0];
          $month = $frMonth[$words[1]];
-         $year = $words[2];
+         $year = $words[3];
          $date = new \DateTime("$year-$month-$day");
          return $date;
      }
      
+     
+     private function getDrawNo($rawNo)
+    {   $rawNo= substr($rawNo,0, 4);
+        $rawNo= trim($rawNo, ".");
+        return trim($rawNo);
+         
+    }
 }

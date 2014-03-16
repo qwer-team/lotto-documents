@@ -5,12 +5,13 @@ namespace Qwer\LottoDocumentsBundle\Service\ResultParser\Greece;
 use Qwer\LottoDocumentsBundle\Service\ResultParser\AbstractLotoParser;
 
 class GreeceLotoParser extends AbstractLotoParser {
-    
+     
      protected $templateUrl = 'http://www.opap.gr/en/web/guest/lotto-draw-results';
      
-     
      public function parse() {
-         
+          $crawler = $this->getCrawler();
+       //  $rawDate = trim($crawler->filter('TR TD a.menucount h2')->text());
+      //   print($rawDate."\n");
          $file = $this->getHtmlPage();
          
          preg_match("/class=\"date\">[\D]+\s[\d\/]+/", $file, $rawDate);
@@ -20,7 +21,7 @@ class GreeceLotoParser extends AbstractLotoParser {
          $month = $words[1];
          $year = $words[2];
          $date = new \DateTime("$year-$month-$day");
-         
+         print_r($date);
          preg_match("/var s=\"[\d,]+/", $file, $ballsNodes);
          $ballsNodes = substr($ballsNodes[0], 7);
          $balls = explode(',', $ballsNodes);

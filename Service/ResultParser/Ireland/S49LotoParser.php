@@ -9,40 +9,63 @@ class S49LotoParser extends AbstractLotoParser {
      protected $templateUrl = 'http://www.49s.co.uk/49s/LatestResults.aspx';
      
      public function parse() {
-         
+          if($this->draw->getLottoTime()->getTime()->format("H")=="14" ) {
+              $drawTime="LT";              
+          } else {
+              $drawTime="TT"; 
+          }
+          
          $crawler = $this->getCrawler();
          $rawDate = trim($crawler->filter('h2#ctl00_BodyContent_results_title_text')->text());
          $date = $this->getDate($rawDate);
+          $drawNo=$this->getDrawNo($date->format("Ymd").$drawTime); 
          
-         $ballsNodesLT = $crawler->filter('div#ctl00_BodyContent_main_drawLunch.main_draw img')->extract(array('alt'));
-         $ballsLunchTime = array();
-         $ballsCnt = 6;
-         foreach($ballsNodesLT as $ball) {
-            if($ballsCnt == 0)
-                $break;
-            $ballsLunchTime[] = $ball;
-            $ballsCnt--;
+          if($drawTime=="LT") {
+                $ballsNodes = $crawler->filter('div#ctl00_BodyContent_main_drawLunch.main_draw img')->extract(array('alt'));
+                $bonus = $crawler->filter('div#BoosterBallLunch.booster_ball img')->extract(array('alt'));
+                
+          } else {
+              $ballsNodes = $crawler->filter('div#ctl00_BodyContent_main_drawTea.main_draw img')->extract(array('alt'));
+              $bonus = $crawler->filter('div#BoosterBallTea.booster_ball img')->extract(array('alt'));
+              
+          }
+         $balls= array();
+         
+                $ballsCnt = 6;
+                foreach($ballsNodes as $ball) {
+                   if($ballsCnt == 0)
+                       $break;
+                   $balls[] = $ball;
+                   $ballsCnt--;
+                }
+           
+         //       print_r($balls);
+         $t=$this->draw->getLottoTime()->getLottoType();
+        
+          if(!$this->repoResAll->findResultAllByTypeDrowNo($t,$drawNo)) {
+            $drawTime=$this->draw->getLottoTime()->getTime();
+            $h=$drawTime->format("H");
+            $m=$drawTime->format("i");
+            $date->setTime($h, $m);
+
+            $this->resultAll->setLottoType($t);
+            $this->resultAll->setDt($date);
+            $this->resultAll->setDrawName($drawNo);
+            $this->resultAll->setResult($balls); 
+            $this->resultAll->setBonusResult($bonus);
+            $this->resultAll->setUCor("parsing");
+
+             $t->addLottoResultsAll( $this->resultAll);
+             
          }
-         $bonusLunchTime = $crawler->filter('div#BoosterBallLunch.booster_ball img')->extract(array('alt'));
-         
-         $ballsNodesTT = $crawler->filter('div#ctl00_BodyContent_main_drawTea.main_draw img')->extract(array('alt'));
-         $ballsTeaTime = array();
-         $ballsCnt = 6;
-         foreach ($ballsNodesTT as $ball) {
-             if($ballsCnt == 0)
-                 break;
-             $ballsTeaTime[] = $ball;
-             $ballsCnt--;
-         }
-         $bonusTeaTime = $crawler->filter('div#BoosterBallTea.booster_ball img')->extract(array('alt'));
-         
+      
+          
          $this->validate($date);
          if($this->hasResult) {
              $result = $this->draw->getResult();
-             $result->setResult($ballsLunchTime);
-             $result->setBonusResult($bonusLunchTime);
-             $result->setSecondResult($ballsTeaTime);
-             $result->setSecondBonusResult($bonusTeaTime);
+             $result->setResult($balls);
+             $result->setBonusResult(array($bonus));
+             $this->draw->setLottoStatus(2);
          }
          return $this->hasResults();
      }
@@ -72,5 +95,11 @@ class S49LotoParser extends AbstractLotoParser {
          $date = new \DateTime("$year-$month-$day");
          return $date;
      }
+     
+     private function getDrawNo($rawNo)
+    { 
+         return trim($rawNo);
+         
+    }
 }
 ?>

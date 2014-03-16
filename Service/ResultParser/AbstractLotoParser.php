@@ -74,7 +74,7 @@ abstract class AbstractLotoParser
     
     public function getHtmlPage() {
         if(is_null($this->htmlPage)) {
-            $htmlPage = file_get_contents($templateUrl);
+            $htmlPage = file_get_contents($this->templateUrl);
         }
         else $htmlPage = $this->htmlPage;
         
