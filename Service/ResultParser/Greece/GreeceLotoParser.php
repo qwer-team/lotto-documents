@@ -9,7 +9,9 @@ class GreeceLotoParser extends AbstractLotoParser {
      protected $templateUrl = 'http://www.opap.gr/en/web/guest/lotto-draw-results';
      
      public function parse() {
-         
+          $crawler = $this->getCrawler();
+       //  $rawDate = trim($crawler->filter('TR TD a.menucount h2')->text());
+      //   print($rawDate."\n");
          $file = $this->getHtmlPage();
          
          preg_match("/class=\"date\">[\D]+\s[\d\/]+/", $file, $rawDate);

@@ -8,7 +8,7 @@ class MillionLotoParser extends AbstractLotoParser {
     
      protected $templateUrl = 'http://nylottery.ny.gov/wps/portal';
      
-     public function getCrawler()
+   /*  public function getCrawler()
     {
         if (is_null($this->crawler)) {
             $client = new Client();
@@ -23,30 +23,61 @@ class MillionLotoParser extends AbstractLotoParser {
         }
         
         return $crawler;
-    }
+    } */
      
      public function parse() {
          
          $crawler = $this->getCrawler();
-         $rawDate = trim($crawler->filter('div.WinningNumbersText')->text());
+      
+         $rawDate = trim($crawler->filter('td#LottoHomeTableBG  span.drawings_header')->text());
+          
          $date = $this->getDate($rawDate);
+         $drawNo=$this->getDrawNo($date->format("Ymd"));
+         //print($drawNo."ddd\n");
          
-         $ballsNodes = $crawler->filter('tr td div.WinningNumbersResultsSweetMillion');
-         $ballsCnt = 6;
-         $balls = array();
-         foreach ($ballsNodes as $ball) {
-             if($ballsCnt == 0)
-                 break;
-             $balls[] = trim($ball->nodeValue);
-             $ballsCnt--;
+         $ballsNodes = $crawler->filter('div.nyl_numbers')->text();
+         $ballsNodes = trim($ballsNodes);
+         $ballsNodes = trim($ballsNodes,"." );
+        
+         $balls=  explode(".", $ballsNodes);
+         
+         foreach ($balls as $key => $value) {
+             $balls[$key]=  trim($value);
          }
+         
+         $bonusTxt = $crawler->filter('div.nyl_BonusExtra')->text();
+         
+         $bonus = array(trim($bonusTxt));
+         
+         $t=$this->draw->getLottoTime()->getLottoType();
+          if(!$this->repoResAll->findResultAllByTypeDrowNo($t,$drawNo)) {
+            $drawTime=$this->draw->getLottoTime()->getTime();
+            $h=$drawTime->format("H");
+            $m=$drawTime->format("i");
+            $date->setTime($h, $m);
+
+            $this->resultAll->setLottoType($t);
+            $this->resultAll->setDt($date);
+            $this->resultAll->setDrawName($drawNo);
+            $this->resultAll->setResult($balls); 
+            $this->resultAll->setBonusResult($bonus);
+            $this->resultAll->setUCor("parsing");
+
+             $t->addLottoResultsAll( $this->resultAll);
+         }
+         
+         
          $this->validate($date);
          if($this->hasResult) {
              $result = $this->draw->getResult();
              $result->setResult($balls);
+             $result->setBonusResult($bonus);
+             $this->draw->setLottoStatus(2);
          }
          return $this->hasResults();
      }
+     
+     
      public function getDate($rawDate) {
          $frMonth = array(
              'jan' => 1,
@@ -62,13 +93,22 @@ class MillionLotoParser extends AbstractLotoParser {
              'nov' => 11,
              'dec' => 12
          );
+         $rawDate = str_replace('Winning Numbers', '', $rawDate);
          $rawDate = str_replace(',', '', $rawDate);
+         $rawDate = str_replace('.', '', $rawDate);
+         $rawDate = trim($rawDate);
          $words = explode(' ', $rawDate);
          $day = $words[1];
          $month = $frMonth[strtolower($words[0])];
-         $year = $words[2];
+         $year = date("Y");
          $date = new \DateTime("$year-$month-$day");
          return $date;
       }
+      
+      private function getDrawNo($rawNo)
+    { 
+         return trim($rawNo);
+         
+    }
 }
 ?>

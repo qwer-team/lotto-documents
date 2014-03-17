@@ -11,10 +11,11 @@ class EuroJackLotoParser extends AbstractLotoParser {
      public function parse() {
          
          $crawler = $this->getCrawler();
-         $rawDate = trim($crawler->filter('tr th')->text());
+         $rawDate = $crawler->filter('div.date')->text();
          $date = $this->getDate($rawDate);
-         
-         $ballsNodes = $crawler->filter('tr td.jack-ball');
+          $drawNo=$this->getDrawNo($date->format("Ymd"));
+          
+         $ballsNodes = $crawler->filter('li.jack-ball');
          $ballsCnt = 5;
          $balls = array();
          foreach ($ballsNodes as $ball) {
@@ -23,7 +24,8 @@ class EuroJackLotoParser extends AbstractLotoParser {
              $balls[] = trim($ball->nodeValue);
              $ballsCnt--;
          }
-         $bonusNodes = $crawler->filter('tr td.jack-euro');
+         
+         $bonusNodes = $crawler->filter('li.jack-euro');
          $bonusCnt = 2;
          $bonus = array();
          foreach ($bonusNodes as $ball) {
@@ -32,11 +34,31 @@ class EuroJackLotoParser extends AbstractLotoParser {
              $bonus[] = trim($ball->nodeValue);
              $bonusCnt--;
          }
+         
+         $t=$this->draw->getLottoTime()->getLottoType();
+          if(!$this->repoResAll->findResultAllByTypeDrowNo($t,$drawNo)) {
+            $drawTime=$this->draw->getLottoTime()->getTime();
+            $h=$drawTime->format("H");
+            $m=$drawTime->format("i");
+            $date->setTime($h, $m);
+
+            $this->resultAll->setLottoType($t);
+            $this->resultAll->setDt($date);
+            $this->resultAll->setDrawName($drawNo);
+            $this->resultAll->setResult($balls); 
+            $this->resultAll->setBonusResult($bonus);
+            $this->resultAll->setUCor("parsing");
+
+             $t->addLottoResultsAll( $this->resultAll);
+         }
+         
+         
          $this->validate($date);
          if($this->hasResult) {
              $result = $this->draw->getResult();
              $result->setResult($balls);
              $result->setBonusResult($bonus);
+             $this->draw->setLottoStatus(2);
          }
          return $this->hasResults();
      }
@@ -65,5 +87,11 @@ class EuroJackLotoParser extends AbstractLotoParser {
          $date = new \DateTime("$year-$month-$day[0]");
          return $date;
      }
+     
+      private function getDrawNo($rawNo)
+    { 
+         return trim($rawNo);
+         
+    }
 }
 ?>

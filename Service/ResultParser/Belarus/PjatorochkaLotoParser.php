@@ -19,9 +19,11 @@ class PjatorochkaLotoParser extends AbstractLotoParser  {
          $date = $this->getDate($rawDate);
     //     print_r($date);
           $drawNo=trim( $ar[0]);
-     // print($drawNo." \n");
-         
-        $fr = fopen("http://belloto.by/files/news/files/1489_act_l5_278.xls", "r");
+     // print($drawNo." \n"); tirag_icon
+         $a=trim($crawler->filter('a.tirag_icon')->attr('href'));  
+          
+          
+        $fr = fopen("http://belloto.by".$a, "r");
         $fw = fopen("x.xsl","w");
         $c= stream_get_contents($fr);
         fwrite($fw, $c);
