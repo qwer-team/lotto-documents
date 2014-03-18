@@ -13,7 +13,7 @@ class IrishLotoParser extends AbstractLotoParser
         $crawler = $this->getCrawler();
         $rawDate = trim($crawler->filter('div.drawtitle a')->text());
         $date = $this->getDate($rawDate);
-        $drawNo=$this->getDrawNo($rawDate);
+        $drawNo=$this->getDrawNo($date->format("Ymd"));
         
         $ballsNodes = $crawler->filter('td.irish-ball');
         $ballsCnt = 6;
@@ -68,11 +68,8 @@ class IrishLotoParser extends AbstractLotoParser
     }
     
      private function getDrawNo($rawNo)
-    {
-        $rawNo= str_replace(" ", "",$rawNo);
-        $rawNo= str_replace("/", "",$rawNo);
-        $rawNo = trim($rawNo);
-         return  $rawNo;
+    { 
+         return trim($rawNo);
          
     }
 }

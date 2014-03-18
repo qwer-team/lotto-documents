@@ -13,6 +13,8 @@ class JokerFranceLotoParser extends AbstractLotoParser {
          $crawler = $this->getCrawler();
          $rawDate = trim($crawler->filter('h3.dateTirage')->text());
          $date = $this->getDate($rawDate);
+         $drawNo=$this->getDrawNo($date->format("Ymd"));
+         
          $i = 1;
          $ballsCnt = 7;
          $balls = array();
@@ -21,10 +23,28 @@ class JokerFranceLotoParser extends AbstractLotoParser {
          $balls[] = $ballsNodes;
          $i++;
          }
+         
+         $t=$this->draw->getLottoTime()->getLottoType();
+          if(!$this->repoResAll->findResultAllByTypeDrowNo($t,$drawNo)) {
+            $drawTime=$this->draw->getLottoTime()->getTime();
+            $h=$drawTime->format("H");
+            $m=$drawTime->format("i");
+            $date->setTime($h, $m);
+
+            $this->resultAll->setLottoType($t);
+            $this->resultAll->setDt($date);
+            $this->resultAll->setDrawName($drawNo);
+            $this->resultAll->setResult($balls);  
+            $this->resultAll->setUCor("parsing");
+
+             $t->addLottoResultsAll( $this->resultAll);
+         }
+         
          $this->validate($date);
          if($this->hasResult) {
              $result = $this->draw->getResult();
              $result->setResult($balls);
+              $this->draw->setLottoStatus(2);
          }
          return $this->hasResults();
      }
@@ -52,5 +72,11 @@ class JokerFranceLotoParser extends AbstractLotoParser {
          $date = new \DateTime("$year-$month-$day");
          return $date;
      }
+     
+         private function getDrawNo($rawNo)
+    { 
+         return trim($rawNo);
+         
+    }
 }
 ?>

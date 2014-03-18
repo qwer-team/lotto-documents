@@ -21,12 +21,11 @@ class GreeceLotoParser extends AbstractLotoParser {
          $month = $words[1];
          $year = $words[2];
          $date = new \DateTime("$year-$month-$day");
-         print_r($date);
+         //print_r($date);
          preg_match("/class=\"number\">[\d\/]+/", $file, $rawN);
-         
          preg_match('/[\d\/]+/', $rawN[0], $strRawN);
          $drawNo=trim($strRawN[0]);
-         print($drawNo."\n");
+      //   print($drawNo."\n");
          
          preg_match("/var s=\"[\d,]+/", $file, $ballsNodes);
          $ballsNodes = substr($ballsNodes[0], 7);

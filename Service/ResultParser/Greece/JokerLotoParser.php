@@ -21,10 +21,31 @@ class JokerLotoParser extends AbstractLotoParser {
          $year = $words[2];
          $date = new \DateTime("$year-$month-$day");
          
+         preg_match("/class=\"number\">[\d\/]+/", $file, $rawN);
+         preg_match('/[\d\/]+/', $rawN[0], $strRawN);
+         $drawNo=trim($strRawN[0]);
+         
          preg_match("/var s=\"[\d,]+/", $file, $ballsNodes);
          $ballsNodes = substr($ballsNodes[0], 7);
          $balls = explode(',', $ballsNodes);
          $bonus = array_pop($balls);
+         
+         $t=$this->draw->getLottoTime()->getLottoType();
+          if(!$this->repoResAll->findResultAllByTypeDrowNo($t,$drawNo)) {
+            $drawTime=$this->draw->getLottoTime()->getTime();
+            $h=$drawTime->format("H");
+            $m=$drawTime->format("i");
+            $date->setTime($h, $m);
+
+            $this->resultAll->setLottoType($t);
+            $this->resultAll->setDt($date);
+            $this->resultAll->setDrawName($drawNo);
+            $this->resultAll->setResult($balls); 
+            $this->resultAll->setBonusResult(array($bonus));
+            $this->resultAll->setUCor("parsing");
+
+             $t->addLottoResultsAll( $this->resultAll);
+         }
          
          $this->validate($date);
          if($this->hasResult) {
@@ -32,6 +53,7 @@ class JokerLotoParser extends AbstractLotoParser {
              sort($balls);
              $result->setResult($balls);
              $result->setBonusResult(array($bonus));
+              $this->draw->setLottoStatus(2);
          }
          return $this->hasResults();
      }
