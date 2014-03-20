@@ -14,7 +14,7 @@ class DailyLotoParser extends AbstractLotoParser {
          $rawDate = trim($crawler->filter('span.drawtitle')->text());
          $date = $this->getDate($rawDate);
          $drawNo=$this->getDrawNo($date->format("Ymd"));
-          
+       //   print($drawNo);
          $ballsNodes = $crawler->filter('tr td.daily-mill-ball');
          $ballsCnt = 6;
          $balls = array();

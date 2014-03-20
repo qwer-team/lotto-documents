@@ -17,9 +17,12 @@ class PrimitivaLotoParser extends AbstractLotoParser {
         // print($drawNo."\n");
          
          $ballsNodes = trim($crawler->filter('div.txt14')->text());
-         if($ballsNodes="Results coming soon") {return $this->hasResults();}
+         //print($ballsNodes);
+         if($ballsNodes=="Results coming soon") {return $this->hasResults();}
          
          $balls = explode(', ', $ballsNodes);
+       //  print_r($balls);
+         
          $bonus = trim($crawler->filterXpath('//*[@id="column2"]/div/div/div[1]/div[2]')->text());
          
          $t=$this->draw->getLottoTime()->getLottoType();

@@ -14,7 +14,7 @@ class Plus1LotoParser extends AbstractLotoParser {
          $rawDate = trim($crawler->filter('tr th div.floatLeft')->text());
          $date = $this->getDate($rawDate);
          $drawNo=$this->getDrawNo($date->format("Ymd"));
-         print($drawNo."\n");
+        // print($drawNo."\n");
          
          $ballsNodes = $crawler->filter('tr td.irish-small-ball');
          $ballsCnt = 6;

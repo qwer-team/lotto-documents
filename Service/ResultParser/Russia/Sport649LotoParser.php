@@ -14,7 +14,6 @@ class Sport649LotoParser extends AbstractLotoParser {
          $crawler = $this->getCrawler();
            
          $rawDate = trim($crawler->filter('ins.pseudo')->text());
-        
          $date = $this->getDate($rawDate);
          
           $rawDrawNo = trim($crawler->filter('div.draw a')->text());

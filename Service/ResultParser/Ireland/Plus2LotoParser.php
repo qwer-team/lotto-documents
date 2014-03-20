@@ -35,7 +35,7 @@ class Plus2LotoParser extends AbstractLotoParser {
              $bonus[] = trim($ball->nodeValue);
              $ballsCnt--;
          }
-         print_r($balls);
+        // print_r($balls);
          $t=$this->draw->getLottoTime()->getLottoType();
           if(!$this->repoResAll->findResultAllByTypeDrowNo($t,$drawNo)) {
             $drawTime=$this->draw->getLottoTime()->getTime();

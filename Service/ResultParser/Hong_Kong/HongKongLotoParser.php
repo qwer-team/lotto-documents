@@ -11,7 +11,7 @@ class HongKongLotoParser extends AbstractLotoParser {
      public function parse() {
          
         $file = $this->getHtmlPage();
-        print(strlen($file)."\n" );
+      //  print(strlen($file)."\n" );
         preg_match('/Date : [\d\/]+/', $file, $rawDate);
        // print_r($rawDate);
         $rawDate = substr($rawDate[0], 7);
@@ -20,13 +20,13 @@ class HongKongLotoParser extends AbstractLotoParser {
         $month = $words[1];
         $year = $words[2];
         $date = new \DateTime("$year-$month-$day");
-      //  print_r($date);
+     //   print_r($date);
         preg_match_all('/\/icon\/no_[\d]+/', $file, $ballsNodes);
         
         preg_match("/\>Draw Number : ".$date->format("y")."\/[\d]+/", $file, $rawN);
         $drawNo=trim($rawN[0] , ">Draw Number : ");
        
-        //print($drawNo);
+       // print($drawNo);
         $ballsCnt = 7;
         $balls = array();
         foreach($ballsNodes[0] as $ball) {
@@ -35,6 +35,7 @@ class HongKongLotoParser extends AbstractLotoParser {
             $balls[] = trim(substr($ball, 9));
             $ballsCnt--;
         }
+   //     print_r($balls);
         $bonus = array_pop($balls);
       
         $t=$this->draw->getLottoTime()->getLottoType();
