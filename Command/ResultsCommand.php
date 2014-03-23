@@ -8,7 +8,7 @@ class ResultsCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this->setName("lotto:results");
-        $this->setDescription("Расчет лотерей");
+        $this->setDescription("Парсинг результатов лотерей");
     }
 
     protected function execute(\Symfony\Component\Console\Input\InputInterface $input, \Symfony\Component\Console\Output\OutputInterface $output)

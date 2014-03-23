@@ -112,7 +112,7 @@ class BetController extends Controller
 
         $entities = $em->getRepository('QwerLottoDocumentsBundle:Bet')->findAll();
 
-        if (!$entity) {
+        if (!$entities) {
             throw $this->createNotFoundException('Unable to find Bet entity.');
         }
 

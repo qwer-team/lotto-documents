@@ -11,6 +11,7 @@
     <table class="records_list table table-bordered">
         <thead>
             <tr>              
+                <th>id</th>
                 <th>Date</th>
                 <th>Client</th>
                 <th>Status</th> 
@@ -28,8 +29,10 @@
                 class="alert-error"
                 {% endif %}
                 >
+                <td>{{ entity.id }}</td>
                 <td>{% if entity.date %}{{ entity.date|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{{ entity.getLotoClient().name }}</td>
+                
                 <td>{{ entity.status }}</td>
                 <td>{{ entity.summa1|number_format(2, '.', ',') }}</td>
                 <td>{{ entity.summa2|number_format(2, '.', ',') }}</td>
