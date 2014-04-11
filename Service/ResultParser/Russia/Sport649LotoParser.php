@@ -25,7 +25,7 @@ class Sport649LotoParser extends AbstractLotoParser {
          foreach($ballsNodes as $ball) {
              if($ballsCnt == 0)
                  break;
-             $balls[] = trim($ball->nodeValue);
+             $balls[] = trim($ball->nodeValue)+0;
              $ballsCnt--;
          }
          $bonus = array_pop($balls);

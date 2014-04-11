@@ -13,7 +13,7 @@ class SayisalLotoParser extends AbstractLotoParser {
          $crawler = $this->getCrawler();
          $rawDate = trim($crawler->filter('TR TD a.menucount h2')->text());
          $date = $this->getDate($rawDate);
-         print_r($date);
+      //   print_r($date);
          $drawNo=$this->getDrawNo($rawDate);
          
          $ballsNodes = $crawler->filter('tr td a img')->extract(array('src'));
@@ -73,10 +73,10 @@ class SayisalLotoParser extends AbstractLotoParser {
          $dtTxt = trim($dtTxt);
          
          $words = explode(' ', $dtTxt);
-        // print_r($words);
+      //   print_r($words);
          $day = $words[0];
          $month = $frMonth[$words[1]];
-         $year = $words[3];
+         $year = $words[2];
          $date = new \DateTime("$year-$month-$day");
          return $date;
      }
