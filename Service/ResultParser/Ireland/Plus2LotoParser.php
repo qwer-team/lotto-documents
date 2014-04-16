@@ -58,7 +58,7 @@ class Plus2LotoParser extends AbstractLotoParser {
              $result = $this->draw->getResult();
              $result->setResult($balls);
              $result->setBonusResult(array($bonus[1]));
-              $this->draw->setLottoStatus(2);
+              $this->draw->setIsParsed(1); 
          }
      }
      

@@ -72,7 +72,7 @@ class MillionLotoParser extends AbstractLotoParser {
              $result = $this->draw->getResult();
              $result->setResult($balls);
              $result->setBonusResult($bonus);
-             $this->draw->setLottoStatus(2);
+             $this->draw->setIsParsed(1); 
          }
          return $this->hasResults();
      }

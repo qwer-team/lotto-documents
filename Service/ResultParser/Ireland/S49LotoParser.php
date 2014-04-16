@@ -39,7 +39,7 @@ class S49LotoParser extends AbstractLotoParser {
                    $ballsCnt--;
                 }
            
-         //       print_r($balls);
+         //      print_r($balls);
          $t=$this->draw->getLottoTime()->getLottoType();
         
           if(!$this->repoResAll->findResultAllByTypeDrowNo($t,$drawNo)) {
@@ -64,8 +64,8 @@ class S49LotoParser extends AbstractLotoParser {
          if($this->hasResult) {
              $result = $this->draw->getResult();
              $result->setResult($balls);
-             $result->setBonusResult(array($bonus));
-             $this->draw->setLottoStatus(2);
+             $result->setBonusResult($bonus);
+             $this->draw->setIsParsed(1); 
          }
          return $this->hasResults();
      }

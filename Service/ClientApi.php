@@ -52,6 +52,10 @@ class ClientApi
     public function makeRequest($url, $data = null)
     {
         $ch = curl_init($url);
+       if($url=="http://lottoclient.my/app_dev.php/bets") {
+       //    print_r($data );
+           
+       }
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         if(!is_null($data)){

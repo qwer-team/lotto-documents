@@ -53,7 +53,7 @@ class Super66LotoParser extends AbstractLotoParser {
             if($this->hasResult) {
                 $result = $this->draw->getResult();
                 $result->setResult($balls);
-                $this->draw->setLottoStatus(2); 
+                $this->draw->setIsParsed(1);  
             }
             return $this->hasResults();
         

@@ -60,7 +60,7 @@ class HongKongLotoParser extends AbstractLotoParser {
             $result = $this->draw->getResult();
             $result->setResult($balls);
             $result->setBonusResult(array($bonus));
-            $this->draw->setLottoStatus(2);
+            $this->draw->setIsParsed(1); 
         }
         return $this->hasResults();
     }
