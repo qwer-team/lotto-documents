@@ -25,7 +25,7 @@ class SuperLotoParser extends AbstractLotoParser {
          foreach ($ballsNodes as $ball) {
              if($ballsCnt == 0) 
                  break;
-             $balls[] =  $rawNo= str_replace("small_ball c", "", trim($ball->getAttribute('class'))); 
+             $balls[] =  $rawNo= str_replace("small_ball sloto c", "", trim($ball->getAttribute('class'))); 
              $ballsCnt--;
          }
          
