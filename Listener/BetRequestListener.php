@@ -26,14 +26,18 @@ class BetRequestListener extends ContainerAware
 
     public function onEvent(BetRequestEvent $event)
     {
+         
         $body = $event->getBody();
+        
         $class = $this->container->getParameter('users.token_class');
+        // print(" -- ".$body->getTokenStr());
         $token = $this->em->getRepository($class)
                       ->findOneByToken($body->getTokenStr());
+       
         $body->setToken($token);
 
         $bets = $this->mapper->getBets($body);
-
+ 
         $violations = array();
         $errors = array();
         foreach ($bets as $bet) {

@@ -19,6 +19,7 @@ class ClientApi
             "id" => $externalId,
             "currency" => $currency->getCode(),
             "amount"   => $amount,
+            "token"   => $token->getToken(),
         );
 
         $response = $this->makeRequest($fundsUrl, $data);
@@ -42,10 +43,11 @@ class ClientApi
         $this->makeRequest($url, $request);
     }
     
-    public function sendBetsCreated($bets, Client $client){
+    public function sendBetsCreated($bets, Client $client, $token){
         $url = $client->getBetsUrl();
         $request = array();
         $request["data"] = $this->serialize($bets);
+        $request["token"] = $token;
         $this->makeRequest($url, $request);
     }
 

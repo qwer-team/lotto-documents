@@ -228,17 +228,22 @@ class BetController extends Controller
 
         $form->bindRequest($request);
         $response = new \stdClass();
+        
         if ($form->isValid()) {
+           
             $dispatcher = $this->getEventDispatcher();
 
             $event = new BetRequestEvent();
             $event->setBody($body);
             try {
+              //print("1555");
                 $dispatcher->dispatch("bet.request.event", $event);
                 $ids = array();
+               
                 foreach ($body->getBets() as $bet) {
                     $ids[] = $bet->getId();
                 }
+          
                 $response->result = 'success';
                 $response->ids = $ids;
                 return new \Symfony\Component\HttpFoundation\Response(json_encode($response));
