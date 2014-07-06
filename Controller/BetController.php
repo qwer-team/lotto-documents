@@ -35,7 +35,7 @@ class BetController extends Controller
         $qb = $this->repo->createQueryBuilder("bet");
         $paginator = $this->get("qwer.pagination");
         $url = $this->generateUrl("bet");
-        $entities = $paginator->getIterator($qb, $url, $page, 10);
+        $entities = $paginator->getIterator($qb, $url, $page, 50);
         $html = $paginator->getHtml();
         return $this->render('QwerLottoDocumentsBundle:Bet:index.html.twig', array(
                     'entities' => $entities,
@@ -286,7 +286,7 @@ class BetController extends Controller
                 ->find($id);
 
         try {
-            $calculation->calculate($draw);
+           $message .= $calculation->calculate($draw);
         } catch (\Exception $e) {
             $message = toString($e);
         }

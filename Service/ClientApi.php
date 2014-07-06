@@ -72,6 +72,7 @@ class ClientApi
     {
         $betsArr = array();
         foreach ($bets as $bet) {
+            if($bet->getSumma2()>0) {
             $arr = array();
             $arr["id"] = $bet->getId();
             $arr["externalId"] = $bet->getExternalUserId();
@@ -80,6 +81,7 @@ class ClientApi
             $arr["summa2"] = $bet->getSumma2();
 
             $betsArr[] = $arr;
+            }
         }
 
         return json_encode(array("bets" => $betsArr));

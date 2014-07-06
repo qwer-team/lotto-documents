@@ -15,11 +15,12 @@ class Sport649LotoParser extends AbstractLotoParser {
            
          $rawDate = trim($crawler->filter('ins.pseudo')->text());
          $date = $this->getDate($rawDate);
-         
+      //   print_r($date);
           $rawDrawNo = trim($crawler->filter('div.draw a')->text());
          $drawNo=$this->getDrawNo($rawDrawNo);
        //  print($drawNo."\n");
          $ballsNodes = $crawler->filter('div.numbers div b');
+       //  print_r($ballsNodes);
          $ballsCnt = 7;
          $balls = array();
          foreach($ballsNodes as $ball) {
@@ -72,10 +73,11 @@ class Sport649LotoParser extends AbstractLotoParser {
              'декабря' => 12
          );
          $rawDate = trim($rawDate);
-         $words = explode(' ', $rawDate);
+         $rawDate = substr( $rawDate, 0, -6);
+         $words = explode('.', $rawDate);
          $day = $words[0];
-         $month = $frMonth[strtolower($words[1])];  
-         $year=date("Y");
+         $month = $words[1]; //$frMonth[strtolower($words[1])];  
+         $year=$words[2];
          $date = new \DateTime("$year-$month-$day");
          return $date;
      }

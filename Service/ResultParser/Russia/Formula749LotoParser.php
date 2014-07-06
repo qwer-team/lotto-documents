@@ -70,11 +70,12 @@ class Formula749LotoParser extends AbstractLotoParser {
              'ноября' => 11,
              'декабря' => 12
          );
-         $rawDate = trim($rawDate);
-         $words = explode(' ', $rawDate);
+          $rawDate = trim($rawDate);
+         $rawDate = substr( $rawDate, 0, -6);
+         $words = explode('.', $rawDate);
          $day = $words[0];
-         $month = $frMonth[strtolower($words[1])];  
-         $year=date("Y");
+         $month = $words[1]; //$frMonth[strtolower($words[1])];  
+         $year=$words[2];
          $date = new \DateTime("$year-$month-$day");
          return $date;
      }

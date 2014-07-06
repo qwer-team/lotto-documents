@@ -24,13 +24,14 @@ class Calculation extends ContainerAware
     public function calculate(Draw $draw)
     {
         $this->draw = $draw;
-
+$msg="";
         $clients = $this->findClients();
         foreach ($clients as $client) {
-            $this->calculateForClient($client);
+           $msg.=$this->calculateForClient($client);
         }
         $this->draw->setLottoStatus(2);
         $this->em->flush();
+        return " - ".$msg;
     }
     
     public function rallback(Draw $draw){
@@ -79,7 +80,7 @@ class Calculation extends ContainerAware
     private function calculateForClient(Client $client)
     {
         $bets = $this->getClientsBets($client);
-
+ 
         if (count($bets)) {
             foreach ($bets as $bet) {
                 $this->calculateBet($bet);
@@ -90,6 +91,7 @@ class Calculation extends ContainerAware
             $resultEvent->setClient($client);
             $this->dispatcher->dispatch("send.bets.result", $resultEvent);
         }
+       return "b- ".count($bets);
     }
 
     
