@@ -6,20 +6,57 @@ use Qwer\LottoDocumentsBundle\Service\ResultParser\AbstractLotoParser;
 
 class MegaLotoParser extends AbstractLotoParser {
     
-     protected $templateUrl = 'http://www.msl.ua/?code=ml-results_archive';
+     //protected $templateUrl = 'http://www.msl.ua/?code=ml-results_archive';
+     protected $templateUrl = '';
+    protected  $frMonth = array(
+            1 =>  'січня' , 
+            2 =>  'лютого' , 
+            3 =>  'березня' , 
+            4 =>  'квітня' , 
+            5 =>  'травня' , 
+            6 =>  'червня' , 
+            7 =>  'липня' , 
+            8 =>  'серпня' , 
+            9 =>  'вересня' , 
+            10 =>  'жовтня' , 
+            11 =>  'листопада' , 
+            12 =>  'грудня' 
+         );  
      
-     public function parse() {
-         
+public function parse() {
+      
+$crawler = $this->getCrawler();
+           
+$arrNode=$crawler->filter('.mb20 .span2')->each(function ($node, $i)
+{ return $node->nodeValue ;
+
+});
+//print_r($arrNode);
+$d= $this->draw->getDate()->format("j");
+$m= $this->frMonth[$this->draw->getDate()->format("n")];
+$y= $this->draw->getDate()->format("Y");
+
+//print($d." ".$m." ".$y);
+      // 5 листопада 2014
+$key = array_search($d." ".$m." ".$y, $arrNode);      
+ if($key === false) {
+            return 0;
+        } 
          $crawler = $this->getCrawler();
-         $rawDate = trim($crawler->filter('table.results_item tbody tr td')->text());
+         
+         $rawDate = trim($crawler->filter('.mb20 .span2')->eq($key)->text());
          $date = $this->getDate($rawDate);
-         //print_r($date);
-         $rawDrawNo = trim($crawler->filter('a.results_a')->text());
+      //   print_r($date);
+         $rawDrawNo = trim($crawler->filter('.mb20 .span10 a')->eq($key)->text());
          $drawNo=$this->getDrawNo($rawDrawNo);
-        // print($drawNo."\n");
+       //  print($drawNo."\n");
          $balls = array();
-         $ballsNodes = $crawler->filter('html body div.main_frame table.results_item tbody tr td p span')->text();
+         
+         $ballsNodes = $crawler->filter('.mb20 .span10 a + div')->eq($key)->text();
+          $ballsNodes = trim(str_replace('Результати', '', $ballsNodes));
+       //   print($ballsNodes."\n");
          $ball = str_replace('+ мегакулька:', ',', $ballsNodes);
+    //     print($ball."\n");
          $ballsSpace = explode(',',  $ball);
          foreach ($ballsSpace as $ball) {
              $balls[] = trim($ball);
@@ -55,9 +92,12 @@ class MegaLotoParser extends AbstractLotoParser {
      
      public function getDate($rawDate) {
            
-         $words = explode('.', $rawDate);
+         $words = explode(' ', $rawDate);
          $day = $words[0];
-         $month = $words[1];
+         
+         $ar_m=array_keys($this->frMonth, $words[1]);
+         
+         $month = $ar_m[0];
          $year = $words[2];
          $date = new \DateTime("$year-$month-$day");
          return $date;

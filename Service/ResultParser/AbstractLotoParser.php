@@ -20,7 +20,8 @@ abstract class AbstractLotoParser
 
     public function getUrl()
     {
-        return $this->templateUrl;
+       // echo($this->draw->getLottoTime()->getLottoType()->getUrl());
+        return ($this->templateUrl=="")?$this->draw->getLottoTime()->getLottoType()->getUrl():$this->templateUrl;
     }
     
     public function hasResults()
@@ -64,7 +65,7 @@ abstract class AbstractLotoParser
             $url = $this->getUrl();
             $crawler = $client->request("GET", $url);
             $array = (array) $crawler; 
-            //print_r($array);
+         //   print_r($array);
         } elseif ($this->crawler != null) {
             $crawler = $this->crawler;
         }

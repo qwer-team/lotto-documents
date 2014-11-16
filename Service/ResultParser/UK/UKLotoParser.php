@@ -7,19 +7,52 @@ use Qwer\LottoDocumentsBundle\Service\ResultParser\AbstractLotoParser;
 
 class UKLotoParser extends AbstractLotoParser {
     
-     protected $templateUrl = 'https://www.national-lottery.co.uk/player/lotto/results/results.ftl';
+  //   protected $templateUrl = 'https://www.national-lottery.co.uk/player/lotto/results/results.ftl';
+     protected $templateUrl = '';
+     protected  $frMonth = array(
+            1 =>  'Jan' , 
+            2 =>  'Feb' , 
+            3 =>  'Mar' , 
+            4 =>  'Apr' , 
+            5 =>  'May' , 
+            6 =>  'Jun' , 
+            7 =>  'Jul' , 
+            8 =>  'Aug' , 
+            9 =>  'Sep' , 
+            10 =>  'Oct' , 
+            11 =>  'Nov' , 
+            12 =>  'Dec' 
+         ); 
      
      public function parse() {
          
          $crawler = $this->getCrawler();
-         $rawDate = trim($crawler->filter('td.first')->text());
+      //   $rawDate = trim($crawler->filter('.list_table .table_cell_1 .table_cell_block')->text());
+$arrNode=$crawler->filter('.list_table .table_cell_1 .table_cell_block')->each(function ($node, $i)
+{ return trim($node->nodeValue) ;
+
+});
+ //print_r($arrNode);
+$d= $this->draw->getDate()->format("D d M Y");
+ 
+ //print($d );
+      // Wed 05 Nov 2014 
+$key = array_search($d , $arrNode);     
+ if($key === false) {
+            return 0;
+        } 
+         
+         
+         $rawDate = trim($crawler->filter('.list_table .table_cell_1 .table_cell_block')->eq($key)->text());
+     //     print($rawDate);
          $date = $this->getDate($rawDate);
-         $drawNo = trim($crawler->filterXpath('//*[@id="drawHistoryForm"]/table/tbody/tr[2]/td[6]')->text());
-      // print($drawNo."\n");
+        
+         $drawNo =  str_replace(' ', '', $rawDate); 
+       // print($drawNo."\n");
          
          
-         $ballsNodes = $crawler->filterXpath('//*[@id="drawHistoryForm"]/table/tbody/tr[2]/td[3]')->text();
-         
+        
+         $ballsNodes = trim($crawler->filter('.list_table .table_cell_3 .table_cell_block')->eq($key)->text());
          
          $ballsSpace = explode('-', $ballsNodes);
          $ballsCnt = 6;
@@ -31,7 +64,7 @@ class UKLotoParser extends AbstractLotoParser {
              $ballsCnt--;
          }
          
-         $bonus = trim($crawler->filterXpath('//*[@id="drawHistoryForm"]/table/tbody/tr[2]/td[4]/span')->text());
+         $bonus = trim($crawler->filter('.list_table .table_cell_4 .table_cell_block')->eq($key)->text());
          
          $t=$this->draw->getLottoTime()->getLottoType();
           if(!$this->repoResAll->findResultAllByTypeDrowNo($t,$drawNo)) {

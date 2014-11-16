@@ -7,18 +7,41 @@ use Qwer\LottoDocumentsBundle\Service\ResultParser\AbstractLotoParser;
 class Sport649LotoParser extends AbstractLotoParser {
     
      
-      protected $templateUrl = 'http://www.stoloto.ru/6x49/archive';
+      //protected $templateUrl = 'http://www.stoloto.ru/6x49/archive';
+      protected $templateUrl = '';
       
      public function parse() {
         
          $crawler = $this->getCrawler();
            
-         $rawDate = trim($crawler->filter('ins.pseudo')->text());
+$arrNode=$crawler->filter('ins.pseudo')->each(function ($node, $i)
+{ return $node->nodeValue ;
+
+});
+ 
+$dt= $this->draw->getDate()->format("d.m.Y");
+      
+$key = array_search($dt." 20:00", $arrNode);
+ if($key === false) {
+            return 0;
+        } 
+ 
+        
+        
+         $rawDate = trim($crawler->filter('ins.pseudo')->eq($key)->text());
          $date = $this->getDate($rawDate);
-      //   print_r($date);
-          $rawDrawNo = trim($crawler->filter('div.draw a')->text());
+     //   print_r($date);
+         
+          $rawDrawNo = trim($crawler->filter('div.draw a')->eq($key)->text());
          $drawNo=$this->getDrawNo($rawDrawNo);
-       //  print($drawNo."\n");
+      //print($drawNo);
+      $balls = array();
+      for ($i = 0; $i <= 5; $i++) {
+            $balls[]=trim($crawler->filter('div.numbers div b')->eq($key*7+$i)->text());
+        }
+         
+       
+     /* 
          $ballsNodes = $crawler->filter('div.numbers div b');
        //  print_r($ballsNodes);
          $ballsCnt = 7;
@@ -28,8 +51,9 @@ class Sport649LotoParser extends AbstractLotoParser {
                  break;
              $balls[] = trim($ball->nodeValue)+0;
              $ballsCnt--;
-         }
-         $bonus = array_pop($balls);
+         } */
+         $bonus = trim($crawler->filter('div.numbers div b')->eq($key*7+6)->text());
+       //  print($bonus);
          
           $t=$this->draw->getLottoTime()->getLottoType();
           if(!$this->repoResAll->findResultAllByTypeDrowNo($t,$drawNo)) {

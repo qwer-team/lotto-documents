@@ -12,27 +12,32 @@ class TatsLotoParser extends AbstractLotoParser
     public function parse()
     {
         $crawler = $this->getCrawler();
-        $rawDate = $crawler->filter('span.resultHeadingDrawDateSpn')->text();
-        $date = $this->getDate($rawDate);
-        $drawNo=$this->getDrawNo($rawDate);
-        $ballsNodes = $crawler->filter('span.resultNumberSpn');
-        $ballsCnt = 6;
-        $balls = array();
-        foreach ($ballsNodes as $ball) {
-            if ($ballsCnt == 0)
-                break;
-            $balls[] = trim($ball->nodeValue);
-            $ballsCnt--;
-        }
+        $arrNode=$crawler->filter('.lotto-draw-result .draw-date')->each(function ($node, $i)
+        { return trim(trim($node->nodeValue),",") ;
 
-        $bonusNodes = $crawler->filter('span.resultSecondaryNumberColor');
-        $bonusCnt = 2;
+        });
+      
+        $d= $this->draw->getDate()->format("D d/M/y");
+        $key = array_search($d , $arrNode); 
+         if($key === false) {
+            return 0;
+        } 
+        
+        $rawDate = trim($crawler->filter('.lotto-draw-result .draw-date')->eq($key)->text());
+         $date = $this->draw->getDate();
+        
+        $drawNo=$this->getDrawNo( trim($crawler->filter('.lotto-draw-result .draw-number')->eq($key)->text()));
+       
+        $balls = array();
+ 
+        for ($i = 0; $i <= 5; $i++) {
+            $balls[]=trim($crawler->filter('.lotto-draw-result .draw-details .primary .drawn-number')->eq($key*6+$i)->text());
+        }
+ 
         $bonus = array();
-        foreach ($bonusNodes as $bonusBall) {
-            if($bonusCnt == 0)
-                break;
-            $bonus[] = trim($bonusBall->nodeValue);
-            $bonusCnt--;
+ 
+        for ($i = 0; $i <= 1; $i++) {
+            $bonus[]=trim($crawler->filter('.lotto-draw-result .draw-details .secondary .drawn-number')->eq($key*2+$i)->text());
         }
         
         $t=$this->draw->getLottoTime()->getLottoType();
@@ -66,38 +71,12 @@ class TatsLotoParser extends AbstractLotoParser
         return $this->hasResults();
     }
 
-    private function getDate($rawDate)
-    {
-        $frMonth = array(
-            'jun' => 1,
-            'feb' => 2,
-            'mar' => 3,
-            'apr' => 4,
-            'may' => 5,
-            'jun' => 6,
-            'jul' => 7,
-            'aug' => 8,
-            'sep' => 9,
-            'oct' => 10,
-            'nov' => 11,
-            'dec' => 12,
-        );
-        $rawDate = substr($rawDate, 22, 9);
-        $words = explode("/", $rawDate);
-        $day = $words[0];
-        $month = $frMonth[strtolower($words[1])];
-        $year = $words[2];
-
-        $date = new \DateTime("$year-$month-$day");
-        return $date;
-    }
+    
     
      private function getDrawNo($rawNo)
     {
-        $rawNo=  trim($rawNo);
-        $rawNo=substr($rawNo, -5);
-        $rawNo=  trim($rawNo);
-       // print($rawNo."\n");
+      $rawNo=  trim($rawNo, "Draw ");
+ 
          return  $rawNo;
          
     }

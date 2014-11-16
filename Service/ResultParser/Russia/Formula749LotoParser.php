@@ -3,23 +3,47 @@
 namespace Qwer\LottoDocumentsBundle\Service\ResultParser\Russia;
 
 use Qwer\LottoDocumentsBundle\Service\ResultParser\AbstractLotoParser;
+ 
 
 class Formula749LotoParser extends AbstractLotoParser {
     
-     protected $templateUrl = 'http://www.gosloto.ru/7x49/archive';
+    // protected $templateUrl = 'http://www.stoloto.ru/7x49/archive';
+     protected $templateUrl = '';
      
      public function parse() {
          
          $crawler = $this->getCrawler();
-         
-          $rawDate = trim($crawler->filter('ins.pseudo')->text());
-         $date = $this->getDate($rawDate);
+      
+ $arrNode=$crawler->filter('ins.pseudo')->each(function ($node, $i)
+{ return $node->nodeValue ;
+
+});
+ 
+$dt= $this->draw->getDate()->format("d.m.Y H:i");
+      
+$key = array_search($dt, $arrNode);
+ if($key === false) {
+            return 0;
+        }  
+ 
         
+        
+         $rawDate = trim($crawler->filter('ins.pseudo')->eq($key)->text());
+         $date = $this->getDate($rawDate);
+     //   print_r($date);
          
-          $rawDrawNo = trim($crawler->filter('div.draw a')->text());
+          $rawDrawNo = trim($crawler->filter('div.draw a')->eq($key)->text());
          $drawNo=$this->getDrawNo($rawDrawNo);
-         
-         $ballsNodes = $crawler->filter('div.numbers div b');
+      //print($drawNo);
+      $balls = array();
+      for ($i = 0; $i <= 6; $i++) {
+            $balls[]=trim($crawler->filter('div.numbers div b')->eq($key*7+$i)->text());
+        }
+      
+ 
+      /*
+         $ballsNodes = $crawler->filter('div.numbers div b')->eq($key*7);
+      
          $ballsCnt = 7;
          $balls = array();
          foreach ($ballsNodes as $ball) {
@@ -27,8 +51,8 @@ class Formula749LotoParser extends AbstractLotoParser {
                  break;
              $balls[] = trim($ball->nodeValue);
              $ballsCnt--;
-         }
-         
+         } */
+    //     print_r($balls);
          
          $t=$this->draw->getLottoTime()->getLottoType();
           if(!$this->repoResAll->findResultAllByTypeDrowNo($t,$drawNo)) {
@@ -48,6 +72,7 @@ class Formula749LotoParser extends AbstractLotoParser {
          
          $this->validate($date);
          if ($this->hasResult) {
+             
              $result = $this->draw->getResult();
              $result->setResult($balls);
              $this->draw->setIsParsed(1); 
