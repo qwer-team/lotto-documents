@@ -48,14 +48,17 @@ class ClientApi
         $request = array();
         $request["data"] = $this->serialize($bets);
         $request["token"] = $token;
-        $this->makeRequest($url, $request);
+         $response = $this->makeRequest($url, $request);
+        //$response = json_decode($response);
+        //if ! result == 'success' записать в лог
+        //return $response->result == 'success';
     }
 
     public function makeRequest($url, $data = null)
     {
         $ch = curl_init($url);
        if($url=="http://lottoclient.my/app_dev.php/bets") {
-       //    print_r($data );
+   //        print_r($data );
            
        }
         curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -64,6 +67,8 @@ class ClientApi
             curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         }
         $response = curl_exec($ch);
+         
+        
         curl_close($ch);
         return $response;
     }
@@ -72,7 +77,7 @@ class ClientApi
     {
         $betsArr = array();
         foreach ($bets as $bet) {
-            if($bet->getSumma2()>0) {
+           // if($bet->getSumma2()>0) {
             $arr = array();
             $arr["id"] = $bet->getId();
             $arr["externalId"] = $bet->getExternalUserId();
@@ -81,7 +86,7 @@ class ClientApi
             $arr["summa2"] = $bet->getSumma2();
 
             $betsArr[] = $arr;
-            }
+            //}
         }
 
         return json_encode(array("bets" => $betsArr));
