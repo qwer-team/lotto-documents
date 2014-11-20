@@ -31,8 +31,11 @@ class ClientApi
     {
         $url = $client->getResultUrl();
         $request = array();
-        $request["data"] = $this->serialize($bets);
-        $this->makeRequest($url, $request);
+        $request["data"] = $this->serializeRes($bets);
+        $response = $this->makeRequest($url, $request);
+        //$response = json_decode($response);
+        //if ! result == 'success' записать в лог
+        //return $response->result == 'success';
     }
     
     public function sendBetsRallback($bets, Client $client)
@@ -75,6 +78,57 @@ class ClientApi
 
     private function serialize($bets)
     {
+        
+        /*
+“id”: .., 		//(«серверный» ид ставки)
+“externalId”: ..,	// (ид игрока)
+“currency”: .., 	//(код валюты)
+“summa1”: ..,		// (поставлено)  
+"draw_id": ..., 		// id тиража 
+"draw_dt": ..., 		// датавремя тиража 
+"country_code":...., 	// iso код страны
+"lotto_name":...., 	// название лотереи
+"stake_str": ..., 	// строка ставки, на что поставил
+“is_bonus_include”: 	// включая бонусный шар         
+         */
+        $betsArr = array();
+        foreach ($bets as $bet) {
+           // if($bet->getSumma2()>0) {
+            $arr = array();
+            $arr["id"] = $bet->getId();
+            $arr["externalId"] = $bet->getExternalUserId();
+            $arr["currency"] = $bet->getCurrency()->getCode();
+            $arr["summa1"] = $bet->getSumma1();
+            $arr["bet_type"] = $bet->getBetType()->getName();
+            $arr["draw_id"] = $bet->getLottoDraw()->getId();
+            $arr["draw_dt"] = $bet->getLottoDraw()->getDate()->format("d.m.Y H:i");
+            $arr["country_code"] = $bet->getLottoDraw()->getLottoTime()->getLottoType()->getCountry()->getCode();
+            $arr["lotto_name"] = $bet->getLottoDraw()->getLottoTime()->getLottoType()->getTitle();
+            $arr["stake_str"] = implode(",", $bet->getBalls());
+            $arr["is_bonus_include"] = $bet->getWithBonus();
+       
+            //$arr["summa2"] = $bet->getSumma2();
+
+            $betsArr[] = $arr;
+            //}
+        }
+
+        return json_encode(array("bets" => $betsArr));
+    }
+    
+    
+    
+     private function serializeRes($bets)
+    {
+        
+        /*
+“id”: .., 		//(«серверный» ид ставки)
+“externalId”: ..,	// (ид игрока)
+“currency”: .., 	//(код валюты)
+“summa1”: ..,		// (поставлено)  
+"summa2": ..., 		// выиграно 
+"result_str": ..., 	// строка ставки, на что поставил
+         */
         $betsArr = array();
         foreach ($bets as $bet) {
            // if($bet->getSumma2()>0) {
@@ -84,6 +138,8 @@ class ClientApi
             $arr["currency"] = $bet->getCurrency()->getCode();
             $arr["summa1"] = $bet->getSumma1();
             $arr["summa2"] = $bet->getSumma2();
+            $arr["result_str"] = implode(",", $bet->getLottoDraw()->getResult()->getAllBalls());
+            //$arr["summa2"] = $bet->getSumma2();
 
             $betsArr[] = $arr;
             //}
@@ -91,5 +147,7 @@ class ClientApi
 
         return json_encode(array("bets" => $betsArr));
     }
+    
+    
 
 }

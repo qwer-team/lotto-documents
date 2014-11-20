@@ -138,6 +138,10 @@ $msg="";
         } else {
             $resultsBalls = $results->getResult();
         }
+     
+        for ($i = 0; $i < count($resultsBalls); $i++) {
+            $resultsBalls[$i] = ltrim($resultsBalls[$i],"0"); 
+        }
         
         $balls = $betline->getBalls();
         $win = true;
@@ -155,5 +159,7 @@ $msg="";
         
         $betline->setWonAmount($winSum);
     }
+    
+  
 
 }
