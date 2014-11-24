@@ -26,6 +26,23 @@ class BetRepository extends EntityRepository
         return $queryBuilder->getQuery()->execute();
     }
     
+    public function getClientsBetsOnDraw($client, $draw )
+    {
+        $queryBuilder = $this->createQueryBuilder("bet");
+
+        $queryBuilder->select("bet")
+                ->where("bet.lottoClient = :client")
+                ->andWhere("bet.lottoDraw = :draw") ;
+                
+        $params = array(
+            "client" => $client,
+            "draw" => $draw, 
+        );
+
+        $queryBuilder->setParameters($params);
+        return $queryBuilder->getQuery()->execute();
+    }
+    
     public function getBetsByIds($ids){
         $queryBuilder = $this->createQueryBuilder("bet");
 

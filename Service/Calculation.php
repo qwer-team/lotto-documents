@@ -34,6 +34,17 @@ $msg="";
         return " - ".$msg;
     }
     
+    public function returnDraw(Draw $draw){
+        $this->draw = $draw;
+
+        $clients = $this->findClients();
+        foreach ($clients as $client) {
+            $this->returnForClient($client);
+        }
+        $this->draw->setLottoStatus(2);
+        $this->em->flush();
+    }
+    
     public function rallback(Draw $draw){
         $this->draw = $draw;
 
@@ -64,7 +75,7 @@ $msg="";
 
         if (count($bets)) {
             foreach ($bets as $bet) {
-                $this->rallbackBet($bet);
+                $this->rollbackBet($bet);
             }
             $resultEvent = new BetsEvent();
             $resultEvent->setBets($bets);
@@ -72,6 +83,27 @@ $msg="";
             $this->dispatcher->dispatch("send.bets.rollback", $resultEvent);
         }
     }
+    
+    
+    /**
+     * 
+     * @param \Qwer\LottoBundle\Entity\Client $client
+     */
+    private function returnForClient(Client $client)
+    {
+        $bets = $this->getClientsBetsOnDraw($client );
+
+        if (count($bets)) {
+            foreach ($bets as $bet) {
+                $this->returnBet($bet);
+            }
+            $resultEvent = new BetsEvent();
+            $resultEvent->setBets($bets);
+            $resultEvent->setClient($client);
+            $this->dispatcher->dispatch("send.bets.return", $resultEvent);
+        }
+    }
+    
     
     /**
      * 
@@ -103,26 +135,55 @@ $msg="";
         $bets = $repo->getClientsBets($client, $this->draw, $status);
         return $bets;
     }
+    
+    private function getClientsBetsOnDraw($client )
+    {
+        $betRepo = "QwerLottoDocumentsBundle:Bet";
+        
+        $repo = $this->em->getRepository($betRepo);
+        $bets = $repo->getClientsBetsOnDraw($client, $this->draw );
+        return $bets;
+    }
 
     
     private function calculateBet(Bet $bet)
     {
+        $totalWin = 0; 
         foreach ($bet->getDocumentLines() as $line) {
-            $this->calculateBetLine($line);
+           $totalWin+=$this->calculateBetLine($line);
         }
         $bet->setStatus(2);
+        if($totalWin>0){
+            $bet->setBetStatus(2); //win
+            $bet->setSumma2($totalWin);
+        } else {
+            $bet->setBetStatus(1); // lose
+            $bet->setSumma2(0);
+        }
         
         $event = new DocumentEvent($bet);
         $this->dispatcher->dispatch("approve.document.event", $event);
     }
     
-    private function rallbackBet(Bet $bet)
+    private function rollbackBet(Bet $bet)
     {
         foreach ($bet->getDocumentLines() as $line) {
             $line->setWonAmount(0);
         }
         $bet->setStatus(1);
+        $bet->setBetStatus(0); // not calc
         $bet->setSumma2(0);
+        
+        $event = new DocumentEvent($bet);
+        $this->dispatcher->dispatch("return.document.event", $event);
+    }
+   
+    private function returnBet(Bet $bet)
+    {
+         
+        $bet->setStatus(2);
+        $bet->setBetStatus(3); // not calc
+        $bet->setSumma2($bet->getSumma1());
         
         $event = new DocumentEvent($bet);
         $this->dispatcher->dispatch("return.document.event", $event);
@@ -152,12 +213,14 @@ $msg="";
             }
         }
         
-        $winSum = 0;
+        $winSum = 0; 
         if($win){
             $winSum = $betline->getSumma() * $betline->getOdd();
+            
         }
         
         $betline->setWonAmount($winSum);
+        return $winSum;
     }
     
   

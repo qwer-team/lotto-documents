@@ -8,11 +8,11 @@ use Qwer\LottoDocumentsBundle\Event\BetsEvent;
 use \Qwer\LottoDocumentsBundle\Service\ClientApi;
 
 /**
- * Description of RollbackNotification
+ * Description of ReturnNotification
  *
  * @author root
  */
-class RollbackNotification
+class ReturnNotification
 {
     
     /**
@@ -26,7 +26,7 @@ class RollbackNotification
         $bets = $event->getBets();
         $client = $event->getClient();
         
-        $this->clientApi->sendBetsRollback($bets, $client);
+        $this->clientApi->sendBetsReturn($bets, $client);
     }
 
     /**

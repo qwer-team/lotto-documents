@@ -313,5 +313,26 @@ class BetController extends Controller
 
         return $this->redirect($this->generateUrl('draw_edit', array('id' => $id)));
     }
+    
+    
+    public function returnAction(Request $request, $id)
+    {
+        $calculation = $this->get("lotto.calculation");
+        $message = 'Successful return';
+
+        $draw = $this->getDoctrine()->getManager()
+                ->getRepository("QwerLottoBundle:Draw")
+                ->find($id);
+
+        try {
+            $this->rollbackAction($request, $id);
+            $calculation->returnDraw($draw);
+        } catch (\Exception $e) {
+            $message = (string)$e;
+        }
+        $this->get('session')->getFlashBag()->add('notice', $message);
+
+        return $this->redirect($this->generateUrl('draw_edit', array('id' => $id)));
+    }
 
 }

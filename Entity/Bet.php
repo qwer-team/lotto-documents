@@ -44,6 +44,12 @@ class Bet extends Document
     
     
     protected $betType;
+     
+    /**
+     *
+     * @var int 
+     */
+    protected $betStatus ;
 
     /**
      * Set externalUserId
@@ -209,6 +215,16 @@ class Bet extends Document
     public function setBetType($betType)
     {
         $this->betType = $betType;
+    }
+    
+    public function getBetStatus()
+    {
+        return $this->betStatus;
+    }
+
+    public function setBetStatus($betStatus)
+    {
+        $this->betStatus = $betStatus;
     }
 
 

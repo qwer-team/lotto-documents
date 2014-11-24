@@ -38,11 +38,19 @@ class ClientApi
         //return $response->result == 'success';
     }
     
-    public function sendBetsRallback($bets, Client $client)
+    public function sendBetsRollback($bets, Client $client)
     {
         $url = $client->getRollbackUrl();
         $request = array();
-        $request["data"] = $this->serialize($bets);
+        $request["data"] = $this->serializeRollback($bets);
+        $this->makeRequest($url, $request);
+    }
+   
+    public function sendBetsReturn($bets, Client $client)
+    {
+        $url = $client->getReturnUrl();
+        $request = array();
+        $request["data"] = $this->serializeReturn($bets);
         $this->makeRequest($url, $request);
     }
     
@@ -59,11 +67,13 @@ class ClientApi
 
     public function makeRequest($url, $data = null)
     {
+        
+      for($i=0; $i<5; $i++) {   
         $ch = curl_init($url);
-       if($url=="http://lottoclient.my/app_dev.php/bets") {
+   //    if($url=="http://lottoclient.my/app_dev.php/bets") {
    //        print_r($data );
            
-       }
+    //   }
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         if(!is_null($data)){
@@ -72,10 +82,51 @@ class ClientApi
         $response = curl_exec($ch);
          
         
-        curl_close($ch);
-        return $response;
+        
+if (empty($response)) {
+    // some kind of an error happened
+  
+    curl_close($ch); // close cURL handler
+} else {
+    $info = curl_getinfo($ch);
+    curl_close($ch); // close cURL handler
+
+    if (empty($info['http_code'])) {
+            
+    } else {
+       if($info['http_code'] ==200) {
+           return $response;
+        }
     }
 
+}
+
+      }
+        
+      $this->errHandling($url, $data);
+       return 0; 
+    }
+
+    
+    private function errHandling($url, $data = null)
+    {   
+        $message = \Swift_Message::newInstance()
+        ->setSubject('Hello Email')
+        ->setFrom('fed@qwer.com.ua')
+        ->setTo('fedorchajka@gmail.com')
+        ->setBody("Err hendling: ".$url) ;
+        
+        
+        $transport = \Swift_SmtpTransport::newInstance( 'gmail', 25) 
+                                        ->setUsername("fedorchajka") 
+                                        ->setPassword("hekbnfed"); 
+        $mailer = \Swift_Mailer::newInstance($transport);
+        
+    $mailer->send($message);
+
+        
+    }
+    
     private function serialize($bets)
     {
         
@@ -131,7 +182,7 @@ class ClientApi
          */
         $betsArr = array();
         foreach ($bets as $bet) {
-           // if($bet->getSumma2()>0) {
+    
             $arr = array();
             $arr["id"] = $bet->getId();
             $arr["externalId"] = $bet->getExternalUserId();
@@ -139,10 +190,54 @@ class ClientApi
             $arr["summa1"] = $bet->getSumma1();
             $arr["summa2"] = $bet->getSumma2();
             $arr["result_str"] = implode(",", $bet->getLottoDraw()->getResult()->getAllBalls());
-            //$arr["summa2"] = $bet->getSumma2();
+ 
+            $betsArr[] = $arr;
+   
+        }
+
+        return json_encode(array("bets" => $betsArr));
+    }
+    
+    
+    
+     private function serializeRollback($bets)
+    { /*
+ 
+“summa1”: ..,		// (поставлено)  
+"summa2": ..., 		// выиграно  
+         */
+        $betsArr = array();
+        foreach ($bets as $bet) {
+      
+            $arr = array();
+            $arr["id"] = $bet->getId();
+            $arr["externalId"] = $bet->getExternalUserId();
+            $arr["currency"] = $bet->getCurrency()->getCode();
+            $arr["summa1"] = $bet->getSumma1();
+            $arr["summa2"] = $bet->getSumma2(); 
+ 
 
             $betsArr[] = $arr;
-            //}
+            
+        }
+
+        return json_encode(array("bets" => $betsArr));
+    }
+    
+    private function serializeReturn($bets)
+    { /* “summa1”: ..,		// (поставлено)  
+ 
+         */
+        $betsArr = array();
+        foreach ($bets as $bet) {
+      
+            $arr = array();
+            $arr["id"] = $bet->getId();
+            $arr["externalId"] = $bet->getExternalUserId();
+            $arr["currency"] = $bet->getCurrency()->getCode();
+            $arr["summa1"] = $bet->getSumma1(); 
+              $betsArr[] = $arr;
+            
         }
 
         return json_encode(array("bets" => $betsArr));
