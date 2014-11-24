@@ -288,7 +288,7 @@ class BetController extends Controller
         try {
            $message .= $calculation->calculate($draw);
         } catch (\Exception $e) {
-            $message = toString($e);
+            $message = (string)$e;
         }
         $this->get('session')->getFlashBag()->add('notice', $message);
 
@@ -307,7 +307,7 @@ class BetController extends Controller
         try {
             $calculation->rallback($draw);
         } catch (\Exception $e) {
-            $message = toString($e);
+            $message = (string)$e;
         }
         $this->get('session')->getFlashBag()->add('notice', $message);
 
