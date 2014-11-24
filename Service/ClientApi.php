@@ -103,7 +103,7 @@ if (empty($response)) {
 
       }
         
-      $this->errHandling($url, $data);
+    //  $this->errHandling($url, $data);
        return 0; 
     }
 
