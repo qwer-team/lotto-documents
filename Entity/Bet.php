@@ -49,7 +49,7 @@ class Bet extends Document
      *
      * @var int 
      */
-    protected $betStatus ;
+    protected $betStatus;
 
     /**
      * Set externalUserId
