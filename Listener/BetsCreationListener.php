@@ -41,6 +41,18 @@ class BetsCreationListener extends ContainerAware
                 throw $exception;
             }
             
+             
+            $client = $event->getToken()->getClient();
+            $tokenStr =$token->getToken();
+         
+            
+             if (!$this->clientsApi->sendBetsCreated ($bets, $client,$tokenStr)) {
+                $translator = $this->container->get("translator");
+                $exception = new FundsException($translator->trans("limit.message.externalErr", array(), 'validators'));
+                throw $exception;
+            }
+            
+            
             $this->em->getConnection()->commit();
         } catch (\Exception $e) {
             $this->em->getConnection()->rollback();
@@ -48,7 +60,7 @@ class BetsCreationListener extends ContainerAware
             throw $e;
         }
         
-        $this->dispatcher->dispatch("send.bets.create", $event);
+       // $this->dispatcher->dispatch("send.bets.create", $event);
     }
     
     public function setClientsApi(ClientApi $clientsApi)

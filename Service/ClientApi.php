@@ -60,9 +60,9 @@ class ClientApi
         $request["data"] = $this->serialize($bets);
         $request["token"] = $token;
          $response = $this->makeRequest($url, $request);
-        //$response = json_decode($response);
-        //if ! result == 'success' записать в лог
-        //return $response->result == 'success';
+         
+        $response = json_decode($response);
+        return $response->result == 'success';
     }
 
     public function makeRequest($url, $data = null)
