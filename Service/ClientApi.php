@@ -152,7 +152,7 @@ if (empty($response)) {
             $arr["summa1"] = $bet->getSumma1();
             $arr["bet_type"] = $bet->getBetType()->getName();
             $arr["draw_id"] = $bet->getLottoDraw()->getId();
-            $arr["draw_dt"] = $bet->getLottoDraw()->getDate()->format("d.m.Y H:i");
+            $arr["draw_dt"] = $bet->getLottoDraw()->getDate()->format("d.m.y H:i");
             $arr["country_code"] = $bet->getLottoDraw()->getLottoTime()->getLottoType()->getCountry()->getCode();
             $arr["lotto_name"] = $bet->getLottoDraw()->getLottoTime()->getLottoType()->getTitle();
             $arr["stake_str"] = implode(",", $bet->getBalls());
