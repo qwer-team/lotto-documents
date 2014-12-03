@@ -62,7 +62,18 @@ class ClientApi
          $response = $this->makeRequest($url, $request);
          
         $response = json_decode($response);
-        return $response->result == 'success';
+       // if(empty($response)){
+      //      $res=-1;
+      //  } else
+            if($response->result == 'success') {
+            $res=0; 
+      //  } elseif(empty($response["code_error"])) {
+    //        $res=-1;
+        } else {
+            $res=$response->code_error;
+        }
+        
+        return $res;
     }
 
     public function makeRequest($url, $data = null)

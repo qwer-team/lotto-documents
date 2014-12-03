@@ -45,10 +45,10 @@ class BetsCreationListener extends ContainerAware
             $client = $event->getToken()->getClient();
             $tokenStr =$token->getToken();
          
-            
-             if (!$this->clientsApi->sendBetsCreated ($bets, $client,$tokenStr)) {
+            $err=$this->clientsApi->sendBetsCreated ($bets, $client,$tokenStr);
+             if ($err!=0) {
                 $translator = $this->container->get("translator");
-                $exception = new FundsException($translator->trans("limit.message.externalErr", array(), 'validators'));
+                $exception = new FundsException($translator->trans("limit.message.externalErr", array(), 'validators')." err# ".$err);
                 throw $exception;
             }
             
