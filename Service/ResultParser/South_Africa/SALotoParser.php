@@ -71,7 +71,7 @@ class SALotoParser extends AbstractLotoParser {
              'september' => 9,
              'october' => 10,
              'november' => 11,
-             'decembre' => 12
+             'december' => 12
          );
          $rawDate = preg_replace('/[\D]+,\s/', '', $rawDate);
          $words = explode(' ', $rawDate);

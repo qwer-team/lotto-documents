@@ -84,7 +84,7 @@ class S49LotoParser extends AbstractLotoParser {
              'september' => 9,
              'october' => 10,
              'november' => 11,
-             'decembre' => 12
+             'december' => 12
          );
          
          preg_match('/\s[\d]+\s[\D]+/', $rawDate, $words);

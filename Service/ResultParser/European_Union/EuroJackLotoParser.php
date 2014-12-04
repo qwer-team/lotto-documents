@@ -77,7 +77,7 @@ class EuroJackLotoParser extends AbstractLotoParser {
              'september' => 9,
              'october' => 10,
              'november' => 11,
-             'decembre' => 12
+             'december' => 12
          );
          preg_match('/\s[\D]+\s[\d]+[\D]+\s[\d]+/', $rawDate, $words);
          $words = explode(' ', trim($words[0]));

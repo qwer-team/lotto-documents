@@ -12,6 +12,7 @@ class MegaDiceLotoParser extends AbstractLotoParser {
          
          $crawler = $this->getCrawler();
          $rawDate = trim($crawler->filter('div.drawing dl dt')->text());
+         // print($rawDate);
          $date = $this->getDate($rawDate);
          $drawNo=$this->getDrawNo($rawDate);
          
@@ -66,12 +67,14 @@ class MegaDiceLotoParser extends AbstractLotoParser {
              'september' => 9,
              'october' => 10,
              'november' => 11,
-             'decembre' => 12
+             'december' => 12
          );
          $rawDate = str_replace(',', '', $rawDate);
          $rawDate = str_replace('  ', ' ', $rawDate);
          $rawDate = trim($rawDate);
+         
          $words = explode(' ', $rawDate);
+        //print_r($words);
          $day = $words[1];
          $month = $frMonth[strtolower($words[0])];
          $year = $words[2];

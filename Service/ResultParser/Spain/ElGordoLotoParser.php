@@ -46,7 +46,7 @@ class ElGordoLotoParser extends AbstractLotoParser {
              'september' => 9,
              'october' => 10,
              'november' => 11,
-             'decembre' => 12
+             'december' => 12
          );
          preg_match('/([\d]+)\W+([\D]+)[\W]\W+([\d]+)/', $rawDate, $words);
          

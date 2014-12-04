@@ -76,7 +76,7 @@ class TagLotoParser extends AbstractLotoParser {
                  'september' => 9,
                  'october' => 10,
                  'november' => 11,
-                 'decembre' => 12
+                 'december' => 12
              );
              
              $rawDate = str_replace('  ', ' ', $rawDate);
