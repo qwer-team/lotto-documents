@@ -24,6 +24,9 @@ class ClientApi
 
         $response = $this->makeRequest($fundsUrl, $data);
         $response = json_decode($response);
+        if (empty($response)){
+            return 0;
+        } 
         return $response->result == 'success';
     }
 

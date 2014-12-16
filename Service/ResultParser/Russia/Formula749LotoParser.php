@@ -18,10 +18,11 @@ class Formula749LotoParser extends AbstractLotoParser {
 { return $node->nodeValue ;
 
 });
- 
-$dt= $this->draw->getDate()->format("d.m.Y H:i");
-      
+ //print_r($arrNode);
+$dt= $this->draw->getDate()->format("d.m.Y 21:00");
+//print_r($dt);
 $key = array_search($dt, $arrNode);
+//print_r($key);
  if($key === false) {
             return 0;
         }  

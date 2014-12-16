@@ -8,17 +8,25 @@ use Qwer\LottoDocumentsBundle\Service\ResultParser\Parser;
 
 class Super66LotoParser extends AbstractLotoParser {
     
-     protected $templateUrl = 'http://tatts.com/tattersalls/results/last-10-results?product=Super66';
-
+    // protected $templateUrl = 'http://tatts.com/tattersalls/results/last-10-results?product=Super66';
+ protected $templateUrl = '';
+ 
     public function parse() {
-        $crawler = $this->getCrawler();
-        $rawDate = $crawler->filter('span.resultHeadingDrawDateSpn')->text();
-                
-
+       
+        
+        
+        
+        /*$crawler = $this->getCrawler();
+        $rawDate = $crawler->filter('span.draw-date')->text();
+      //  print($rawDate);
         $date = $this->getDate($rawDate);
+      //  print_r($date);
+        
+        $rawDate = $crawler->filter('span.draw-number')->text();
         $drawNo=$this->getDrawNo($rawDate);
         
-        $ballsNodes = $crawler->filter('span.resultNumberSpn');
+        $ballsNodes = $crawler->filter('div.numbers-wrapper.drawn-number');
+        // print_r($ballsNodes);
         $ballsCnt = 6;
         $balls = array();
         foreach ($ballsNodes as $ball) {
@@ -28,10 +36,42 @@ class Super66LotoParser extends AbstractLotoParser {
             $balls[] = trim($ball->nodeValue);
             $ballsCnt--;
         }
+        print_r($balls); 
+       */
+        
+           $crawler = $this->getCrawler();
+      
+ $arrNode=$crawler->filter('span.draw-date')->each(function ($node, $i)
+{ return $node->nodeValue ;
+
+});
+ //print_r($arrNode);
+$dt= $this->draw->getDate()->format("D d/M/y,");
+//print_r($dt);
+$key = array_search($dt, $arrNode);
+//print_r($key);
+ if($key === false) {
+            return 0;
+        }  
+ 
+        
+        
+         $rawDate = trim($crawler->filter('span.draw-number')->eq($key)->text());
+         $date = $this->draw->getDate();//$this->getDate($rawDate);
+       // print_r($date);
+         
+          $rawDrawNo = trim($crawler->filter('span.draw-number')->eq($key)->text());
+         $drawNo=$this->getDrawNo($rawDrawNo);
+       //   print($drawNo);
+          
+          $balls = array();
+      for ($i = 0; $i <= 5; $i++) {
+            $balls[]=trim($crawler->filter('div.numbers-wrapper div')->eq($key*6+$i)->text());
+        }
+         
+      //   print_r($balls);
         
         $t=$this->draw->getLottoTime()->getLottoType();
-       
-        
        if(!$this->repoResAll->findResultAllByTypeDrowNo($t,$drawNo)) {
         $drawTime=$this->draw->getLottoTime()->getTime();
         $h=$drawTime->format("H");
@@ -75,7 +115,8 @@ class Super66LotoParser extends AbstractLotoParser {
             'nov' => 11,
             'dec' => 12,
         );
-        $rawDate = substr($rawDate, 20, 9);
+        $rawDate = substr($rawDate, 4, 9);
+       // print($rawDate);
         $words = explode("/", $rawDate);
         $day = $words[0];
         $month = $frMonth[strtolower($words[1])];
@@ -88,10 +129,10 @@ class Super66LotoParser extends AbstractLotoParser {
         
         private function getDrawNo($rawNo)
     {
-        $rawNo=  trim($rawNo);
-        $rawNo=substr($rawNo, -5);
-        $rawNo=  trim($rawNo);
-       // print($rawNo."\n");
+       // $rawNo=  trim($rawNo);
+      //  $rawNo=substr($rawNo, -5);
+        $rawNo=  trim($rawNo, "Draw ");
+       
          return  $rawNo;
          
     }
