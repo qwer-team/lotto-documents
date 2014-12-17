@@ -25,7 +25,7 @@ class UKLotoParser extends AbstractLotoParser {
          ); 
      
      public function parse() {
-         
+     //    print("daf");
          $crawler = $this->getCrawler();
       //   $rawDate = trim($crawler->filter('.list_table .table_cell_1 .table_cell_block')->text());
 $arrNode=$crawler->filter('.list_table .table_cell_1 .table_cell_block')->each(function ($node, $i)

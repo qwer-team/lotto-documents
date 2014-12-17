@@ -192,8 +192,11 @@ if (empty($response)) {
 “currency”: .., 	//(код валюты)
 “summa1”: ..,		// (поставлено)  
 "summa2": ..., 		// выиграно 
-"result_str": ..., 	// строка ставки, на что поставил
+"result_str": ..., 	// строка c резами ттиража , на что поставил
          */
+          $res = implode(",", $bets[0]->getLottoDraw()->getResult()->getAllBalls());
+          
+          $res=preg_replace("/[\s".chr(194)."".chr(160)."]/","",$res);
         $betsArr = array();
         foreach ($bets as $bet) {
     
@@ -203,8 +206,8 @@ if (empty($response)) {
             $arr["currency"] = $bet->getCurrency()->getCode();
             $arr["summa1"] = $bet->getSumma1();
             $arr["summa2"] = $bet->getSumma2();
-            $arr["result_str"] = implode(",", $bet->getLottoDraw()->getResult()->getAllBalls());
- 
+           
+            $arr["result_str"]=$res;
             $betsArr[] = $arr;
    
         }

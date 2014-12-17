@@ -15,7 +15,9 @@ class NationalLotoParser extends AbstractLotoParser {
          
          $crawler = $this->getCrawler();
          $rawDate = $crawler->filter('div.drawing dl dt')->text();
+        // print($rawDate);
          $date = $this->getDate($rawDate);
+        
          $drawNo=$this->getDrawNo($rawDate);
          $ballsNodes = $crawler->filter('span.regNums span');
          $ballsCnt = 6;
@@ -47,9 +49,13 @@ class NationalLotoParser extends AbstractLotoParser {
          $t->addLottoResultsAll( $this->resultAll);
        }
          
-       
+     //   print_r($date);
+       // print_r($this->draw->getDate());
          $this->validate($date);
+      //   print($this->hasResult." ----- ");
+         
          if($this->hasResult) {
+      //       print("da");
              $result = $this->draw->getResult();
              $result->setResult($balls);
              $result->setBonusResult(array($bonus));
