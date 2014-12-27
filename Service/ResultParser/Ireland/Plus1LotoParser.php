@@ -6,17 +6,21 @@ use Qwer\LottoDocumentsBundle\Service\ResultParser\AbstractLotoParser;
 
 class Plus1LotoParser extends AbstractLotoParser {
     
-     protected $templateUrl = 'http://irish.national-lottery.com/';
+    // protected $templateUrl = 'http://irish.national-lottery.com/';
+     protected $templateUrl = 'http://irish.national-lottery.com/results/irish-lotto.asp';
      
      public function parse() {
-         
+         // http://irish.national-lottery.com/results/irish-lotto-result-2014-12-06.asp
+         $d= $this->draw->getDate()->format("Y-m-d");
+         $this->templateUrl="http://irish.national-lottery.com/results/irish-lotto-result-".$d.".asp";
          $crawler = $this->getCrawler();
-         $rawDate = trim($crawler->filter('tr th div.floatLeft')->text());
-         $date = $this->getDate($rawDate);
+         
+    // $rawDate = trim($crawler->filter('tr th div.floatLeft')->text());
+         $date = $this->draw->getDate();//$this->getDate($rawDate);
          $drawNo=$this->getDrawNo($date->format("Ymd"));
         //print($drawNo."\n");
          
-         $ballsNodes = $crawler->filter('tr td.irish-small-ball');
+         $ballsNodes = $crawler->filter('.subgame .mediumResults td.irish-small-ball');
          $ballsCnt = 6;
          $balls = array();
          foreach ($ballsNodes as $ball) {
@@ -25,8 +29,8 @@ class Plus1LotoParser extends AbstractLotoParser {
              $balls[] = trim($ball->nodeValue);
              $ballsCnt--;
          }
-         $bonus = $crawler->filter('tr td.irish-small-bonus-ball')->text();
-         
+         $bonus = $crawler->filter('.subgame .mediumResults td.irish-small-bonus-ball')->text();
+        
            $t=$this->draw->getLottoTime()->getLottoType();
           if(!$this->repoResAll->findResultAllByTypeDrowNo($t,$drawNo)) {
             $drawTime=$this->draw->getLottoTime()->getTime();

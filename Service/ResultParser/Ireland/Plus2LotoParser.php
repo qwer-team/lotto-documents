@@ -10,32 +10,40 @@ class Plus2LotoParser extends AbstractLotoParser {
      
      public function parse() {
          
+          $d= $this->draw->getDate()->format("Y-m-d");
+         $this->templateUrl="http://irish.national-lottery.com/results/irish-lotto-result-".$d.".asp";
          $crawler = $this->getCrawler();
-         $rawDate = trim($crawler->filter('tr th div.floatLeft')->text());
-         $date = $this->getDate($rawDate);
-          $drawNo=$this->getDrawNo($date->format("Ymd"));
          
-         $ballsNodes = $crawler->filter('tr td.irish-small-ball');
-         $ballsCnt = 12;
+    // $rawDate = trim($crawler->filter('tr th div.floatLeft')->text());
+         $date = $this->draw->getDate();//$this->getDate($rawDate);
+         $drawNo=$this->getDrawNo($date->format("Ymd"));
+        //print($drawNo."\n");
+         
+         $ballsNodes = $crawler->filter('.subgame .mediumResults td.irish-small-ball');
+        // print_r($ballsNodes);
+         
+         $ballsCnt = 6;
+         $i=0;
          $balls = array();
          foreach ($ballsNodes as $ball) {
              if($ballsCnt == 0)
                  break;
+             $i++;
+             if($i>6){
              $balls[] = trim($ball->nodeValue);
              $ballsCnt--;
+             }
          }
-         $balls = array_slice($balls, 6);
-         
-         $bonusNodes = $crawler->filter('tr td.irish-small-bonus-ball');
-         $bonusCnt = 2;
-         $bonus = array();
+         $bonusNodes = $crawler->filter('.subgame .mediumResults td.irish-small-bonus-ball');//->text();
+        // print_r($bonus);
+         $i=0;
          foreach ($bonusNodes as $ball) {
-             if($bonusCnt == 0)
-                 break;
-             $bonus[] = trim($ball->nodeValue);
-             $ballsCnt--;
+             $i++;
+             if($i>1){
+                 $bonus=trim($ball->nodeValue);
+             }
          }
-        // print_r($balls);
+       //  print($bonus);
          $t=$this->draw->getLottoTime()->getLottoType();
           if(!$this->repoResAll->findResultAllByTypeDrowNo($t,$drawNo)) {
             $drawTime=$this->draw->getLottoTime()->getTime();
@@ -47,7 +55,7 @@ class Plus2LotoParser extends AbstractLotoParser {
             $this->resultAll->setDt($date);
             $this->resultAll->setDrawName($drawNo);
             $this->resultAll->setResult($balls); 
-            $this->resultAll->setBonusResult(array($bonus[1]));
+            $this->resultAll->setBonusResult(array($bonus));
             $this->resultAll->setUCor("parsing");
 
              $t->addLottoResultsAll( $this->resultAll);
@@ -57,7 +65,7 @@ class Plus2LotoParser extends AbstractLotoParser {
          if($this->hasResult) {
              $result = $this->draw->getResult();
              $result->setResult($balls);
-             $result->setBonusResult(array($bonus[1]));
+             $result->setBonusResult(array($bonus));
               $this->draw->setIsParsed(1); 
          }
      }

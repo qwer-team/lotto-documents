@@ -10,7 +10,7 @@ class EuroLotoParser extends AbstractLotoParser {
     
     public function parse() {
         
-        $crawler = $this->getCrawler();
+   /*     $crawler = $this->getCrawler();
         
         $rawDate = $crawler->filter('div.date')->text();
        
@@ -36,7 +36,45 @@ class EuroLotoParser extends AbstractLotoParser {
             $bonus[] = trim($bonusBall->nodeValue);
             $bonusCnt--;
         }
-    //    print_r($bonus);
+ */
+      
+           $d= $this->draw->getDate()->format("d-m-Y");
+         $this->templateUrl="http://www.euro-millions.com/results/".$d;
+         $crawler = $this->getCrawler();
+         
+    // $rawDate = trim($crawler->filter('tr th div.floatLeft')->text());
+         $date = $this->draw->getDate();//$this->getDate($rawDate);
+         
+         $drawNoRaw= $crawler->filter('.draw-number');
+         foreach($drawNoRaw as $drawNoO){
+              
+                 $drawNo=$this->getDrawNo($drawNoO->nodeValue);
+        // print($drawNo."\n");
+         }
+        
+      
+         
+          $ballsNodes = $crawler->filter('li.ball');
+        $ballsCnt = 5;
+        $balls = array();
+        foreach ($ballsNodes as $ball) {
+            if($ballsCnt == 0)
+                break;
+            $balls[] = trim($ball->nodeValue);
+            $ballsCnt--;
+        }
+     //   print_r($balls);
+        $bonusNodes = $crawler->filter('li.lucky-star');
+        $bonusCnt = 2;
+        $bonus = array();
+        foreach ($bonusNodes as $bonusBall) {
+            if($bonusCnt == 0)
+                break;
+            $bonus[] = trim($bonusBall->nodeValue);
+            $bonusCnt--;
+        }
+        
+        
         
         $t=$this->draw->getLottoTime()->getLottoType();
           if(!$this->repoResAll->findResultAllByTypeDrowNo($t,$drawNo)) {
@@ -95,7 +133,7 @@ class EuroLotoParser extends AbstractLotoParser {
     
     private function getDrawNo($rawNo)
     { 
-         return trim($rawNo);
+         return trim($rawNo, "Draw Number ");
          
     }
 }
