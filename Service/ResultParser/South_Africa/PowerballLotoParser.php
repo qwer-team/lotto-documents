@@ -10,7 +10,16 @@ class PowerballLotoParser extends AbstractLotoParser {
      
      public function parse() {
          
+         $d= $this->draw->getDate()->format("d");
+         $m= $this->draw->getDate()->format("m");
+         $y= $this->draw->getDate()->format("Y");
+         $this->templateUrl="https://www.nationallottery.co.za/powerball_home/results.asp?type=1&month=".$m."&year=".$y."&day=".$d;
+        
+       
+         
          $crawler = $this->getCrawler();
+         
+         /*
          $rawDate = trim($crawler->filter('tr td span.onGreenBackground')->text());
          $date = $this->getDate($rawDate);
       //   print_r($date);
@@ -28,6 +37,25 @@ class PowerballLotoParser extends AbstractLotoParser {
              $ballsCnt--;
          }
          $bonus = array_pop($balls);
+         */
+         
+         $date = $this->draw->getDate();//$this->getDate($rawDate);
+         $drawNo=$this->getDrawNo($date->format("Ymd"));
+        
+          $ballsNodes = $crawler->filter('tr td.bbottomYellow div img')->extract(array('src'));
+          $ballsNodes = array_unique($ballsNodes);
+        $ballsCnt = 6;
+        $balls = array();
+        foreach ($ballsNodes as $ball) {
+            if($ballsCnt == 0)
+                 break;
+             preg_match('/[\d]+/', $ball, $ballNum);
+             $balls[] = $ballNum[0];
+             $ballsCnt--;
+        }
+     //   print_r($balls);
+        $bonus = array_pop($balls);
+         
          
           $t=$this->draw->getLottoTime()->getLottoType();
           if(!$this->repoResAll->findResultAllByTypeDrowNo($t,$drawNo)) {
