@@ -78,7 +78,8 @@ abstract class AbstractLotoParser
             $htmlPage = file_get_contents($this->templateUrl);
         }
         else $htmlPage = $this->htmlPage;
-        
+     //   print($this->templateUrl."<br/>");
+      //  print($this->templateUrl."<br/>");
         return $htmlPage;
     }
     

@@ -10,8 +10,16 @@ class HongKongLotoParser extends AbstractLotoParser {
      
      public function parse() {
          
+         $d= $this->draw->getDate()->format("d");
+         $m= $this->draw->getDate()->format("m");
+         $y= $this->draw->getDate()->format("Y");
+         $this->templateUrl="http://bet.hkjc.com/marksix/Results_Detail.aspx?lang=en&date=".$d."/".$m."/".$y;
         $file = $this->getHtmlPage();
-      //  print(strlen($file)."\n" );
+      //   print($file );
+         
+         /*
+       
+       
         preg_match('/Date : [\d\/]+/', $file, $rawDate);
        // print_r($rawDate);
         $rawDate = substr($rawDate[0], 7);
@@ -37,7 +45,30 @@ class HongKongLotoParser extends AbstractLotoParser {
         }
    //     print_r($balls);
         $bonus = array_pop($balls);
-      
+      */ 
+         
+          $date = $this->draw->getDate();//$this->getDate($rawDate);
+       //  $drawNo=$this->getDrawNo($date->format("Ymd"));
+    
+        
+        preg_match_all('/\/icon\/no_[\d]+/', $file, $ballsNodes);
+       // print_r($ballsNodes);
+        preg_match("/\>Draw Number : ".$date->format("y")."\/[\d]+/", $file, $rawN);
+        $drawNo=trim($rawN[0] , ">Draw Number : ");
+       
+      //  print($drawNo);
+        $ballsCnt = 7;
+        $balls = array();
+        foreach($ballsNodes[0] as $ball) {
+            if($ballsCnt == 0) 
+                break;
+            $balls[] = trim(substr($ball, 9));
+            $ballsCnt--;
+        }
+      //  print_r($balls);
+        $bonus = array_pop($balls);
+         
+        if(empty($balls)) {return 0;} 
         $t=$this->draw->getLottoTime()->getLottoType();
           if(!$this->repoResAll->findResultAllByTypeDrowNo($t,$drawNo)) {
             $drawTime=$this->draw->getLottoTime()->getTime();
@@ -63,6 +94,13 @@ class HongKongLotoParser extends AbstractLotoParser {
             $this->draw->setIsParsed(1); 
         }
         return $this->hasResults();
+    }
+    
+    
+    private function getDrawNo($rawNo)
+    { 
+         return trim($rawNo);
+         
     }
 }
 ?>
